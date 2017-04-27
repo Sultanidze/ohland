@@ -1,11 +1,35 @@
 $(document).ready(function(){
-	// selectric initialization
+// selectric initialization
 	$(".js-selectric").selectric();
 	// vehicles labels select
 	$(".b-vehicle").click(function(){
 		$(".b-vehicle").removeClass("b-vehicle_active");
 		$(this).addClass("b-vehicle_active");
 		// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
+	});
+// ajax load of propositions
+	$("#vehicleForm").submit(function(event){
+		event.preventDefault();
+		var $containerAjax = $(this).parents(".js-ajax_calculator");
+		$containerAjax.fadeOut({
+			duration: 400,
+			queue: "ajax",
+			complete: function(){
+				// $(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
+			}
+		});
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
+			// in a case of Ajax success:
+			$(this).dequeue("ajax");
+		})
+		// $containerAjax.load("./ajax/__propositions.html");
+		$containerAjax.fadeIn({
+			duration: 400,
+			queue: "ajax"
+		});
+		$containerAjax.dequeue("ajax");
 	});
 // reasons slider
 	var $sliderReasons = $(".b-reasons__slider .b-slider__string").slick({
@@ -55,7 +79,6 @@ $(document).ready(function(){
 		var  $anchor = $($(this).attr("href"))
 			,offsetAnchor = $anchor.offset().top
 			;
-		console.log(offsetAnchor);
 		$('html, body').animate({ scrollTop: offsetAnchor}, 600);
 		return false;
 	});
@@ -121,28 +144,22 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 20,
 					left: 444
-				},
-				{
+				},	{
 					duration: 200,
 					easing: "linear",
 					queue: "active",	// черга для анімації цього слайда
 					done: function(){
-						// console.log($(this).css("left"));
-						$(this).css("z-index", "-1")
+						$(this).css("z-index", "-1")	// приберемо на задній фон
 					}
 				}
 			);
 			$slide.animate({
 					top: 5,
 					left: 400
-				},
-				{
+				},	{
 					duration: 200,
 					easing: "linear",
-					queue: "active",	// черга для анімації цього слайда
-					done: function(){
-						// console.log($(this).css("left"));
-					}
+					queue: "active"	// черга для анімації цього слайда
 				}
 			);
 			$slide.animate({
@@ -154,15 +171,15 @@ $(document).ready(function(){
 					easing: "linear",
 					queue: "active",	// черга для анімації цього слайда
 					done: function(){
-						// console.log($(this).css("left"));
-						// завантажимо новий слайд
-						$(this).find(".b-slide__side_front .b-slide__wrap").fadeOut(100);
+						// завантажимо новий контент слайда
+						var $slideContent = $(this).find(".b-slide__side_front .b-slide__wrap");
+						$slideContent.fadeOut(100);
 						if(bNext){
-							$(this).find(".b-slide__side_front .b-slide__wrap").load("./ajax/__nextSlide.html")
+							$slideContent.load("./ajax/__nextSlide.html")
 						} else{
-							$(this).find(".b-slide__side_front .b-slide__wrap").load("./ajax/__prevSlide.html")
+							$slideContent.load("./ajax/__prevSlide.html")
 						}
-						$(this).find(".b-slide__side_front .b-slide__wrap").fadeIn(100);
+						$slideContent.fadeIn(100);
 					}
 				}
 			);
@@ -176,7 +193,6 @@ $(document).ready(function(){
 					queue: "active",
 					done: function(){
 						$slideResp.toggleClass("b-slide_active");
-						// console.log($(this).css("left"));
 					}
 				}
 			);
@@ -184,7 +200,6 @@ $(document).ready(function(){
 		}
 		,moveRight = function($slide){
 			$slide.animate({
-					// top: 30,
 					top: 40,
 					left: -44
 				},
@@ -193,38 +208,28 @@ $(document).ready(function(){
 					easing: "linear",
 					queue: "unactive",	// черга для анімації цього слайда
 					done: function(){
-						console.log($(this).css("top"));
 						$(this).css("z-index", "4")
 					}
 				}
 			);
 			$slide.animate({
 					top: 60,
-					// top: 50,
 					left: 4
 				},
 				{
 					duration: 200,
 					easing: "linear",
-					queue: "unactive",	// черга для анімації цього слайда
-					done: function(){
-						console.log($(this).css("top"));
-					}
+					queue: "unactive"	// черга для анімації цього слайда
 				}
 			);
 			$slide.animate({
 					top: 30,
-					// top: 30,
-					// left: 404
 					left: 404
 				},
 				{
 					duration: 600,
 					easing: "linear",
-					queue: "unactive",
-					done: function(){
-						console.log($(this).css("top"));
-					}
+					queue: "unactive"
 				}
 			);
 			$slide.dequeue("unactive");	// запустимо чергу
@@ -242,7 +247,9 @@ $(document).ready(function(){
 	$feedbackBtn.click(function(){
 		$respFedbBtn.toggleClass("b-rating__btn_active");
 		$activeSlide = $slideResp.filter(".b-slide_active");
-		$activeSlide.toggleClass("b-slide_rotated")
+		if (!$activeSlide.is(":animated")) {
+			$activeSlide.toggleClass("b-slide_rotated");
+		}
 	});
 
 	$sliderRespControlBtn.click(function(){
@@ -273,4 +280,57 @@ $(document).ready(function(){
 			reshuffle($activeSlide, $unactiveSlide, true);
 		}
 	});
+	//	Додаємо маску на номер телефона в формах
+	$("input[type='tel']").mask("+38 (099) 999-99-99");
+
+	// feedback form submission
+	$(".js-form_feedback").submit(function(event){
+		event.preventDefault();
+		// place for Ajax sending
+		// in a case of Ajax success:
+		$modalOvl.fadeIn();	// show success modal
+		$modalFeedbackSuccess.fadeIn();
+		$feedbackBtn.trigger("click");	//розвертаємо слайд
+	})
+
+	// modals
+	var	 $modalOvl = $(".b-overlay_modal")
+		,$modals = $modalOvl.find(".b-modal")
+		,$modalError = $modals.filter(".b-modal_error")
+		,$modalCloseBtn = $modals.find(".b-modal__btn_close")
+		,$modalCallback = $modals.filter(".b-modal_callback")
+		,$modalCallbackSuccess = $modals.filter(".b-modal_callbackSuccess")
+		,$modalFeedbackSuccess = $modals.filter(".b-modal_feedbackSuccess")
+		,$modalCallbackForm = $modalCallback.find(".js-form_callback")
+		;
+
+	$("#callbackBtn").click(function(){
+		$modalOvl.fadeIn();
+		$modalCallback.fadeIn();
+	});
+
+	$modalCloseBtn.click(function(){	// hide modals
+		$modalOvl.fadeOut();
+		$modals.fadeOut();
+	});
+
+	$modalCallbackForm.submit(function(event){
+		event.preventDefault();
+		// place for Ajax sending
+		// in a case of Ajax success:
+		$modals.fadeOut();
+		$modalCallbackSuccess.fadeIn();
+		// in a case of Ajax error:
+		//$modals.fadeOut();
+		//$modalError.fadeIn();
+	})
+	// scroll to top
+	$("#toTop").click(function(){
+		event.preventDefault();
+		var  $anchor = $($(this).find(".b-btn_toTop").attr("href"))
+			,offsetAnchor = $anchor.offset().top
+			;
+		$('html, body').animate({ scrollTop: offsetAnchor}, 600);
+		return false;
+	})
 });

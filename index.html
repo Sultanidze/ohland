@@ -19,7 +19,7 @@
 	<![endif]-->
 </head>
 <body>
-	<header class="b-header">
+	<header class="b-header" id="header">
         <div class="b-container_wide b-container_header">
             <img src="./img/logo.png" alt="OH.UA лого" class="b-logo">
             <span class="b-header__address">Украина, г. Киев, ул. Пушкинская, 9</span>
@@ -41,7 +41,7 @@
         <div class="js-ajax_calculator">
             <div class="b-container b-container__calculator_vehicle" id="calculator">
                 <div class="b-calculator b-calculator_vehicle">
-                    <form action="" class="b-form_calculator b-form_vehicle">
+                    <form action="" class="b-form_calculator b-form_vehicle" id="vehicleForm">
                         <span class="b-calculator__heading">Выберите транспортное средство</span>
                         <div class="b-vehicles">
                             <input type="radio" class="sr-only" id="car" value="car" name="vehicle" required checked>
@@ -898,17 +898,27 @@
                             </div>
                             <div class="b-slide__side b-slide__side_back">
                                 <div class="b-slide__wrap b-slide__wrap_back">
-<!--                                slide 1<br>BOTTOM-->
-                                   <div class="b-slide__heading b-slide__heading_back">Что вы о нас думаете</div>
-                                   <form action="" class="b-form_feedback">
-                                       <div class="row">
-                                           <div class="col-6">
-                                               <label for="name1" class="b-label_registration">Ваше Имя</label>
-                                               <input type="text" name="name" id="name1">
-                                           </div>
-                                           <div class="col-6"></div>
-                                           <div class="col-12"></div>
-                                       </div>
+                                <div class="b-slide__heading b-slide__heading_back">Что вы о нас думаете</div>
+                                   <form action="" class="b-form_feedback js-form_feedback">
+                                        <div class="row">
+                                            <div class="col-l">
+                                                <label for="name1" class="b-label_registration">Ваше Имя</label>
+                                                <input type="text" name="name" id="name1" required pattern="[A-Za-zА-Яа-яЁёІіЇї\s]{2,}">
+                                            </div>
+                                            <div class="col-r">
+                                                <label for="phone1" class="b-label_registration">Ваш Телефон</label>
+                                                <input type="tel" name="phone" id="phone1" required pattern="[0-9()\s+-]{19}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-l col-12">
+                                                <label for="feedback" class="b-label_registration">Ваш отзыв</label>
+                                                <textarea name="feedback" id="feedback1" required pattern="[A-Za-zА-Яа-яЁёІіЇї\s]{2,}"></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">
+                                            <span class="b-text_btn">Оставить отзыв</span><span class="fa fa-comments" aria-hidden="true"></span>
+                                        </button>
                                    </form>
                                </div>
                             </div>
@@ -916,7 +926,6 @@
                         <figure class="b-slide_responses b-slide b-slide_active">
                             <div class="b-slide__side b-slide__side_front">
                                 <div class="b-slide__wrap">
-<!--                                    slide 2<br>FACE-->
                                     <div class="b-slide__heading">Зариц Сергейcкий</div>
                                     <div class="b-slide__content">
                                         <p class="b-slide__response">
@@ -936,7 +945,32 @@
                                    </div>
                                 </div>
                             </div>
-                            <div class="b-slide__side b-slide__side_back">slide 2<br>BOTTOM</div>
+                            <div class="b-slide__side b-slide__side_back">
+                                <div class="b-slide__wrap b-slide__wrap_back">
+                                   <div class="b-slide__heading b-slide__heading_back">Что вы о нас думаете</div>
+                                   <form action="" class="b-form_feedback js-form_feedback">
+                                        <div class="row">
+                                            <div class="col-l">
+                                                <label for="name1" class="b-label_registration">Ваше Имя</label>
+                                                <input type="text" name="name" id="name1" required pattern="[A-Za-zА-Яа-яЁёІіЇї\s]{2,}">
+                                            </div>
+                                            <div class="col-r">
+                                                <label for="phone1" class="b-label_registration">Ваш Телефон</label>
+                                                <input type="tel" name="phone" id="phone1" required pattern="[0-9()\s+-]{19}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-l col-12">
+                                                <label for="feedback" class="b-label_registration">Ваш отзыв</label>
+                                                <textarea name="feedback" id="feedback1" required pattern="[A-Za-zА-Яа-яЁёІіЇї\s]{2,}"></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">
+                                            <span class="b-text_btn">Оставить отзыв</span><span class="fa fa-comments" aria-hidden="true"></span>
+                                        </button>
+                                   </form>
+                               </div>
+                            </div>
                         </figure>
                     </div>
                     <div class="b-slider__controls_responses">
@@ -944,11 +978,16 @@
                         <button class="b-slider__control b-slider__control_responses b-slider__control_right"><span class="fa fa-angle-double-right" aria-hidden="true"></span></button>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
     <footer class="b-footer">
+        <div class="b-footer__toTop" id="toTop">
+            <span class="b-heading_toTop">На вверх&nbsp;</span>
+            <a href="#header" class="b-btn_toTop">
+                <span class="fa fa-arrow-up" aria-hidden="true"></span>
+            </a>
+        </div>
         <div class="b-container">
             <div class="b-container_footer">
                 <img src="./img/ewa.png" alt="EWA" class="b-logo_ewa">
@@ -961,6 +1000,41 @@
             </div>
         </div>
     </footer>
+    
+<!-- MODALS -->
+    <div class="b-overlay_modal">
+        <div class="b-modal b-modal_callback">
+            <div class="b-modal__btn_close">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </div>
+            <div class="b-modal__heading">Введите ваш<br>номер телефона и мы<br>вам перезвоним</div>
+                <form action="" class="b-modal__form_callback b-form_feedback js-form_callback">
+                    <input type="tel" name="phone" required pattern="[0-9()\s+-]{19}">
+                    <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">
+                        <span class="b-text_btn">Перезвонить</span><span class="fa fa-comments" aria-hidden="true"></span>
+                    </button>
+                </form>
+        </div>
+        <div class="b-modal b-modal_callbackSuccess">
+            <div class="b-modal__btn_close">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </div>
+            <div class="b-modal__heading">Спасибо, мы перезвоним вам на протяжении 5 минут.</div>
+        </div>
+        <div class="b-modal b-modal_feedbackSuccess">
+            <div class="b-modal__btn_close">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </div>
+            <div class="b-modal__heading">Спасибо, ваш отзыв принят.</div>
+        </div>
+        <div class="b-modal b-modal_error">
+            <div class="b-modal__btn_close">
+                <span class="fa fa-times" aria-hidden="true"></span>
+            </div>
+            <div class="b-modal__heading">Ошибка, попробуйте еще раз.</div>
+        </div>
+    </div>
+<!-- MODALS END -->
 	<!-- scripts -->
 	<script src="./js/jquery-3.2.0.min.js"></script>
 	<script src="./js/jquery.maskedinput.min.js"></script>
