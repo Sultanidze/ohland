@@ -47,7 +47,6 @@ font-family: 'Playfair Display', serif;
     font-weight: 700;
 }
 html{
-    
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -113,10 +112,48 @@ body{
     background-color: transparent;
     cursor: pointer;
 }
-.b-crumbs{
-    height: 37px;
+
+.b-section_crumbs{
+    min-height: 40px;
     background-color: #f5f5f5;
 }
+.b-crumbs{
+    display: none;
+    margin: 0;
+    padding: 20px 0 0 80px;
+}
+.b-crumbs__item{
+    display: inline-block;
+    font-family: 'Roboto Condensed', sans-serif;
+    line-height: 30px;
+}
+.b-crumbs__item+.b-crumbs__item:before{
+    content: "\f061";
+    font-family: FontAwesome;
+}
+.b-crumbs__link{
+    text-decoration: none;
+    color: #000;
+/*
+    transition: color 300ms ease;
+    -moz-transition: color 300ms ease;
+    -webkit-transition: color 300ms ease;
+    -o-transition: color 300ms ease;
+*/
+}
+/*
+.b-crumbs__link:hover{
+    color: #7239a6;
+}
+*/
+.b-crumbs__item_active{
+}
+.b-crumbs__item_active span{
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #7239a6;
+}
+
 .b-section_calculator{
     background-color: #f5f5f5;
 }
@@ -1361,7 +1398,8 @@ body{
     text-align: center;
     -webkit-box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
     box-shadow: 0 0 30px 10px rgba(0,0,0,0.2);
-    
+}
+.b-gradient_bg{
     /*    background-color: #653294;*/
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7a3db0+0,7b3db1+0,653294+100 */
     background: #7a3db0; /* Old browsers */
@@ -1420,15 +1458,16 @@ body{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.b-propositions__aside {
+.b-propositions__block_aside {
     float: left;
+    margin-top: 5px;
     width: 247px;
 }
 .b-data_your{
     margin-bottom: 11px;
     overflow: hidden;
     height: 297px;
-    padding: 25px;
+    padding: 23px 25px;
     background-color: #f2c916;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1439,7 +1478,17 @@ body{
 }
 .b-data__part{
     margin-bottom: 15px;
-    line-height: 18px;
+    line-height: 17px;
+}
+.b-data_your .b-form__submit_vehicle{
+    margin: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #000;
+}
+.b-data_your .b-form__submit_vehicle span.b-text_btn{
+    padding-left: 8px;
+    padding-right: 8px;
 }
 .b-propositions__tip{
     position: relative;
@@ -1461,9 +1510,130 @@ body{
     margin: 0;
     color: #231f20;
 }
-.b-calculator_propositions{
+.b-calculator_propos{
     float: right;
+    width: 920px;
 }
+.b-calculator__heading_propos{
+    text-align: center;
+    margin-bottom: 40px;
+}
+.b-propositions{
+    position: relative;
+}
+.b-proposition__wrap{
+    position: relative;
+    width: 227px;
+    height: 293px;
+}
+.b-proposition__wrap:first-child{
+    width: 245px;
+}
+.b-proposition{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 245px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 23px 18px 15px;
+    z-index: 5;
+}
+.b-proposition__tab{
+    position: absolute;
+    top: -22px;
+    left: 20px;
+    z-index: -1;
+    width: 112px;
+    height: 22px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 3px 3px 0 0;
+    padding: 6px 5px 0;
+    background-color: #f2c916;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+.b-proposition__logo{
+    display: block;
+    max-height: 27px;
+}
+.b-company__rating_propos{
+    float: none;
+    display: inline-block;
+}
+.b-company__name{
+    display: inline-block;
+    margin-right: 10px;
+    color: #fff;
+}
+.b-propos__details{
+/*    overflow: hidden;*/
+    max-height: 70px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.b-details__list{
+    margin-bottom: 5px;
+    padding-left: 20px;
+    font-weight: 300;
+    color: #fff;
+}
+.b-details__btn_readmore{
+    margin-bottom: 20px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.b-details_hidden{
+    display: none;
+}
+.b-discont{
+    margin-top: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    line-height: 20px;
+    font-weight: 300;
+    color: #f2c916;
+}
+.b-discont__num{
+    display: inline-block;
+    margin-right: 2px;
+    padding-right: 2px;
+    padding-left: 5px;
+    text-align: center;
+    background-color: #fbbb1d;
+    font-weight: 700;
+    color: #000;
+}
+.b-proposition__buy{
+    position: relative;
+    margin-top: 20px;
+    border: 1px solid #f2c916;
+    color: #f2c916;
+    background-color: transparent;
+}
+.b-proposition__buy span.fa{
+    border-left: 1px solid #f2c916;
+}
+.b-proposition__gain{
+    position: absolute;
+    top: 120%;
+    right: 0;
+    font-size: 13px;
+    font-weight: 300;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #f2c916;
+    cursor: default;
+}
+
 .b-progress_propositions{
     margin-left: 300px;
 }

@@ -34,15 +34,26 @@
             <button class="b-header__btn" id="callbackBtn">Вам перезвонить?</button>
         </div>
 	</header>
-	<div class="b-crumbs">
-	    <div class="b-container"></div>
+	<div class="b-section_crumbs">
+	    <div class="b-container">
+	        <ol class="b-crumbs">
+                <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span class="b-crumbs__link">
+                        Главная
+                    </span>
+                </li>
+                <li class="b-crumbs__item b-crumbs__item_active" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span>Осаго</span>
+                </li>
+            </ol>
+	    </div>
 	</div>
 	<section class="b-section_calculator">
         <div class="js-ajax_calculator">
             <div class="b-container b-container__calculator_vehicle" id="calculator">
                 <div class="b-calculator b-calculator_vehicle">
                     <form action="" class="b-form_calculator b-form_vehicle" id="vehicleForm">
-                        <span class="b-calculator__heading">Выберите транспортное средство</span>
+                        <span class="b-calculator__heading">Выберите страховку на свое авто</span>
                         <div class="b-vehicles">
                             <input type="radio" class="sr-only" id="car" value="car" name="vehicle" required checked>
                             <label class="b-vehicle b-vehicle_active" for="car">
@@ -1003,7 +1014,7 @@
     
 <!-- MODALS -->
     <div class="b-overlay_modal">
-        <div class="b-modal b-modal_callback">
+        <div class="b-modal b-modal_callback b-gradient_bg">
             <div class="b-modal__btn_close">
                 <span class="fa fa-times" aria-hidden="true"></span>
             </div>
@@ -1015,19 +1026,19 @@
                     </button>
                 </form>
         </div>
-        <div class="b-modal b-modal_callbackSuccess">
+        <div class="b-modal b-modal_callbackSuccess b-gradient_bg">
             <div class="b-modal__btn_close">
                 <span class="fa fa-times" aria-hidden="true"></span>
             </div>
             <div class="b-modal__heading">Спасибо, мы перезвоним вам на протяжении 5 минут.</div>
         </div>
-        <div class="b-modal b-modal_feedbackSuccess">
+        <div class="b-modal b-modal_feedbackSuccess b-gradient_bg">
             <div class="b-modal__btn_close">
                 <span class="fa fa-times" aria-hidden="true"></span>
             </div>
             <div class="b-modal__heading">Спасибо, ваш отзыв принят.</div>
         </div>
-        <div class="b-modal b-modal_error">
+        <div class="b-modal b-modal_error b-gradient_bg">
             <div class="b-modal__btn_close">
                 <span class="fa fa-times" aria-hidden="true"></span>
             </div>

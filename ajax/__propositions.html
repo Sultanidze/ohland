@@ -1,5 +1,5 @@
 <div class="b-container b-container__calculator_propositions" id="propositions">
-    <div class="b-propositions__aside">
+    <div class="b-propositions__block_aside">
         <div class="b-data_your">
             <div class="b-calculator__heading b-data__heading">Ваши данные:</div>
             <div class="b-data__part">
@@ -14,6 +14,9 @@
                 <div>Место регистрации транспортного средства</div>
                 <div class="bold">Киев</div>
             </div>
+            <button type="button" class="b-form__submit_vehicle" id="vehicleSubmit">
+                <span class="b-text_btn">Изменить данные</span><span class="fa fa-angle-left" aria-hidden="true"></span>
+            </button>
         </div>
         <div class="b-propositions__tip">
             <div class="b-tip__icon"><span class="fa fa-clock-o" aria-hidden="true"></span></div>
@@ -24,7 +27,49 @@
             <p class="b-tip__text"><span class="bold">Цена страховки на сайте не выше, чем в страховой компании, </span>гарантируем, что вы непереплатите.</p>
         </div>
     </div>
-    <div class="b-calculator b-calculator_propositions">
+    <div class="b-calculator b-calculator_propos">
+            <div class="b-calculator__heading b-calculator__heading_propos">Ваши данные:</div>
+            <div class="b-propositions">
+                <div class="b-proposition__wrap">
+                    <div class="b-proposition b-gradient_bg">
+                        <div class="b-proposition__tab">
+                            Топ продаж
+                        </div>
+                        <img src="./img/unica.png" alt="" class="b-proposition__logo">
+                        <span class="b-company__name">СК УНИКА</span>
+                        <span class="b-company__rating b-company__rating_propos">
+                            <span class="fa fa-star-o" aria-hidden="true"></span>
+                            <span class="fa fa-star-o" aria-hidden="true"></span>
+                            <span class="fa fa-star-o" aria-hidden="true"></span>
+                            <span class="fa fa-star-o" aria-hidden="true"></span>
+                            <span class="fa fa-star-o" aria-hidden="true"></span>
+                        </span>
+                        <div class="b-propos__details">
+                            <ul class="b-details__list">
+                                <li class="b-propos__detail">Франшиза 0</li>
+                                <li class="b-propos__detail">Карта Assistance</li>
+                                <li class="b-propos__detail">Прямое урегулирование</li>
+                            </ul>
+                            <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
+                            <div class="b-details_hidden js-content_readmore">
+                                <ul class="b-details__list">
+                                    <li class="b-propos__detail">Франшиза 0</li>
+                                    <li class="b-propos__detail">Карта Assistance</li>
+                                    <li class="b-propos__detail">Прямое урегулирование</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="b-discont">
+                            <span class="b-discont__num">15%</span>
+                             скидка от Oh.ua
+                        </div>
+                        <button type="button" class="b-form__submit_vehicle b-proposition__buy">
+                            <span class="b-text_btn">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                            <span class="b-proposition__gain">Экономия 155 грн</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="b-form__submit_vehicle" id="vehicleSubmit">
                 <span class="b-text_btn">Посмотреть еще предложения</span><span class="fa fa-angle-down" aria-hidden="true"></span>
             </button>

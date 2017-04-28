@@ -7,6 +7,7 @@ $(document).ready(function(){
 		$(this).addClass("b-vehicle_active");
 		// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
 	});
+var $bCrumbs = $(".b-crumbs");
 // ajax load of propositions
 	$("#vehicleForm").submit(function(event){
 		event.preventDefault();
@@ -23,6 +24,10 @@ $(document).ready(function(){
 			$(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
 			// in a case of Ajax success:
 			$(this).dequeue("ajax");
+			$(".b-crumbs").fadeIn({	// show breadcrumbs
+				duration: 400,
+				queue: "ajax"
+			}).dequeue("ajax");
 		})
 		// $containerAjax.load("./ajax/__propositions.html");
 		$containerAjax.fadeIn({
