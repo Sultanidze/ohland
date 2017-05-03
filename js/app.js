@@ -14,14 +14,14 @@ var $bCrumbs = $(".b-crumbs");
 		var $containerAjax = $(this).parents(".js-ajax_calculator");
 		$containerAjax.fadeOut({
 			duration: 400,
-			queue: "ajax",
-			complete: function(){
-				// $(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
-			}
+			queue: "ajax"
+			// ,complete: function(){
+			// 	// $(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
+			// }
 		});
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
-			$(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
+			$(this).load("./ajax/__propositions.html", propositionsInit);	// підвантажуємо пропозиції
 			// in a case of Ajax success:
 			$(this).dequeue("ajax");
 			$(".b-crumbs").fadeIn({	// show breadcrumbs
@@ -338,4 +338,41 @@ var $bCrumbs = $(".b-crumbs");
 		$('html, body').animate({ scrollTop: offsetAnchor}, 600);
 		return false;
 	})
+
+// OSAGO propositions
+	function propositionsInit(){
+		// hide-show details -----
+		// show:
+		$(".js-btn_readmore").click(function(){
+			$(this).hide();
+			$(this).next(".js-content_readmore").slideDown();
+		})
+		// hide:
+		$(".b-proposition").mouseleave(function(){
+			$(".js-btn_readmore").slideDown();
+			$(".js-content_readmore").slideUp();
+		})
+
+		//propositions slider
+		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
+			arrows: false,
+			infinite: true,
+			speed: 400,
+			slidesToShow: 4,
+			slidesToScroll: 4,
+			// autoplay: true,
+			// autoplaySpeed: 4400
+		});
+		//	morePropositions btn functionality
+		var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
+		$sliderProposMoreBtn.click(function(event){
+			event.preventDefault();
+			$sliderPropos.slick("slickNext");
+		});
+		$("#vehicleEdit").click(showVehicleCalc);
+	}
+	function showVehicleCalc(){
+
+	}
+	
 });

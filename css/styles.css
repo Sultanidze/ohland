@@ -1513,6 +1513,10 @@ body{
 .b-calculator_propos{
     float: right;
     width: 920px;
+    overflow-x: hidden;
+    padding-left: 20px;
+    padding-right: 15px;
+    margin-right: -20px;
 }
 .b-calculator__heading_propos{
     text-align: center;
@@ -1521,14 +1525,23 @@ body{
 .b-propositions{
     position: relative;
 }
+.b-propositions__string:after{
+    content: '';
+    display: table;
+    clear: both;
+}
 .b-proposition__wrap{
+    float: left;
     position: relative;
     width: 227px;
+/*    width: 245px;*/
     height: 293px;
 }
+/*
 .b-proposition__wrap:first-child{
     width: 245px;
 }
+*/
 .b-proposition{
     position: absolute;
     top: 0;
@@ -1537,7 +1550,9 @@ body{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 23px 18px 15px;
+    padding: 23px 18px 12px;
+    -webkit-box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
+    box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
     z-index: 5;
 }
 .b-proposition__tab{
@@ -1571,8 +1586,9 @@ body{
     color: #fff;
 }
 .b-propos__details{
-/*    overflow: hidden;*/
-    max-height: 70px;
+    overflow: hidden;
+/*    max-height: 70px;*/
+/*    max-height: 83px;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -1584,7 +1600,7 @@ body{
     color: #fff;
 }
 .b-details__btn_readmore{
-    margin-bottom: 20px;
+/*    margin-bottom: 20px;*/
     border: none;
     padding: 0;
     background-color: transparent;
@@ -1595,6 +1611,12 @@ body{
 }
 .b-details_hidden{
     display: none;
+/*    min-height: 15px;*/
+    margin-bottom: 20px;
+    padding-top: 15px;
+}
+.b-details_hidden .b-details__list:first-child{
+    margin-top: 0;
 }
 .b-discont{
     margin-top: 20px;
@@ -1615,23 +1637,48 @@ body{
 }
 .b-proposition__buy{
     position: relative;
-    margin-top: 20px;
-    border: 1px solid #f2c916;
-    color: #f2c916;
+    margin-top: 10px;
+    border: 1px solid #fff;
+    color: #fff;
     background-color: transparent;
 }
 .b-proposition__buy span.fa{
+    border-left: 1px solid #fff;
+}
+.b-proposition__buy:hover{
+    border: 1px solid #f2c916;
+    color: #f2c916;
+}
+.b-proposition__buy:hover span.fa{
     border-left: 1px solid #f2c916;
 }
 .b-proposition__gain{
     position: absolute;
-    top: 120%;
-    right: 0;
+/*    top: 120%;*/
+    right: 31px;
+    bottom: 14px;
     font-size: 13px;
     font-weight: 300;
     font-family: 'Roboto Condensed', sans-serif;
     color: #f2c916;
     cursor: default;
+}
+.b-propos__guaranties{
+    width: 510px;
+    margin-top: 30px;
+    margin-left: 5px;
+}
+.b-guaranties__heading{
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.b-propos__guaranties p{
+    margin-top: 15px;
+    font-weight: 300;
+}
+#morePropositions{
+    margin-bottom: 45px;
 }
 
 .b-progress_propositions{
