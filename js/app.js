@@ -1,41 +1,146 @@
+
 $(document).ready(function(){
-// selectric initialization
-	$(".js-selectric").selectric();
-	// vehicles labels select
-	$(".b-vehicle").click(function(){
-		$(".b-vehicle").removeClass("b-vehicle_active");
-		$(this).addClass("b-vehicle_active");
-		// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
-	});
-var $bCrumbs = $(".b-crumbs");
-// ajax load of propositions
-	$("#vehicleForm").submit(function(event){
-		event.preventDefault();
-		var $containerAjax = $(this).parents(".js-ajax_calculator");
+// Global variables
+	var  $containerAjax = $(".js-ajax_calculator")
+		// ,$bCrumbs = $(".b-crumbs")
+		;
+
+	// Functions for the calc-choose-buy block AJAX loads and js-functional inits on them
+	var hideContainerAjax = function($containerAjax){
 		$containerAjax.fadeOut({
 			duration: 400,
 			queue: "ajax"
-			// ,complete: function(){
-			// 	// $(this).load("./ajax/__propositions.html");	// підвантажуємо пропозиції
-			// }
-		});
-		$containerAjax.queue("ajax", function(){
-			// place for Ajax sending
-			$(this).load("./ajax/__propositions.html", propositionsInit);	// підвантажуємо пропозиції
-			// in a case of Ajax success:
-			$(this).dequeue("ajax");
-			$(".b-crumbs").fadeIn({	// show breadcrumbs
-				duration: 400,
-				queue: "ajax"
-			}).dequeue("ajax");
-		})
-		// $containerAjax.load("./ajax/__propositions.html");
+			}
+		);
+	};
+	var showContainerAjax = function($containerAjax){
 		$containerAjax.fadeIn({
 			duration: 400,
 			queue: "ajax"
 		});
+	};
+	// var hideBcrumbs = function($bCrumbs){
+	// 	$bCrumbs.fadeOut({	
+	// 		duration: 400,
+	// 		queue: "ajax"
+	// 		}
+	// 	).dequeue("ajax");
+	// };
+	// var showBcrumbs = function($bCrumbs){
+	// 	$bCrumbs.fadeIn({	
+	// 		duration: 400,
+	// 		queue: "ajax"
+	// 		}
+	// 	).dequeue("ajax");
+	// };
+
+	// OSAGO propositions
+	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
+		hideContainerAjax($containerAjax);
+
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$(this).load("./ajax/__propositions.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			
+			$(this).dequeue("ajax");
+			// showBcrumbs($bCrumbs);	// show breadcrumbs
+		});
+
+		showContainerAjax($containerAjax);
+
 		$containerAjax.dequeue("ajax");
-	});
+	};
+	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
+		// hide-show details -----
+		// show:
+		$(".js-btn_readmore").click(function(){
+			$(this).hide();
+			$(this).next(".js-content_readmore").slideDown();
+		})
+		// hide:
+		$(".b-proposition").mouseleave(function(){
+			var $hiddenContent = $(this).find(".js-content_readmore");
+			$hiddenContent.slideUp(
+				function(){
+					$hiddenContent.prev(".js-btn_readmore").slideDown();
+				}
+			);
+		})
+
+		//propositions slider
+		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
+			arrows: false,
+			infinite: true,
+			speed: 400,
+			slidesToShow: 4,
+			slidesToScroll: 4,
+			// autoplay: true,
+			// autoplaySpeed: 4400
+		});
+		//	morePropositions btn functionality
+		var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
+		$sliderProposMoreBtn.click(function(event){
+			event.preventDefault();
+			$sliderPropos.slick("slickNext");
+		});
+
+		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
+		$("#propositions .b-proposition__buy").click(function(){
+			var propositonId = $(this).attr("data-proposition");	// id пропозиції яку треба передати
+			//$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});
+		});
+	};
+
+	// vehicle calculator
+	var showVehicleCalc = function($containerAjax){
+		hideContainerAjax($containerAjax);
+
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			 
+			$(this).dequeue("ajax");
+			// hideBcrumbs($bCrumbs);	// show breadcrumbs
+		});
+
+		showContainerAjax($containerAjax);
+		
+		$containerAjax.dequeue("ajax");
+	};
+	var vehicleCalcInit = function($containerAjax){
+		// selects stylization
+		$(".js-selectric").selectric();
+		// vehicles labels select
+		$(".b-vehicle").click(function(){
+			$(".b-vehicle").removeClass("b-vehicle_active");
+			$(this).addClass("b-vehicle_active");
+			// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
+		});
+
+		$("#vehicleForm").submit(function(event){
+			event.preventDefault();
+			showPropositions($containerAjax);	// load of propositions
+		});
+	};
+	var showFinalCalc = function(propositonId){
+		hideContainerAjax($containerAjax);
+
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$(this).load("./ajax/__finalBlock.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			
+			$(this).dequeue("ajax");
+		});
+
+		showContainerAjax($containerAjax);
+
+		$containerAjax.dequeue("ajax");
+	}
+	var finalCalcInit = function(){}
+
+//	vehicle calculator js initialization
+	vehicleCalcInit($containerAjax);	//
+	
 // reasons slider
 	var $sliderReasons = $(".b-reasons__slider .b-slider__string").slick({
 		arrows: false,
@@ -339,40 +444,5 @@ var $bCrumbs = $(".b-crumbs");
 		return false;
 	})
 
-// OSAGO propositions
-	function propositionsInit(){
-		// hide-show details -----
-		// show:
-		$(".js-btn_readmore").click(function(){
-			$(this).hide();
-			$(this).next(".js-content_readmore").slideDown();
-		})
-		// hide:
-		$(".b-proposition").mouseleave(function(){
-			$(".js-btn_readmore").slideDown();
-			$(".js-content_readmore").slideUp();
-		})
-
-		//propositions slider
-		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
-			arrows: false,
-			infinite: true,
-			speed: 400,
-			slidesToShow: 4,
-			slidesToScroll: 4,
-			// autoplay: true,
-			// autoplaySpeed: 4400
-		});
-		//	morePropositions btn functionality
-		var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
-		$sliderProposMoreBtn.click(function(event){
-			event.preventDefault();
-			$sliderPropos.slick("slickNext");
-		});
-		$("#vehicleEdit").click(showVehicleCalc);
-	}
-	function showVehicleCalc(){
-
-	}
 	
 });

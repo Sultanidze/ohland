@@ -118,7 +118,7 @@ body{
     background-color: #f5f5f5;
 }
 .b-crumbs{
-    display: none;
+/*    display: none;*/
     margin: 0;
     padding: 20px 0 0 80px;
 }
@@ -149,7 +149,7 @@ body{
 .b-crumbs__item_active{
 }
 .b-crumbs__item_active span{
-    text-transform: uppercase;
+/*    text-transform: uppercase;*/
     text-decoration: underline;
     color: #7239a6;
 }
@@ -1514,7 +1514,7 @@ body{
     float: right;
     width: 920px;
     overflow-x: hidden;
-    padding-left: 20px;
+    padding-left: 15px;
     padding-right: 15px;
     margin-right: -20px;
 }
@@ -1611,7 +1611,7 @@ body{
 }
 .b-details_hidden{
     display: none;
-/*    min-height: 15px;*/
+    min-height: 15px;
     margin-bottom: 20px;
     padding-top: 15px;
 }
@@ -1680,10 +1680,117 @@ body{
 #morePropositions{
     margin-bottom: 45px;
 }
-
 .b-progress_propositions{
     margin-left: 300px;
 }
 .b-gauge_propositions{
     width: 199px;
+}
+
+.b-crumbs_finalize{
+    padding-left: 15px;
+}
+.b-heading_finalize{
+    text-align: center;
+}
+.b-finalize__btns_method{
+    width: 754px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 45px;
+}
+.b-finalize__btns_method:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.b-finalize__btn_method{
+    float: left;
+    margin-right: 44px;
+    width: 222px;
+    height: 213px;
+    border: 1px solid #673396;
+    padding-top: 25px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 30px;
+    cursor: pointer;
+    color: #6c369d;
+}
+.b-finalize__btn_method:last-child{
+    margin-right: 0;
+}
+.b-btn__heading_method{
+    padding-right: 35px;
+    padding-left: 35px;
+    text-align: center;
+    font-size: 21.6px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.b-btn__cover_method{
+    position: relative;
+    height: 100px;
+}
+.b-btn__cover_method span.fa{
+    position: absolute;
+    top: 34px;
+    left: 100px;
+    font-size: 35.1px;
+}
+.svg-method{
+    display: inline-block;
+    fill: #6c369d;
+}
+.svg-method_self{
+    padding-top: 20px;
+    margin-left: 86px;
+    width: 65px;
+}
+.svg-method_phone{
+    padding-top: 15px;
+    margin-left: 80px;
+    width: 54px;
+}
+.svg-method_upload{
+    padding-top: 20px;
+    margin-left: 86px;
+    width: 47px;
+}
+.b-finalize__btn_active{
+    -webkit-box-shadow: 0 0 30px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 0 30px 10px rgba(0,0,0,0.15);
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7a3db0+0,7b3db1+0,653294+100 */
+    background: #7a3db0; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #7a3db0 0%, #7b3db1 0%, #653294 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #7a3db0 0%,#7b3db1 0%,#653294 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #7a3db0 0%,#7b3db1 0%,#653294 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a3db0', endColorstr='#653294',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    color: #fff;
+}
+.b-finalize__btn_active .svg-method{
+    fill: #fff;
+}
+.b-btn__footer_method{
+    padding-right: 35px;
+    padding-left: 35px;
+    text-align: center;
+    font-weight: 300;
+}
+.b-progress_finalize{
+    margin-right: auto;
+    margin-left: auto;
+}
+.b-gauge_finalize{
+    width: 258px;
+}
+.b-heading_method{
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding-left: 22px;
+}
+.b-method__trash{
+    position: absolute;
+    top: 48px;
+    left: 49px;
 }
