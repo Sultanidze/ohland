@@ -79,14 +79,17 @@ body{
     position: relative;
 }
 .b-container_header>*{
+    display: inline-block;
+    padding-top: 18px;
     vertical-align: top;
-    line-height: 65px;
+/*    line-height: 50px;*/
     font-size: 14px;
     font-weight: 500;
 }
 .b-logo{
-/*    float: left;*/
-    height: 100%;
+    padding-top: 0;
+    height: auto;
+    width: 111px;
 }
 .b-header__address{
     display: inline-block;
@@ -99,14 +102,20 @@ body{
     color: #000;
     text-decoration: none;
 }
+.b-icon_phone{
+    background-image: url(../img/phone.svg);
+    width: 16px;
+}
 .b-header__btn{
     position: absolute;
     right: 0;
-    bottom: 10px;
+    bottom: 28px;
     padding: 0;
     border: none;
     font-size: 14px;
     line-height: 16px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
     color: #6f37a1;
     text-decoration: underline;
     background-color: transparent;
@@ -1687,6 +1696,7 @@ body{
     width: 199px;
 }
 
+
 .b-crumbs_finalize{
     padding-left: 15px;
 }
@@ -1784,13 +1794,233 @@ body{
 .b-gauge_finalize{
     width: 258px;
 }
+.b-finalize__methods{
+    padding-top: 40px;
+    background-color: #fff;
+}
+.b-finalize__method{
+    position: relative;
+}
 .b-heading_method{
-    margin-top: 40px;
-    margin-bottom: 30px;
+/*    margin-top: 40px;*/
+    margin-bottom: 0;
     padding-left: 22px;
 }
 .b-method__trash{
     position: absolute;
-    top: 48px;
-    left: 49px;
+/*    top: 80px;*/
+    left: 40px;
+    bottom: 0;
+    margin: 0;
+    width: 190px;
+    height: 215px;
+}
+.b-trash__tabs{
+    position: absolute;
+    right: 0;
+    bottom: 3px;
+    left: 0;
+    width: 100p;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.b-trash__tab{
+    text-align: center;
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+/*    display: inline-block;*/
+    background-color: #fff;
+    width: 88px;
+    border: 1px solid #6b359b;
+    color: #6b359b;
+    line-height: 38px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
+    cursor: pointer;
+    z-index: 4;
+}
+.b-trash__tab_guy{
+    left: 11px;
+}
+.b-trash__tab_girl{
+    right: 11px;
+}
+.b-trash__tab_active{
+    border-radius: 5px;
+    border: 1px solid #f2c916;
+    background-color: #f2c916;
+    color: #000;
+    z-index: 5;
+}
+.b-trash__sides{
+    height: 100%;
+    width: 100%;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: -webkit-transform 400ms;
+    -o-transition: -o-transform 400ms;
+    transition: transform 400ms;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.b-sides_flip{
+    -webkit-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.b-trash__side{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.b-trash__side_front{
+    background-image: url(../img/macho.png);
+}
+.b-trash__side_back{
+    background-image: url(../img/diva.png);
+    -webkit-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.b-trash__balloons{
+    position: absolute;
+    top: -32px;
+    right: -100px;
+    width: 168px;
+    height: 100px;
+}
+.b-balloon{
+    position: absolute;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #6b359b;
+    color: #fff;
+    font-style: italic;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.b-balloon_small{
+    bottom: 0;
+    left: 0;
+    border-radius: 17px / 9px;
+    width: 34px;
+    height: 18px;
+}
+.b-balloon_large{
+    top: 0;
+    right: 0;
+    border-radius: 80px / 47px;
+    width: 160px;
+    height: 94px;
+    line-height: 94px;
+}
+.b-balloon__text{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+.b-bg_car{
+    position: absolute;
+/*    top: 345px;*/
+    right: 0;
+    bottom: 10px;
+    width: 253px;
+    height: 184px;
+    background-image: url(../img/car.png);
+}
+
+.b-container_finalize{
+    margin-left: 300px;
+    max-width: 800px;
+}
+.b-form__block{
+    position: relative;
+    padding-top: 30px;
+}
+.b-form__insured{
+    height: 203px;
+}
+.b-form__heading_finalize{
+    margin-bottom: 17px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.row_form{
+    margin: 0;
+}
+.b-form__cell{
+    float: left;
+    margin-right: 60px;
+    margin-bottom: 20px;
+}
+.b-form__cell:last-child{
+    margin-right: 0;
+}
+.b-form__cell label{
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #4b4b4b;
+    font-weight: 300;
+}
+.b-form__cell .fa_ok{
+    display: none;
+    color: #6c359d;
+}
+.b-form__cell .fa_error{
+    display: none;
+    color: #ff4128;
+}
+.b-cell_ok .fa_ok{
+    display: inline-block;
+}
+.b-cell_error .fa_error{
+    display: inline-block;
+}
+.b-form__cell input{
+    display: block;
+    width: 190px;
+    border: 1px solid #adadad;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 8px;
+    line-height: 29px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.b-form__cell #address_insured{
+    width: 284px;
+}
+.b-cell_error input{
+    color: #ff4128;
+}
+
+.b-form__vehicle{
+    height: 223px;
+    background-color: #f5f5f5;
+}
+.b-form__cell .icon_tooltip{
+    display: inline-block;
+    color: #6c359d;
 }
