@@ -54,23 +54,23 @@ $(document).ready(function(){
 		// hide-show details -----
 		// show:
 		$(".js-btn_readmore").click(function(){
-			$(this).hide();
-			$(this).next(".js-content_readmore").slideDown();
+			// $(this).hide();
+			$(this).prev(".js-content_readmore").slideToggle();
 		})
 		// hide:
-		$(".b-proposition").mouseleave(function(){
-			var $hiddenContent = $(this).find(".js-content_readmore");
-			$hiddenContent.slideUp(
-				function(){
-					$hiddenContent.prev(".js-btn_readmore").slideDown();
-				}
-			);
-		})
+		// $(".b-proposition").mouseleave(function(){
+			// var $hiddenContent = $(this).find(".js-content_readmore");
+			// $hiddenContent.slideUp(
+				// function(){
+					// $hiddenContent.next(".js-btn_readmore").slideDown();
+				// }
+			// );
+		// })
 
 		//propositions slider
 		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
 			arrows: false,
-			infinite: true,
+			infinite: false,
 			speed: 400,
 			slidesToShow: 4,
 			slidesToScroll: 4,
@@ -111,9 +111,38 @@ $(document).ready(function(){
 		// selects stylization
 		$(".js-selectric").selectric();
 		// vehicles labels select
-		$(".b-vehicle").click(function(){
-			$(".b-vehicle").removeClass("b-vehicle_active");
+		// $(".b-vehicle").click(function(){
+			// $(".b-vehicle").removeClass("b-vehicle_active");
+			// $(this).addClass("b-vehicle_active");
+			// // $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
+		// });
+		var  $vehicles = $(".b-vehicle")	//	блоки тз з картинками
+			,$vehiclesBlock = $(".b-vehicles")	// $vehicles container
+			,$paramBlocks = $(".b-params")	// відповідні блоки з радіобатонами до кожного тз
+			;
+		$vehiclesBlock.mouseleave(function(){	// виділимо вибраний блок коли курсор ззовні
+			$vehicles.filter(".js-vehicle_active").addClass("b-vehicle_active");
+		});
+		$vehicles.hover(function(){	// при наведенні курсора на певний тз виділятимемо лише його, а активний буде невидимим
+			$vehicles.removeClass("b-vehicle_active");
 			$(this).addClass("b-vehicle_active");
+		}, function(){
+			$(this).removeClass("b-vehicle_active");
+		});
+		$vehicles.click(function(){
+			$vehicles.removeClass("js-vehicle_active");
+			$(this).addClass("js-vehicle_active");
+			var index = $vehicles.index($(this))	// індекс типу тз (від 0 до 3)
+				,$paramBlockActive = $paramBlocks.filter(".js-params_active")
+				;
+				// console.log(index);
+			if ($paramBlockActive != $(this)){
+				$paramBlockActive.removeClass("js-params_active");
+				$paramBlocks.eq(index).addClass("js-params_active");
+				$paramBlockActive.fadeOut(0, function(){
+					$paramBlocks.eq(index).fadeIn(0);
+				})
+			}
 			// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
 		});
 

@@ -103,8 +103,17 @@ body{
     text-decoration: none;
 }
 .b-icon_phone{
-    background-image: url(../img/phone.svg);
+    display: inline-block;
+    vertical-align: bottom;
     width: 16px;
+    height: 16px;
+    background-image: url(../img/phone.svg);
+    -webkit-background-size: contain;
+    background-size: contain;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 .b-header__btn{
     position: absolute;
@@ -392,11 +401,16 @@ body{
   opacity: 1;
 }
 /*-radio buttons stylization end*/
-/*--------------------------------*/
-
 .b-form_vehicle .radio:not(checked) + label{
     margin-right: 4px;
     font-size: 16px;
+}
+/*--------------------------------*/
+.b-params{
+    display: none;
+}
+.b-params_car{
+    display: block;
 }
 .b-block_select{
     display: inline-block;
@@ -692,7 +706,7 @@ body{
     line-height: 36px;
 }
 .b-howto__stages{
-    padding-right: 110px;
+/*    padding-right: 110px;*/
     text-align: center;
     margin-bottom: 50px;
 }
@@ -743,15 +757,18 @@ body{
 .b-attention__factor:last-child{
     border-right: none;
 }
-.b-attention__factor h5{
+.b-factor__heading{
+    margin-top: 40px;
+    margin-bottom: 30px;
     font-size: 24px;
+    font-weight: 700;
     font-family: 'Roboto Condensed', sans-serif;
     color: #733aa7;
     -webkit-transition: color 400ms;
     -o-transition: color 400ms;
     transition: color 400ms;
 }
-.b-attention__factor:hover h5{
+.b-factor__heading:hover{
     color: #f2c90c;
 }
 .b-attention__factor p{
@@ -1287,13 +1304,15 @@ body{
     width: 190px;
     height: 31px;
     border: 1px solid #adadad;
-    padding-top: 2px;
+    padding-top: 3px;
     padding-right: 5px;
     padding-bottom: 2px;
     padding-left: 5px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 600;
 }
 .b-form_feedback textarea{
     margin-bottom: 19px;
@@ -1620,7 +1639,7 @@ body{
 }
 .b-details_hidden{
     display: none;
-    min-height: 15px;
+/*    min-height: 15px;*/
     margin-bottom: 20px;
     padding-top: 15px;
 }

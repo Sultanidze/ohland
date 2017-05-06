@@ -24,7 +24,7 @@
             <img src="./img/logo.svg" alt="OH.UA лого" class="b-logo">
             <span class="b-header__address">Украина, г. Киев, ул. Пушкинская, 9</span>
             <a href="tel:0442903669" class="b-header__link b-header__link_phone">
-                <span class="fa fa-phone" aria-hidden="true"></span>
+<!--                <span class="fa fa-phone" aria-hidden="true"></span>-->
                 <span class="b-icon_phone"></span>
                 &nbsp;&nbsp;(044) 290 36 69
             </a>
@@ -32,19 +32,18 @@
                 <span class="fa fa-envelope-open-o" aria-hidden="true"></span>
                 &nbsp;&nbsp;sales@oh.ua
             </a>
-            <button class="b-header__btn" id="callbackBtn">Вам перезвонить?</button>
+            <button class="b-header__btn" id="callbackBtn">Обратный звонок</button>
         </div>
 	</header>
 	<section class="b-section_calculator">
         <div class="js-ajax_calculator">
-<!--
             <div class="b-container b-container__calculator_vehicle" id="calculator">
                 <div class="b-calculator b-calculator_vehicle">
                     <form action="" class="b-form_calculator b-form_vehicle" id="vehicleForm">
                         <span class="b-calculator__heading">Выберите страховку на свое авто</span>
                         <div class="b-vehicles">
-                            <input type="radio" class="sr-only" id="car" value="car" name="vehicle" required checked>
-                            <label class="b-vehicle b-vehicle_active" for="car">
+                            <input type="radio" class="sr-only" id="car" value="car" name="vehicle" checked>
+                            <label class="b-vehicle b-vehicle_active js-vehicle_active" for="car">
                                 <span class="b-vehicle__back">
                                     <svg viewBox="0 0 409.9 246.5" class="svg-vehicle svg-vehicle_car">
                                             <path class="st0" d="M58.7,82.1c3.5,1.5,7.5-0.1,9-3.6L88,31.1c5.7-11.4,14.6-16.7,28-16.7h95.6c16.6,0,31.9,8.8,42.3,24.6 l40.8,54.2c1.8,3.3,10.2,16.8,26.1,16.8h20.5c29.3,0,40.9,16.2,45.4,27.3h-11.3c-3.8,0-6.8,3.1-6.8,6.8c0,3.8,3.1,6.8,6.8,6.8 h14.7l5.6,34.6c0.5,1.8,0.3,3.2-0.5,4.2c-1,1.4-3.3,2.1-6.2,2.1h-21c-3.3-23.1-23.2-41-47.2-41c-26.3,0-47.8,21.4-47.8,47.8 c0,26.4,21.4,47.8,47.8,47.8c24,0,43.9-17.8,47.2-41h21c7.2,0,13.3-2.6,17-7.5c3.4-4.4,4.4-10.1,3-15.4l-6.4-39.9 c-4.5-22.5-23-46.4-61.3-46.4h-20.5c-9.1,0-14.2-9.8-14.2-9.8c-0.2-0.4-0.4-0.8-0.7-1.1l-40.8-54.3c-12.5-19-32.5-30.4-53.4-30.4  h-95.6c-18.7,0-32.2,8.2-40.4,24.6L55.2,73.2C53.7,76.6,55.3,80.7,58.7,82.1L58.7,82.1z M320.8,232.9c-18.8,0-34.1-15.3-34.1-34.1 c0-18.8,15.3-34.1,34.1-34.1c18.8,0,34.1,15.3,34.1,34.1C354.9,217.6,339.6,232.9,320.8,232.9L320.8,232.9z M320.8,232.9"/>
@@ -57,7 +56,7 @@
                                     <span class="b-vehicle__title">Легковой автомобиль</span>
                                 </span>
                             </label>
-                            <input type="radio" class="sr-only" id="truck" value="truck" name="vehicle" required>
+                            <input type="radio" class="sr-only" id="truck" value="truck" name="vehicle">
                             <label class="b-vehicle" for="truck">
                                 <span class="b-vehicle__back">
                                     <svg viewBox="0 0 409.9 328.6" class="svg-vehicle svg-vehicle_cargo">
@@ -69,7 +68,7 @@
                                     <span class="b-vehicle__title">Грузовой автомобиль</span>
                                 </span>
                             </label>
-                            <input type="radio" class="sr-only" id="bus" value="bus" name="vehicle" required>
+                            <input type="radio" class="sr-only" id="bus" value="bus" name="vehicle">
                             <label class="b-vehicle" for="bus">
                                 <span class="b-vehicle__back">
                                     <svg viewBox="0 0 409.6 273.1" class="svg-vehicle svg-vehicle_bus">
@@ -82,7 +81,7 @@
                                     <span class="b-vehicle__title">Пассажирский автобус</span>
                                 </span>
                             </label>
-                            <input type="radio" class="sr-only" id="moto" value="moto" name="vehicle" required>
+                            <input type="radio" class="sr-only" id="moto" value="moto" name="vehicle">
                             <label class="b-vehicle" for="moto">
                                 <span class="b-vehicle__back">
                                     <svg viewBox="0 0 409.9 287.6" class="svg-vehicle svg-vehicle_moto">
@@ -98,14 +97,36 @@
                                 </span>
                             </label>
                         </div>
-                        <input type="radio" class="radio sr-only" id="small" value="small" name="engine" required>
-                        <label for="small">до 1600 см<sup>3</sup></label>
-                        <input type="radio" class="radio sr-only" id="middle" value="middle" name="engine" required checked>
-                        <label for="middle">1601 - 2000 см<sup>3</sup></label>
-                        <input type="radio" class="radio sr-only" id="large" value="large" name="engine" required>
-                        <label for="large">до 2001 - 3000 см<sup>3</sup></label>
-                        <input type="radio" class="radio sr-only" id="xlarge" value="xlarge" name="engine" required>
-                        <label for="xlarge">от 3001 см<sup>3</sup></label>
+                        <div class="b-vehicle__params">
+                            <div class="b-params b-params_car js-params_active">
+                                <input type="radio" class="radio sr-only" id="small" value="small" name="engine">
+                                <label for="small">до 1600 см<sup>3</sup></label>
+                                <input type="radio" class="radio sr-only" id="middle" value="middle" name="engine" checked>
+                                <label for="middle">1601 - 2000 см<sup>3</sup></label>
+                                <input type="radio" class="radio sr-only" id="large" value="large" name="engine">
+                                <label for="large">до 2001 - 3000 см<sup>3</sup></label>
+                                <input type="radio" class="radio sr-only" id="xlarge" value="xlarge" name="engine" >
+                                <label for="xlarge">от 3001 см<sup>3</sup></label>
+                            </div>
+                            <div class="b-params b-params_truck hidden">
+                                <input type="radio" class="radio sr-only" id="light" value="light" name="tonnage">
+                                <label for="light">до 2т</label>
+                                <input type="radio" class="radio sr-only" id="heavy" value="heavy" name="tonnage" checked>
+                                <label for="heavy">более 2т</label>
+                            </div>
+                            <div class="b-params b-params_bus hidden">
+                                <input type="radio" class="radio sr-only" id="few" value="few" name="seatings">
+                                <label for="few">до 20 человек</label>
+                                <input type="radio" class="radio sr-only" id="many" value="many" name="seatings" checked>
+                                <label for="many">более 20 человек</label>
+                            </div>
+                            <div class="b-params b-params_moto hidden">
+                                <input type="radio" class="radio sr-only" id="motorbike" value="motorbike" name="motoType">
+                                <label for="motorbike">до 300 см<sup>3</sup></label>
+                                <input type="radio" class="radio sr-only" id="motorcycle" value="motorcycle" name="motoType" checked>
+                                <label for="motorcycle">более 300 см<sup>3</sup></label>
+                            </div>
+                        </div>
                         <span class="b-calculator__heading b-calculator__heading_registration">Регистрация и эксплуатация</span>
                         <div class="b-block_select b-selectBlock_registration">
                             <label for="regCity" class="b-label_registration">Место регистрации транспортного средства</label>
@@ -167,8 +188,8 @@
                     </div>
                 </div>
             </div>
--->
 
+<!--
 <div id="finalize">
     <div class="b-container">
         <div class="b-section_crumbs">
@@ -411,6 +432,7 @@
         </div>
     </div>
 </div>
+-->
         </div>
 	</section>
 	<section class="b-section_reasons">
@@ -520,19 +542,19 @@
 	        <span class="b-section__heading b-section__heading_howto">На что  вам следует обратить внимание при выборе ОСАГО?</span>
 	        <div class="b-attention__factors">
 	            <div class="b-attention__factor">
-	                <h5>Стоимость</h5>
+	                <div class="b-factor__heading">Стоимость</div>
 	                <p>Цена не должна отличаться более чем на 15-20%</p>
 	            </div>
 	            <div class="b-attention__factor">
-	                <h5>Светофор МТСБУ</h5>
+	                <div class="b-factor__heading">Светофор МТСБУ</div>
 	                <p>Оценка деятельности страховщика государственным регулятором  МТСБУ</p>
 	            </div>
 	            <div class="b-attention__factor">
-	                <h5>Отзывы</h5>
+	                <div class="b-factor__heading">Отзывы</div>
 	                <p>Отзывы клиентов о страховщике</p>
 	            </div>
 	            <div class="b-attention__factor">
-	                <h5>Франшиза</h5>
+	                <div class="b-factor__heading">Франшиза</div>
 	                <p>сумма, которую выплачивает застрахованный самостоятельно, бывает 0, 1000, 2000 грн</p>
 	            </div>
 	        </div>
@@ -1254,7 +1276,7 @@
                 <form action="" class="b-modal__form_callback b-form_feedback js-form_callback">
                     <input type="tel" name="phone" required pattern="[0-9()\s+-]{19}">
                     <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">
-                        <span class="b-text_btn">Перезвонить</span><span class="fa fa-comments" aria-hidden="true"></span>
+                        <span class="b-text_btn">Перезвонить</span><span class="fa fa-phone" aria-hidden="true"></span>
                     </button>
                 </form>
         </div>
