@@ -1828,7 +1828,8 @@ body{
 .b-method__trash{
     position: absolute;
 /*    top: 80px;*/
-    left: 40px;
+/*    left: 40px;*/
+    left: 0;
     bottom: 0;
     margin: 0;
     width: 190px;
@@ -2042,4 +2043,45 @@ body{
 .b-form__cell .icon_tooltip{
     display: inline-block;
     color: #6c359d;
+}
+
+.b-form__cell_rightShift{
+    margin-left: 250px;
+}
+#finalize .selectric-wrapper{
+    width: 190px;
+}
+.b-form__cell .b-label_pay{
+    width: 105px;
+    text-align: center;
+    line-height: 41px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.b-label_pay .fa{
+    font-size: 19px;
+    color: #6c359d;
+}
+.b-radio_pay:not(checked) + label{
+    padding-left: 0;
+}
+.b-radio_pay:checked + label{
+    background-color: #f2c916;
+}
+.b-radio_pay:not(checked) + label:before {
+    content: none;
+}
+.b-radio_pay:not(checked) + label:after {
+    content: none;
+}
+
+.b-form__submit_pay{
+    margin-left: 270px;
+}
+.b-form__submit_pay:hover{
+    background-color: #6c359d;
+    color: #fff;
+}
+.b-form__submit_pay:hover .fa{
+    border-left: 1px solid #fff;
 }

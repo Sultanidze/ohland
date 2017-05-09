@@ -53,7 +53,7 @@ $(document).ready(function(){
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
 		// hide-show details -----
 		// show:
-		$(".js-btn_readmore").click(function(){
+		$(".js-btn_readmore").click(function(){	// show-hide details text on "Подробнее" click
 			// $(this).hide();
 			$(this).prev(".js-content_readmore").slideToggle();
 		})
@@ -66,7 +66,18 @@ $(document).ready(function(){
 				// }
 			// );
 		// })
-
+		
+		// підванатажимо блок оформлення при кліку на "Купить"
+		var  $buyBtns = $("#propositions").find(".b-proposition__buy")	// кнопки купівлі
+			; 
+		$buyBtns.click(function(){
+			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
+			
+			// place for Ajax sending
+			//send proposNum
+			showOrderBlock(proposNum, $containerAjax);
+		});
+		
 		//propositions slider
 		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
 			arrows: false,
@@ -90,7 +101,66 @@ $(document).ready(function(){
 			//$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});
 		});
 	};
+	
+	// order block
+	var showOrderBlock = function(proposNum, $containerAjax){
+		hideContainerAjax($containerAjax);
 
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$(this).load("./ajax/__orderBlock.html", function(){orderBlockInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			 
+			$(this).dequeue("ajax");
+			// hideBcrumbs($bCrumbs);	// show breadcrumbs
+		});
+
+		showContainerAjax($containerAjax);
+		
+		$containerAjax.dequeue("ajax");
+	}
+	var orderBlockInit = function($containerAjax){		
+		var  $orderBlock = $("#finalize")
+			,$methodBtns = $orderBlock.find(".b-finalize__btn_method")
+			,$methods = $orderBlock.find(".b-finalize__method")
+			,$trash = $orderBlock.find(".b-method__trash")
+			,$trashTabs = $trash.find(".b-trash__tab")
+			,$trashCard = $trash.find(".b-trash__sides")
+			;
+		
+		// selects stylization
+		$orderBlock.find("#bySelf").find(".js-selectric").selectric({
+			onInit: function() {
+				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
+			}
+		});
+		
+		$methodBtns.click(function(){
+			var $activeBtn = $methodBtns.filter(".b-finalize__btn_active")
+				,methodNum = $methodBtns.index($(this))
+				,$activeMethod = $methods.filter(".js-method_active")
+				;
+				
+			if($activeBtn != $(this)){
+				$activeBtn.removeClass("b-finalize__btn_active");
+				$(this).addClass("b-finalize__btn_active");
+				$activeMethod.fadeOut(400, function(){
+					$(this).removeClass("js-method_active");
+				});
+				//
+			}
+		});
+		
+		$trashTabs.click(function(){	// перемикання блоку "парень-девушка"
+			if (!$trashCard.is(":animated")){
+				if (!$(this).hasClass("b-trash__tab_active")){
+					$trashTabs.removeClass("b-trash__tab_active");
+					$(this).addClass("b-trash__tab_active");
+					$trashCard.toggleClass("b-sides_flip")
+				}
+			}
+		})
+	}
+	
 	// vehicle calculator
 	var showVehicleCalc = function($containerAjax){
 		hideContainerAjax($containerAjax);
@@ -304,8 +374,7 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 2,
 					left: 201
-				},
-				{
+				},	{
 					duration: 300,
 					easing: "linear",
 					queue: "active",	// черга для анімації цього слайда
@@ -325,8 +394,7 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 0,
 					left: 0
-				},
-				{
+				},	{
 					duration: 300,
 					easing: "linear",
 					queue: "active",
@@ -341,8 +409,7 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 40,
 					left: -44
-				},
-				{
+				},	{
 					duration: 200,
 					easing: "linear",
 					queue: "unactive",	// черга для анімації цього слайда
@@ -354,8 +421,7 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 60,
 					left: 4
-				},
-				{
+				},	{
 					duration: 200,
 					easing: "linear",
 					queue: "unactive"	// черга для анімації цього слайда
@@ -364,8 +430,7 @@ $(document).ready(function(){
 			$slide.animate({
 					top: 30,
 					left: 404
-				},
-				{
+				},	{
 					duration: 600,
 					easing: "linear",
 					queue: "unactive"
