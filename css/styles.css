@@ -1959,26 +1959,17 @@ body{
     vertical-align: middle;
     line-height: normal;
 }
-.b-bg_car{
-    position: absolute;
-/*    top: 345px;*/
-    right: 0;
-    bottom: 10px;
-    width: 253px;
-    height: 184px;
-    background-image: url(../img/car.png);
-}
 
-.b-container_finalize{
-    margin-left: 300px;
-    max-width: 800px;
-}
 .b-form__block{
     position: relative;
     padding-top: 30px;
 }
 .b-form__insured{
     height: 203px;
+}
+.b-container_finalize{
+    margin-left: 300px;
+    max-width: 800px;
 }
 .b-form__heading_finalize{
     margin-bottom: 17px;
@@ -1997,7 +1988,7 @@ body{
 .b-form__cell:last-child{
     margin-right: 0;
 }
-.b-form__cell label{
+.b-form__cell>label{
     display: inline-block;
     margin-bottom: 7px;
     color: #4b4b4b;
@@ -2039,6 +2030,15 @@ body{
 .b-form__vehicle{
     height: 223px;
     background-color: #f5f5f5;
+}
+.b-bg_car{
+    position: absolute;
+/*    top: 345px;*/
+    right: 0;
+    bottom: 10px;
+    width: 253px;
+    height: 184px;
+    background-image: url(../img/car.png);
 }
 .b-form__cell .icon_tooltip{
     display: inline-block;
@@ -2084,4 +2084,122 @@ body{
 }
 .b-form__submit_pay:hover .fa{
     border-left: 1px solid #fff;
+}
+.b-finalize__method__phone{
+    display: none;
+    height: 294px;
+}
+.b-bg_phone{
+    position: absolute;
+    left: 60px;
+    bottom: 15px;
+    width: 207px;
+    height: 122px;
+    background-image: url(../img/phone.png);
+}
+
+.b-finalize__method__upload{
+    display: none;
+}
+.b-form__insured_byupload{
+    height: 265px;
+}
+.b-bg_man{
+    position: absolute;
+    left: 18px;
+    bottom: 0;
+    width: 168px;
+    height: 215px;
+    background-image: url(../img/macho.png);
+}
+
+.b-form__delivery_byupload{
+/*    height: 410px;*/
+    min-height: 195px;
+    background-color: #f5f5f5;
+}
+.b-form__pay_byupload{
+    background-color: #f5f5f5;
+}
+.b-wrap_files{
+    position: relative;
+}
+.b-wrap_files{
+    width: 265px;
+    height: 40px;
+}
+.b-form__cell input[type="file"]{
+    position: absolute;
+    z-index: 4;
+    padding: 0;
+    width: 265px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    font-size: 0;
+}
+.b-button_files{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 265px;
+    height: 40px;
+    border: 2px dashed #f2c916;
+    border-radius: 0;
+    padding: 0;
+    background-color: transparent;
+}
+.b-progress_files{
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    z-index: 2;
+    max-width: 265px;
+    height: 40px;
+    background-color: #f2c916;
+}
+.b-button__text_files{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    line-height: 36px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+}
+.b-list_files{
+    margin-left: 265px;
+    width: 535px;
+    max-height: 110px;
+    padding-top: 2px;
+    padding-left: 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 36px;
+    font-weight: 700;
+    overflow: hidden;
+}
+.b-filename{
+    display: inline-block;
+}
+.b-filename .fa-check{
+    color: #35bb00;
+    margin-left: 5px;
+    margin-right: 12px;
+}
+
+.b-bg_mailbox{
+    position: absolute;
+    bottom: 0;
+    right: 105px;
+    width: 244px;
+    height: 250px;
+    background-image: url(../img/mailbox.jpg);
 }

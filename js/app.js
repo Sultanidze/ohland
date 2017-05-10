@@ -125,6 +125,10 @@ $(document).ready(function(){
 			,$trash = $orderBlock.find(".b-method__trash")
 			,$trashTabs = $trash.find(".b-trash__tab")
 			,$trashCard = $trash.find(".b-trash__sides")
+			,$filesWrap = $orderBlock.find(".b-wrap_files")
+			,$filesInput = $filesWrap.find("input[type='file']")
+			,$filesList = $filesWrap.find(".b-list_files")
+			,$filesProgress = $filesWrap.find(".b-progress_files")
 			;
 		
 		// selects stylization
@@ -134,6 +138,7 @@ $(document).ready(function(){
 			}
 		});
 		
+		// show only selected buy method
 		$methodBtns.click(function(){
 			var $activeBtn = $methodBtns.filter(".b-finalize__btn_active")
 				,methodNum = $methodBtns.index($(this))
@@ -144,13 +149,18 @@ $(document).ready(function(){
 				$activeBtn.removeClass("b-finalize__btn_active");
 				$(this).addClass("b-finalize__btn_active");
 				$activeMethod.fadeOut(400, function(){
-					$(this).removeClass("js-method_active");
+					$activeMethod.removeClass("js-method_active");
+					$activeMethod = $methods.eq(methodNum).addClass("js-method_active");
+					$activeMethod.fadeIn(400);
 				});
-				//
 			}
 		});
-		
-		$trashTabs.click(function(){	// перемикання блоку "парень-девушка"
+
+		// повісимо маску на поля номерів телефону
+		$filesWrap.find("input[type='tel']").mask("+38 (099) 999-99-99");
+
+		// перемикання блоку "парень-девушка"
+		$trashTabs.click(function(){
 			if (!$trashCard.is(":animated")){
 				if (!$(this).hasClass("b-trash__tab_active")){
 					$trashTabs.removeClass("b-trash__tab_active");
@@ -158,7 +168,50 @@ $(document).ready(function(){
 					$trashCard.toggleClass("b-sides_flip")
 				}
 			}
-		})
+		});
+
+		// pickadate initialization
+		jQuery.extend( jQuery.fn.pickadate.defaults, {
+			monthsFull: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
+			monthsShort: [ 'янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек' ],
+			weekdaysFull: [ 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота' ],
+			weekdaysShort: [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ],
+			today: 'сегодня',
+			clear: 'удалить',
+			close: 'закрыть',
+			firstDay: 1,
+			format: 'd mmmm yyyy г.',
+			formatSubmit: 'yyyy/mm/dd'
+		});
+
+		var pickadayOptions = {
+			min: +1,
+			onClose: function () {
+			   $("#bySelf").find(".picker__holder").blur();
+			}
+		}
+		$orderBlock.find("#bySelf").find("#date").pickadate(pickadayOptions);
+
+		//	file input logic
+		$filesInput.change(function (){
+			var  fileNames = []
+				,filesListStr=""
+				;
+			console.log("before:", this.files.length);
+			if (this.files.length > 10){
+				this.files.length = 10;
+				console.log("after:", this.files.length);
+			}
+			for (var i = 0; i < this.files.length; ++i) {
+				//fileNames.push(this.files[i].name);	// populate file names array
+				filesListStr += '<span class="b-filename">' + this.files[i].name + '<span class="fa fa-check" aria-hidden="true"></span></span>'
+			};
+
+			$filesProgress.animate({
+				width: "" + this.files.length*10 + "%"
+			},400);
+			$filesList.html(filesListStr);
+		});
 	}
 	
 	// vehicle calculator
