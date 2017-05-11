@@ -118,6 +118,109 @@ $(document).ready(function(){
 		
 		$containerAjax.dequeue("ajax");
 	}
+
+	var orderFormsValidation = function($method){
+		var commonRules = {//стилизация полей - общие правила для всех форм
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass(errorClass).removeClass(validClass);
+                $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').addClass('b-cell_' + errorClass).removeClass('b-cell_' + validClass);
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass).addClass(validClass);
+                $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').removeClass('b-cell_' + errorClass).addClass('b-cell_' + validClass);
+            }
+        };
+
+        var finalizeRules = {
+        	rules: {
+        		lastName: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 100,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]+/
+                },
+        		firstName:{
+                    required: true,
+                    minlength: 2,
+                    maxlength: 75,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]+/
+        		},
+        		email:    {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 50,
+                    email: true,
+                    pattern: /^(\S+)@([a-z0-9-]+)(\.)([a-z]{2,4})(\.?)([a-z]{0,4})+$/
+        		},
+        		inn:      {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 10,
+                    pattern: /[0-9]+/
+                },
+        		phone:    {
+        			required: true,
+                    pattern: /^\+38[0-9]{10}$/
+        		},
+        		address:  {
+        			required: true,
+                    minlength: 2,
+                    maxlength: 255,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+/
+        		},
+        		year:     {
+        			required: true,
+        			number: true,
+        			min: 1960,
+        			max: 2018
+        		},
+        		chassis:  {
+        			required: true,
+                    minlength: 2,
+                    maxlength: 17,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-0-9]+/
+        		},
+        		plateNum: {
+        			required: true,
+                    minlength: 2,
+                    maxlength: 10,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-0-9]+/
+        		},
+        	},
+        	messages: {
+        		lastName: {
+                    required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов ",
+                    maxlength: "не более 100 символов",
+                    pattern: "латинница, кириллица, пробел, дефис"
+                },
+        		firstName:{
+                    required: true,
+                    minlength: 2,
+                    maxlength: 75,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]/
+        		},
+        		email:    {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 50,
+                    email: true
+                    //pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]/
+        		},
+        		inn:      {},
+        		phone:    {},
+        		address:  {},
+        		year:     {},
+        		chassis:  {},
+        		plateNum: {},
+        	},
+			errorPlacement: function(error, element) {
+			    element.attr('title', error.text());
+			}
+        };
+        
+        $method.find(".b-form_finalize").validate($.extend(commonRules, finalizeRules));
+	};
 	var orderBlockInit = function($containerAjax){		
 		var  $orderBlock = $("#finalize")
 			,$methodBtns = $orderBlock.find(".b-finalize__btn_method")
@@ -132,7 +235,7 @@ $(document).ready(function(){
 			;
 		
 		// selects stylization
-		$orderBlock.find("#bySelf").find(".js-selectric").selectric({
+		$methods.find(".js-selectric").selectric({
 			onInit: function() {
 				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
 			}
@@ -152,12 +255,16 @@ $(document).ready(function(){
 					$activeMethod.removeClass("js-method_active");
 					$activeMethod = $methods.eq(methodNum).addClass("js-method_active");
 					$activeMethod.fadeIn(400);
+					orderFormsValidation($activeMethod);	// hidden method could not be initialized before
 				});
 			}
 		});
 
 		// повісимо маску на поля номерів телефону
-		$filesWrap.find("input[type='tel']").mask("+38 (099) 999-99-99");
+		$methods.find("input[type='tel']").mask("+380999999999");
+
+		// formBySelf validation init
+		orderFormsValidation($methods.filter("#bySelf"));
 
 		// перемикання блоку "парень-девушка"
 		$trashTabs.click(function(){
@@ -274,21 +381,22 @@ $(document).ready(function(){
 			showPropositions($containerAjax);	// load of propositions
 		});
 	};
-	var showFinalCalc = function(propositonId){
-		hideContainerAjax($containerAjax);
+	// var showFinalCalc = function(propositonId){
+	// 	hideContainerAjax($containerAjax);
 
-		$containerAjax.queue("ajax", function(){
-			// place for Ajax sending
-			$(this).load("./ajax/__finalBlock.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+	// 	$containerAjax.queue("ajax", function(){
+	// 		// place for Ajax sending
+	// 		$(this).load("./ajax/__finalBlock.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
 			
-			$(this).dequeue("ajax");
-		});
+	// 		$(this).dequeue("ajax");
+	// 	});
 
-		showContainerAjax($containerAjax);
+	// 	showContainerAjax($containerAjax);
 
-		$containerAjax.dequeue("ajax");
-	}
-	var finalCalcInit = function(){}
+	// 	$containerAjax.dequeue("ajax");
+	// }
+	// var finalCalcInit = function(){};
+
 
 //	vehicle calculator js initialization
 	vehicleCalcInit($containerAjax);	//

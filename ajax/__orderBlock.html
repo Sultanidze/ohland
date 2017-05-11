@@ -82,7 +82,7 @@
     <div class="b-finalize__methods">
         <div class="b-finalize__method b-finalize__method_self js-method_active" id="bySelf">
             <div class="b-calculator__heading b-heading_finalize b-heading_method">Введите данные, чтобы получить полис</div>
-            <form action="" class="b-form_byself">
+            <form action="" class="b-form_finalize" id="formBySelf">
                     <div class="b-form__block b-form__insured">
                         <div class="b-container">
                             <div class="b-container_finalize">
@@ -112,19 +112,19 @@
                                 </figure>
                                 <div class="b-form__heading_finalize">Страхователь</div>
                                 <div class="row row_form">
-                                    <div class="b-form__cell b-cell_ok">
+                                    <div class="b-form__cell">
                                         <label for="first-name_insured" class="b-label_finalize">Фамилия 
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
-                                        <input type="text" name="lastName" id="first-name_insured" value="Петренко">
+                                        <input type="text" name="lastName" id="first-name_insured">
                                     </div>
-                                    <div class="b-form__cell b-cell_error">
+                                    <div class="b-form__cell">
                                         <label for="last-name_insured" class="b-label_finalize">Имя
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
-                                        <input type="text" name="firstName" id="last-name_insured" value="12_41””12@">
+                                        <input type="text" name="firstName" id="last-name_insured">
                                     </div>
                                     <div class="b-form__cell">
                                         <label for="email_insured" class="b-label_finalize">E-mail
@@ -147,7 +147,7 @@
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
-                                        <input type="tel" name="firstName" id="phone_insured">
+                                        <input type="tel" name="phone" id="phone_insured">
                                     </div>
                                     <div class="b-form__cell">
                                         <label for="address_insured" class="b-label_finalize">Адрес страхователя
@@ -193,12 +193,12 @@
                                     </div>
                                 <div class="row row_form">
                                         <div class="b-form__cell">
-                                            <label for="chassisNum" class="b-label_finalize">Номер кузова (шасси) 
+                                            <label for="chassis" class="b-label_finalize">Номер кузова (шасси) 
                                                 <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                                 <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                                 <span class="icon_tooltip" aria-hidden="true">*</span>
                                             </label>
-                                            <input type="text" name="chassisNum" id="chassisNum">
+                                            <input type="text" name="chassis" id="chassis">
                                         </div>
                                         <div class="b-form__cell">
                                             <label for="plateNum" class="b-label_finalize">Гос номер
@@ -271,7 +271,7 @@
         <div class="b-finalize__method b-finalize__method__phone" id="byPhone">
             <div class="b-calculator__heading b-heading_finalize b-heading_method">Введите ваши данные и мы вам перезвоним</div>
             <div class="b-bg_phone"></div>
-            <form action="" class="b-form_byphone">
+            <form action="" class="b-form_finalize" id="formByPhone">
                  <div class="b-form__block">
                     <div class="b-container">
                         <div class="b-container_finalize">
@@ -296,7 +296,7 @@
                                         <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                         <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                     </label>
-                                    <input type="tel" name="firstName" id="phone_byphone">
+                                    <input type="tel" name="phone" id="phone_byphone">
                                 </div>
                                 <button type="button" class="b-form__submit_vehicle b-form__submit_pay" id="submitBySelf">
                                     <span class="b-text_btn">Заказать</span><span class="fa fa-angle-down" aria-hidden="true"></span>
@@ -309,7 +309,7 @@
         </div>
         <div class="b-finalize__method b-finalize__method__upload" id="byUpload">
             <div class="b-calculator__heading b-heading_finalize b-heading_method">Введите данные, чтобы получить полис</div>
-            <form action="" class="b-form_byself">
+            <form action="" class="b-form_finalize" id="formBySelf">
                 <div class="b-form__block b-form__insured_byupload">
                     <div class="b-container">
                         <div class="b-container_finalize">
@@ -321,7 +321,7 @@
                                         <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                         <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                     </label>
-                                    <input type="tel" name="firstName" id="phone_byupload">
+                                    <input type="tel" name="phone" id="phone_byupload">
                                 </div>
                                 <div class="b-form__cell">
                                     <label for="email_byupload" class="b-label_finalize">E-mail
@@ -331,11 +331,11 @@
                                     <input type="email" name="email" id="email_byupload" >
                                 </div>
                                 <div class="b-form__cell">
-                                    <label for="last-name_byupload" class="b-label_finalize">Имя
+                                    <label for="first-name_byupload" class="b-label_finalize">Имя
                                         <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                         <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                     </label>
-                                    <input type="text" name="firstName" id="last-name_byupload">
+                                    <input type="text" name="firstName" id="first-name_byupload">
                                 </div>
                             </div>
                             <div class="row row_form">
@@ -345,7 +345,7 @@
                                         <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                     </label>
                                     <div class="b-wrap_files">
-                                        <input type="file" name="filesCopy" multiple accept="image/*" id="copies_byupload" title="Не более 10ти фото">
+                                        <input type="file" name="docsScans" multiple accept="image/*" id="copies_byupload" title="Не более 10ти фото">
                                         <button type="button" class="b-button_files">
                                             <span class="b-progress_files"></span>
                                             <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>

@@ -1609,7 +1609,9 @@ body{
     display: inline-block;
 }
 .b-company__name{
-    display: inline-block;
+/*    display: inline-block;*/
+    display: block;
+    margin-top: 10px;
     margin-right: 10px;
     color: #fff;
 }
@@ -2002,7 +2004,7 @@ body{
     display: none;
     color: #ff4128;
 }
-.b-cell_ok .fa_ok{
+.b-cell_valid .fa_ok{
     display: inline-block;
 }
 .b-cell_error .fa_error{
@@ -2202,4 +2204,62 @@ body{
     width: 244px;
     height: 250px;
     background-image: url(../img/mailbox.jpg);
+}
+
+.b-thanks{
+    color: #231f20;
+}
+.b-container_thanks{
+    max-width: 1110px;
+}
+.b-container_thanks:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.b-info_order{
+    width: 606px;
+    -webkit-box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
+    box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
+    border-collapse: collapse;
+    background-color: #fff;
+}
+.b-info_order caption{
+    height: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #f2c916;
+    text-align: left;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+/*
+.b-info_order tr{
+    height: 30px;
+    line-height: 30px;
+}
+*/
+.b-info_order th{
+    width: 215px;
+    border-right: 1px solid #f2c916;
+    padding: 6px 30px;
+    font-size: 14px;
+    font-weight: 300;
+}
+.b-info_order td{
+    padding: 6px 25px;
+    font-weight: 700;
+}
+.b-thanks__block_feedback{
+    padding-left: 20px;
+}
+.b-thanks__heading_feedback{
+    font-size: 16px;
+    font-weight: 700;
+/*    color: #231f20;*/
+}
+.b-gauge_thanks{
+    width: 600px;
 }
