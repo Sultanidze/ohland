@@ -4,20 +4,40 @@ $(document).ready(function(){
 	var  $containerAjax = $(".js-ajax_calculator")
 		// ,$bCrumbs = $(".b-crumbs")
 		;
-
+	// $containerAjax.css("opacity", "1");
 	// Functions for the calc-choose-buy block AJAX loads and js-functional inits on them
 	var hideContainerAjax = function($containerAjax){
-		$containerAjax.fadeOut({
-			duration: 400,
-			queue: "ajax"
+		// $containerAjax.fadeOut({
+		// 	duration: 400,
+		// 	queue: "ajax"
+		// 	}
+		// );
+		$containerAjax.animate({
+				opacity: 0,
+				// visibility: "hidden"
+			},{
+				duration: 400,
+				queue: "ajax",
+				// complete: function(){
+				// 	$containerAjax.dequeue("ajax");
+				// }
 			}
 		);
 	};
 	var showContainerAjax = function($containerAjax){
-		$containerAjax.fadeIn({
-			duration: 400,
-			queue: "ajax"
-		});
+		// $containerAjax.fadeIn({
+		// 	duration: 400,
+		// 	queue: "ajax"
+		// 	}
+		// );
+		$containerAjax.animate({
+				opacity: 1,
+				// visibility: "hidden"
+			},{
+				duration: 400,
+				queue: "ajax"
+			}
+		);
 	};
 	// var hideBcrumbs = function($bCrumbs){
 	// 	$bCrumbs.fadeOut({	
@@ -40,24 +60,60 @@ $(document).ready(function(){
 
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
-			$(this).load("./ajax/__propositions.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
-			
-			$(this).dequeue("ajax");
+			//$(this).load("./ajax/__propositions.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			// var t = this;
+			// var dequeueThis = function(t){
+			// 	return function(){
+			// 		$(t).dequeue("ajax");
+			// 	}
+			// }
+			$.ajax({
+            	type: "get",
+            	url : "./ajax/__propositions.html",
+            	error : function(){
+            	    alert('error');
+            	},
+            	success: function(response){
+            	    $containerAjax.html(response);
+            	    propositionsInit($containerAjax);
+            	},
+            	complete: function(){
+            		showContainerAjax($containerAjax);
+            		$containerAjax.dequeue("ajax");
+            	}
+            });
+
+			// $(this).dequeue("ajax");
 			// showBcrumbs($bCrumbs);	// show breadcrumbs
 		});
 
-		showContainerAjax($containerAjax);
+
+		// showContainerAjax($containerAjax);
 
 		$containerAjax.dequeue("ajax");
 	};
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		// hide-show details -----
-		// show:
+		// hide-show details  by click on "Подробнее"
+			// show:
 		$(".js-btn_readmore").click(function(){	// show-hide details text on "Подробнее" click
 			// $(this).hide();
-			$(this).prev(".js-content_readmore").slideToggle();
+			var  $toggleBlock = $(this).prev(".js-content_readmore")
+				,$parentOfToggleBlock = $toggleBlock.parents(".b-proposition")
+				;
+				
+			if ($toggleBlock.hasClass("js-opened")){
+				$toggleBlock.slideUp(200, function(){
+					$parentOfToggleBlock.css("z-index","0");
+					$(this).removeClass("js-opened");
+				});
+			} else {
+				$parentOfToggleBlock.css("z-index","1");
+				$toggleBlock.slideDown(200, function(){
+					$(this).addClass("js-opened");
+				});
+			}
 		})
-		// hide:
+			// hide:
 		// $(".b-proposition").mouseleave(function(){
 			// var $hiddenContent = $(this).find(".js-content_readmore");
 			// $hiddenContent.slideUp(
@@ -66,7 +122,23 @@ $(document).ready(function(){
 				// }
 			// );
 		// })
+
+		// hide-show additional propositions by click on "Посмотреть еще предложения"
+		var  $propositionsCalc = $containerAjax.find(".b-calculator_propos")
+			,$proposStrings = $propositionsCalc.find(".b-propositions__string")
+			,$hiddenProposStrings = $proposStrings.filter(".b-propositions__string_hidden")
+			,$moreProposBtn = $propositionsCalc.find("#morePropositions")
+			;
+		$moreProposBtn.click(function(){
+			if (!$hiddenProposStrings.is(":animated")){
+				$hiddenProposStrings.slideToggle();
+				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+			}
+		});
 		
+		//	Повертаємось до вибора тз при кліку на "Изменить данные"
+		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
+
 		// підванатажимо блок оформлення при кліку на "Купить"
 		var  $buyBtns = $("#propositions").find(".b-proposition__buy")	// кнопки купівлі
 			; 
@@ -79,27 +151,29 @@ $(document).ready(function(){
 		});
 		
 		//propositions slider
-		var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
-			arrows: false,
-			infinite: false,
-			speed: 400,
-			slidesToShow: 4,
-			slidesToScroll: 4,
-			// autoplay: true,
-			// autoplaySpeed: 4400
-		});
-		//	morePropositions btn functionality
-		var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
-		$sliderProposMoreBtn.click(function(event){
-			event.preventDefault();
-			$sliderPropos.slick("slickNext");
-		});
+		// var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
+		// 	arrows: false,
+		// 	infinite: false,
+		// 	speed: 400,
+		// 	slidesToShow: 4,
+		// 	slidesToScroll: 4,
+		// 	// autoplay: true,
+		// 	// autoplaySpeed: 4400
+		// });
 
-		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
-		$("#propositions .b-proposition__buy").click(function(){
-			var propositonId = $(this).attr("data-proposition");	// id пропозиції яку треба передати
-			//$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});
-		});
+		//	morePropositions btn functionality
+			// var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
+			// $sliderProposMoreBtn.click(function(event){
+			// 	event.preventDefault();
+			// 	$sliderPropos.slick("slickNext");
+			// });
+
+
+
+		// $("#propositions .b-proposition__buy").click(function(){
+		// 	var propositonId = $(this).attr("data-proposition");	// id пропозиції яку треба передати
+		// 	//$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});
+		// });
 	};
 	
 	// order block
@@ -108,13 +182,28 @@ $(document).ready(function(){
 
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
-			$(this).load("./ajax/__orderBlock.html", function(){orderBlockInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			$.ajax({
+            	type: "get",
+            	url : "./ajax/__orderBlock.html",
+            	error : function(){
+            	    alert('error');
+            	},
+            	success: function(response){
+            	    $containerAjax.html(response);
+            	    orderBlockInit($containerAjax);
+            	},
+            	complete: function(){
+            		showContainerAjax($containerAjax);
+            		$containerAjax.dequeue("ajax");
+            	}
+            });
+			// $(this).load("./ajax/__orderBlock.html", function(){orderBlockInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
 			 
-			$(this).dequeue("ajax");
+			// $(this).dequeue("ajax");
 			// hideBcrumbs($bCrumbs);	// show breadcrumbs
 		});
 
-		showContainerAjax($containerAjax);
+		// showContainerAjax($containerAjax);
 		
 		$containerAjax.dequeue("ajax");
 	}
@@ -173,6 +262,7 @@ $(document).ready(function(){
         			number: true,
         			min: 1960,
         			max: 2018
+                    //pattern: /[0-9]{4}/
         		},
         		chassis:  {
         			required: true,
@@ -190,29 +280,56 @@ $(document).ready(function(){
         	messages: {
         		lastName: {
                     required: "Поле обязательно для заполнения!",
-                    minlength: "не менее 2х символов ",
+                    minlength: "не менее 2х символов",
                     maxlength: "не более 100 символов",
                     pattern: "латинница, кириллица, пробел, дефис"
                 },
         		firstName:{
-                    required: true,
-                    minlength: 2,
-                    maxlength: 75,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]/
+                    required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов",
+                    maxlength: "не более 75 символов",
+                    pattern: "латинница, кириллица, пробел, дефис"
         		},
         		email:    {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 50,
-                    email: true
-                    //pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]/
+                    required: "Поле обязательно для заполнения!",
+                    email: "Введите валидный email-адресс"
         		},
-        		inn:      {},
-        		phone:    {},
-        		address:  {},
-        		year:     {},
-        		chassis:  {},
-        		plateNum: {},
+        		inn:      {
+        			required: "Поле обязательно для заполнения!",
+                    minlength: "не менее одной цифры ",
+                    maxlength: "не более 10ти цифр",
+                    pattern: "только цифры"
+        		},
+        		phone:    {
+        			required: "Поле обязательно для заполнения!",
+                    minlength: "введите до конца номер",
+                    pattern: "введите номер украинского оператора связи"
+        		},
+        		address:  {
+        			required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов",
+                    maxlength: "не более 255 символов",
+                    pattern: "ваш почтовый адресс"
+        		},
+        		year:     {
+        			required: "Поле обязательно для заполнения!",
+        			number: "1999 например",
+        			min: "не ранее 1960 года выпуска",
+        			max: "не позднее 2018 года выпуска",
+                    //pattern: "1999 например"
+        		},
+        		chassis:  {
+        			required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов",
+                    maxlength: "не более 17 символов",
+                    pattern: "латинница, кириллица, дефис, цифры"
+        		},
+        		plateNum: {
+                    required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов",
+                    maxlength: "не более 10ти символов",
+                    pattern: "латинница, кириллица, дефис, цифры, без пробелов"
+        		},
         	},
 			errorPlacement: function(error, element) {
 			    element.attr('title', error.text());
@@ -232,14 +349,8 @@ $(document).ready(function(){
 			,$filesInput = $filesWrap.find("input[type='file']")
 			,$filesList = $filesWrap.find(".b-list_files")
 			,$filesProgress = $filesWrap.find(".b-progress_files")
+			,$submitButtons = $methods.find("#submitBySelf, #submitByPhone, #submitByUpload")
 			;
-		
-		// selects stylization
-		$methods.find(".js-selectric").selectric({
-			onInit: function() {
-				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
-			}
-		});
 		
 		// show only selected buy method
 		$methodBtns.click(function(){
@@ -259,13 +370,6 @@ $(document).ready(function(){
 				});
 			}
 		});
-
-		// повісимо маску на поля номерів телефону
-		$methods.find("input[type='tel']").mask("+380999999999");
-
-		// formBySelf validation init
-		orderFormsValidation($methods.filter("#bySelf"));
-
 		// перемикання блоку "парень-девушка"
 		$trashTabs.click(function(){
 			if (!$trashCard.is(":animated")){
@@ -276,6 +380,22 @@ $(document).ready(function(){
 				}
 			}
 		});
+
+		// selects stylization
+		$methods.find(".js-selectric").selectric({
+			onInit: function() {
+				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
+			}
+		});
+
+		// повісимо маски на поля:
+			// номерів телефону
+		$methods.find("input[type='tel']").mask("?+380999999999");
+			// року випуску авто
+		$methods.find("input[name='year']").mask("?9999");
+
+		// formBySelf validation init
+		orderFormsValidation($methods.filter("#bySelf"));
 
 		// pickadate initialization
 		jQuery.extend( jQuery.fn.pickadate.defaults, {
@@ -294,7 +414,7 @@ $(document).ready(function(){
 		var pickadayOptions = {
 			min: +1,
 			onClose: function () {
-			   $("#bySelf").find(".picker__holder").blur();
+			   $("#bySelf").find(".picker__holder").blur();	// заборонимо спливати календарю при згортанні-розгортанні вікна браузера (коли фокус на даті)
 			}
 		}
 		$orderBlock.find("#bySelf").find("#date").pickadate(pickadayOptions);
@@ -319,6 +439,9 @@ $(document).ready(function(){
 			},400);
 			$filesList.html(filesListStr);
 		});
+
+		// show thanks page
+		$submitButtons.click();
 	}
 	
 	// vehicle calculator
