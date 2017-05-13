@@ -43,6 +43,9 @@ font-family: 'Playfair Display', serif;
     clip: rect(0,0,0,0);
     border: 0;
 }
+.hidden {
+    display: none!important;
+}
 .bold{
     font-weight: 700;
 }
@@ -415,12 +418,13 @@ body{
 .b-block_select{
     display: inline-block;
     margin-right: 105px;
+    vertical-align: top;
 }
 .b-block_select:last-of-type{
     margin-right: 0;
 }
 .b-selectBlock_registration .selectric-wrapper{
-    width: 190px;
+    width: 180px;
 }
 .b-selectBlock_franshiza .selectric-wrapper{
     width: 120px;
@@ -432,7 +436,25 @@ body{
     display: block;
     margin-bottom: 10px;
 }
+.b-autocomplete{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 29px;
+    padding: 0 10px;
+    font-size: 16px;
+    line-height: 30px;
+    color: #444444;
+    font-weight: 700;
+    height: 29px;
+    text-transform: capitalize;
+}
+#regCity{
+    width: 180px;
+}
 .b-block_checkbox{
+    width: 200px;
     margin-top: 10px;
     position: relative;
     display: block;

@@ -172,7 +172,8 @@
                                                 <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                                 <span class="icon_tooltip fa fa-info-circle" aria-hidden="true"></span>
                                             </label>
-                                            <input type="text" name="brand" id="brand">
+                                            <input type="text" id="brand">
+                                            <input type="text" name="brand" class="hidden" id="brandId">
                                         </div>
                                         <div class="b-form__cell">
                                             <label for="model" class="b-label_finalize" title="модель авто">Модель 
@@ -180,7 +181,8 @@
                                                 <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                                 <span class="icon_tooltip fa fa-info-circle" aria-hidden="true" ></span>
                                             </label>
-                                            <input type="text" name="model" id="model">
+                                            <input type="text" id="model">
+                                            <input type="text" name="model" class="hidden" id="modelId">
                                         </div>
                                         <div class="b-form__cell">
                                             <label for="year" class="b-label_finalize">Год выпуска авто
@@ -260,7 +262,7 @@
                                         <label for="card_self" class="b-label_pay"><span class="fa fa-credit-card-alt" aria-hidden="true">&nbsp;</span>Онлайн</label>
                                     </div>
                                 </div>
-                                <button type="button" class="b-form__submit_vehicle b-form__submit_pay" id="submitBySelf">
+                                <button type="submit" class="b-form__submit_vehicle b-form__submit_pay" id="submitBySelf">
                                     <span class="b-text_btn">Заказать</span><span class="fa fa-angle-down" aria-hidden="true"></span>
                                 </button>
                             </div>
@@ -298,7 +300,7 @@
                                     </label>
                                     <input type="tel" name="phone" id="phone_byphone">
                                 </div>
-                                <button type="button" class="b-form__submit_vehicle b-form__submit_pay" id="submitByPhone">
+                                <button type="submit" class="b-form__submit_vehicle b-form__submit_pay" id="submitByPhone">
                                     <span class="b-text_btn">Заказать</span><span class="fa fa-angle-down" aria-hidden="true"></span>
                                 </button>
                             </div>
@@ -402,7 +404,7 @@
                                         <label for="card_selfByUpload" class="b-label_pay"><span class="fa fa-credit-card-alt" aria-hidden="true">&nbsp;</span>Онлайн</label>
                                     </div>
                                 </div>
-                                <button type="button" class="b-form__submit_vehicle b-form__submit_pay" id="submitByUpload">
+                                <button type="submit" class="b-form__submit_vehicle b-form__submit_pay" id="submitByUpload">
                                     <span class="b-text_btn">Заказать</span><span class="fa fa-angle-down" aria-hidden="true"></span>
                                 </button>
                                 <div class="b-bg_mailbox"></div>

@@ -1,10 +1,25 @@
+// pickadate plugin defaults
+jQuery.extend( jQuery.fn.pickadate.defaults, {
+	monthsFull: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
+	monthsShort: [ 'янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек' ],
+	weekdaysFull: [ 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота' ],
+	weekdaysShort: [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ],
+	today: 'сегодня',
+	clear: 'удалить',
+	close: 'закрыть',
+	firstDay: 1,
+	// format: 'd mmmm yyyy г.',
+	format: 'dd.mm.yyyy',
+	formatSubmit: 'dd.mm.yyyy'
+});
+
 
 $(document).ready(function(){
 // Global variables
 	var  $containerAjax = $(".js-ajax_calculator")
 		// ,$bCrumbs = $(".b-crumbs")
 		;
-	// $containerAjax.css("opacity", "1");
+
 	// Functions for the calc-choose-buy block AJAX loads and js-functional inits on them
 	var hideContainerAjax = function($containerAjax){
 		// $containerAjax.fadeOut({
@@ -53,6 +68,8 @@ $(document).ready(function(){
 	// 		}
 	// 	).dequeue("ajax");
 	// };
+
+
 
 	// OSAGO propositions
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
@@ -208,8 +225,14 @@ $(document).ready(function(){
 		$containerAjax.dequeue("ajax");
 	}
 
-	var orderFormsValidation = function($method){
-		var commonRules = {//стилизация полей - общие правила для всех форм
+	// валідація форм
+	var commonValidateRules = {	//валідація полів форм - об'єкт глобальних правил
+			errorPlacement: function(error, element) {
+			    element.attr('title', error.text());	// запишемо текст помилки в title атрибут поля
+			}
+        };
+	var orderFormsValidation = function($method){	//$method - блок з формою (самостійно, по телефону, відвантаживши документи)
+        var finalizeValidateRules = {	// пр
             highlight: function (element, errorClass, validClass) {
                 $(element).addClass(errorClass).removeClass(validClass);
                 $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').addClass('b-cell_' + errorClass).removeClass('b-cell_' + validClass);
@@ -217,10 +240,7 @@ $(document).ready(function(){
             unhighlight: function (element, errorClass, validClass) {
                 $(element).removeClass(errorClass).addClass(validClass);
                 $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').removeClass('b-cell_' + errorClass).addClass('b-cell_' + validClass);
-            }
-        };
-
-        var finalizeRules = {
+            },
         	rules: {
         		lastName: {
                     required: true,
@@ -276,6 +296,10 @@ $(document).ready(function(){
                     maxlength: 10,
                     pattern: /[A-Za-zА-Яа-яЁёІіЇї\-0-9]+/
         		},
+        		date: {
+        			required: true,
+                    pattern: /[0-9\.]+/
+        		}
         	},
         	messages: {
         		lastName: {
@@ -330,14 +354,27 @@ $(document).ready(function(){
                     maxlength: "не более 10ти символов",
                     pattern: "латинница, кириллица, дефис, цифры, без пробелов"
         		},
+        		date: {
+                    required: "Поле обязательно для заполнения!",
+                    pattern: "формат: ДД.ММ.ГГГГ"
+        		}
         	},
-			errorPlacement: function(error, element) {
-			    element.attr('title', error.text());
-			}
+			submitHandler: function(form) {
+		        $.ajax({
+		            url: form.action,
+		            type: form.method,
+		            data: $(form).serialize(),
+		            success: function(response) {
+		                showThanks($containerAjax, response);
+		            }            
+		        });
+		    }
         };
         
-        $method.find(".b-form_finalize").validate($.extend(commonRules, finalizeRules));
+        return $method.find(".b-form_finalize").validate($.extend(commonValidateRules, finalizeValidateRules));
 	};
+
+	// ініціалізація блока оформлення замовлень
 	var orderBlockInit = function($containerAjax){		
 		var  $orderBlock = $("#finalize")
 			,$methodBtns = $orderBlock.find(".b-finalize__btn_method")
@@ -350,6 +387,7 @@ $(document).ready(function(){
 			,$filesList = $filesWrap.find(".b-list_files")
 			,$filesProgress = $filesWrap.find(".b-progress_files")
 			,$submitButtons = $methods.find("#submitBySelf, #submitByPhone, #submitByUpload")
+			,validatorCurrent = orderFormsValidation($methods.filter("#bySelf"))	// formBySelf validation init
 			;
 		
 		// show only selected buy method
@@ -359,14 +397,14 @@ $(document).ready(function(){
 				,$activeMethod = $methods.filter(".js-method_active")
 				;
 				
-			if($activeBtn != $(this)){
+			if($activeBtn[0] != $(this)[0]){
 				$activeBtn.removeClass("b-finalize__btn_active");
 				$(this).addClass("b-finalize__btn_active");
 				$activeMethod.fadeOut(400, function(){
 					$activeMethod.removeClass("js-method_active");
 					$activeMethod = $methods.eq(methodNum).addClass("js-method_active");
 					$activeMethod.fadeIn(400);
-					orderFormsValidation($activeMethod);	// hidden method could not be initialized before
+					validatorCurrent = orderFormsValidation($activeMethod);	// hidden method could not be initialized before
 				});
 			}
 		});
@@ -381,36 +419,18 @@ $(document).ready(function(){
 			}
 		});
 
-		// selects stylization
-		$methods.find(".js-selectric").selectric({
-			onInit: function() {
-				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
-			}
-		});
-
 		// повісимо маски на поля:
 			// номерів телефону
 		$methods.find("input[type='tel']").mask("?+380999999999");
 			// року випуску авто
 		$methods.find("input[name='year']").mask("?9999");
+			// дати початку дії поліса
+		$methods.find("input[name='date']").mask("?99.99.9999");
 
 		// formBySelf validation init
-		orderFormsValidation($methods.filter("#bySelf"));
+		// orderFormsValidation($methods.filter("#bySelf"));
 
 		// pickadate initialization
-		jQuery.extend( jQuery.fn.pickadate.defaults, {
-			monthsFull: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
-			monthsShort: [ 'янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек' ],
-			weekdaysFull: [ 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота' ],
-			weekdaysShort: [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ],
-			today: 'сегодня',
-			clear: 'удалить',
-			close: 'закрыть',
-			firstDay: 1,
-			format: 'd mmmm yyyy г.',
-			formatSubmit: 'yyyy/mm/dd'
-		});
-
 		var pickadayOptions = {
 			min: +1,
 			onClose: function () {
@@ -424,10 +444,10 @@ $(document).ready(function(){
 			var  fileNames = []
 				,filesListStr=""
 				;
-			console.log("before:", this.files.length);
+			// console.log("before:", this.files.length);
 			if (this.files.length > 10){
 				this.files.length = 10;
-				console.log("after:", this.files.length);
+				// console.log("after:", this.files.length);
 			}
 			for (var i = 0; i < this.files.length; ++i) {
 				//fileNames.push(this.files[i].name);	// populate file names array
@@ -440,23 +460,98 @@ $(document).ready(function(){
 			$filesList.html(filesListStr);
 		});
 
+		// autocomplete для полів:
+			// "модель"
+				fieldAutocomplete("model", "./ajax/model.json");
+			// "марка"
+				fieldAutocomplete("brand", "./ajax/brand.json");
+
+
+		// selects stylization
+		$methods.find(".js-selectric").selectric({
+			onInit: function() {
+				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
+			}
+		});
+
 		// show thanks page
-		$submitButtons.click();
+		// $submitButtons.click(function(event){
+		// 		event.preventDefault();
+		// 		console.log(validatorCurrent.numberOfInvalids());
+		// 	// if (validatorCurrent.numberOfInvalids() == 0){
+		// 	// 	showThanks($containerAjax);
+		// 	// }
+		// });
 	}
 	
+	// show thanks page
+	var showThanks = function($containerAjax, responseFromPhp){
+		hideContainerAjax($containerAjax);
+
+		// -- temporary Ajax for static demo --
+		// !!! comment it on server
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$.ajax({
+            	type: "get",
+            	url : "./ajax/__thanks.html",
+            	error : function(){
+            	    alert('error');
+            	},
+            	success: function(response){
+            	    $containerAjax.html(response);
+            	    // thanksInit($containerAjax);
+            	},
+            	complete: function(){
+            		showContainerAjax($containerAjax);
+            		$containerAjax.dequeue("ajax");
+            	}
+            });
+		});
+		//-----------------------------------
+
+		// !!! 
+		// commented variant for php server
+		// $containerAjax.queue("ajax", function(){
+  //           $containerAjax.html(responseFromPhp);
+  //           showContainerAjax($containerAjax);
+  //           $containerAjax.dequeue("ajax");
+		// });
+
+		$containerAjax.dequeue("ajax");
+	}
+
 	// vehicle calculator
 	var showVehicleCalc = function($containerAjax){
 		hideContainerAjax($containerAjax);
 
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
-			$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
-			 
-			$(this).dequeue("ajax");
-			// hideBcrumbs($bCrumbs);	// show breadcrumbs
+			$.ajax({
+            	type: "get",
+            	url : "./ajax/__calcVehicle.html",
+            	error : function(){
+            	    alert('error');
+            	},
+            	success: function(response){
+            	    $containerAjax.html(response);
+            	    vehicleCalcInit($containerAjax);
+            	},
+            	complete: function(){
+            		showContainerAjax($containerAjax);
+            		$containerAjax.dequeue("ajax");
+            	}
+            });
 		});
+		// $containerAjax.queue("ajax", function(){
+		// 	// place for Ajax sending
+		// 	$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
+			 
+		// 	$(this).dequeue("ajax");
+		// 	// hideBcrumbs($bCrumbs);	// show breadcrumbs
+		// });
 
-		showContainerAjax($containerAjax);
+		// showContainerAjax($containerAjax);
 		
 		$containerAjax.dequeue("ajax");
 	};
@@ -499,26 +594,78 @@ $(document).ready(function(){
 			// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
 		});
 
+		//ajax registration city autocomplete
+		fieldAutocomplete("regCity", "./ajax/city.json")
+
+		// валідація
 		$("#vehicleForm").submit(function(event){
 			event.preventDefault();
 			showPropositions($containerAjax);	// load of propositions
 		});
 	};
-	// var showFinalCalc = function(propositonId){
-	// 	hideContainerAjax($containerAjax);
 
-	// 	$containerAjax.queue("ajax", function(){
-	// 		// place for Ajax sending
-	// 		$(this).load("./ajax/__finalBlock.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
-			
-	// 		$(this).dequeue("ajax");
-	// 	});
+	// autocomplete function 
+	// (enter string, shows items, select item -> send item id)
+	// note: after autocompleted field must be hidden input with name attr to returnitem id
+	var fieldAutocomplete = function(fieldId, jsonAddr){
+		var  oJS
+			,items = []
+		    ,itemIds = []
+		    ,objToComplete = $("#" + fieldId)
+			;
 
-	// 	showContainerAjax($containerAjax);
+		objToComplete.autoComplete({
+				minChars: 2,
+			    source: function(term, response){
+			        $.getJSON(jsonAddr, { city: term }, function(data){
+			        	items = []; // масив елементів
+			    		itemIds = [];	// масив id елементів
+			        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 
-	// 	$containerAjax.dequeue("ajax");
-	// }
-	// var finalCalcInit = function(){};
+			        	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
+			        		items.push(oJS.items[i].name);
+			        		itemIds.push(oJS.items[i].id);
+			        	};
+			        	response(items);
+			        });
+			    },
+			    // renderItem: function (item, search){
+			    //     search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			    //     var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+			    //     return '<div class="autocomplete-suggestion" data-langname="'+item[0]+'" data-lang="'+item[1]+'" data-val="'+search+'"><img src="img/'+item[1]+'.png"> '+item[0].replace(re, "<b>$1</b>")+'</div>';
+			    // },
+			    onSelect: function (event, term, item) {
+			    	var itemIndex = items.indexOf(term);	// індекс міста в масиві
+			    	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id міста прихованому елементу форми
+			    }
+			});
+		// objToComplete.focus(function(){
+		// 	var e = jQuery.Event( "keydown", { keyCode: 128 } );
+		// 	$(this).trigger(e);
+		// })
+
+		// objToComplete.autoComplete({
+		// 	minChars: 2,
+		//     source: function(term, response){
+		//         $.getJSON(jsonAddr, { city: term }, function(data){
+		//         	items = []; // масив елементів
+		//     		itemIds = [];	// масив id елементів
+		//         	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+
+		//         	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
+		//         		items.push(oJS.items[i].name);
+		//         		itemIds.push(oJS.items[i].id);
+		//         	};
+		//         	response(items);
+		//         });
+		//     },
+		//     onSelect: function (event, term, item) {
+		//     	var itemIndex = items.indexOf(term);	// індекс міста в масиві
+		//     	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id міста прихованому елементу форми
+		//     }
+		// });
+	}
+				
 
 
 //	vehicle calculator js initialization
