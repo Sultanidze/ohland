@@ -13,7 +13,6 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 	formatSubmit: 'dd.mm.yyyy'
 });
 
-
 $(document).ready(function(){
 // Global variables
 	var  $containerAjax = $(".js-ajax_calculator")
@@ -29,7 +28,6 @@ $(document).ready(function(){
 		// );
 		$containerAjax.animate({
 				opacity: 0,
-				// visibility: "hidden"
 			},{
 				duration: 400,
 				queue: "ajax",
@@ -47,7 +45,6 @@ $(document).ready(function(){
 		// );
 		$containerAjax.animate({
 				opacity: 1,
-				// visibility: "hidden"
 			},{
 				duration: 400,
 				queue: "ajax"
@@ -232,7 +229,18 @@ $(document).ready(function(){
 			}
         };
 	var orderFormsValidation = function($method){	//$method - блок з формою (самостійно, по телефону, відвантаживши документи)
-        var finalizeValidateRules = {	// пр
+		// для полів з автокомплітом: валідація при втраті фокусу
+		var	$autoCompleteFields = $method.find(".js-autocomplete");
+		console.log($autoCompleteFields);
+		$autoCompleteFields.blur(function(){
+			if ($(this).next().val()){
+				$(this).parent(".b-form__cell").addClass("b-cell_valid")
+			} else{
+				$(this).parent(".b-form__cell").addClass("b-cell_error")
+			}
+		});
+		
+        var finalizeValidateRules = {	// валідація полів форм - об'єкт локальних правил
             highlight: function (element, errorClass, validClass) {
                 $(element).addClass(errorClass).removeClass(validClass);
                 $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').addClass('b-cell_' + errorClass).removeClass('b-cell_' + validClass);
@@ -241,6 +249,7 @@ $(document).ready(function(){
                 $(element).removeClass(errorClass).addClass(validClass);
                 $(element.form).find("label[for=" + element.id + "]").parent('.b-form__cell').removeClass('b-cell_' + errorClass).addClass('b-cell_' + validClass);
             },
+			ignore: ".js-ignoreValidate",
         	rules: {
         		lastName: {
                     required: true,
@@ -272,6 +281,12 @@ $(document).ready(function(){
                     pattern: /^\+38[0-9]{10}$/
         		},
         		address:  {
+        			required: true,
+                    minlength: 2,
+                    maxlength: 255,
+                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+/
+        		},
+        		deliveryAddr:  {
         			required: true,
                     minlength: 2,
                     maxlength: 255,
@@ -335,6 +350,12 @@ $(document).ready(function(){
                     maxlength: "не более 255 символов",
                     pattern: "ваш почтовый адресс"
         		},
+        		deliveryAddr:  {
+        			required: "Поле обязательно для заполнения!",
+                    minlength: "не менее 2х символов",
+                    maxlength: "не более 255 символов",
+                    pattern: "ваш почтовый адресс"
+        		},
         		year:     {
         			required: "Поле обязательно для заполнения!",
         			number: "1999 например",
@@ -359,7 +380,22 @@ $(document).ready(function(){
                     pattern: "формат: ДД.ММ.ГГГГ"
         		}
         	},
-			submitHandler: function(form) {
+			submitHandler: function(form) {	// replaces default form submit behavior
+				// треба також перевірити поля автокомпліта
+				var  bFocused = false
+					,bValid = true
+					;
+				$autoCompleteFields.each(function(){
+					if ($(this).next().val()){
+						$(this).parent(".b-form__cell").addClass("b-cell_valid")
+					} else{
+						$(this).parent(".b-form__cell").addClass("b-cell_error");
+						bValid = false;
+						if (!bFocused){
+							bFocused = true;
+						}
+					}
+				});
 		        $.ajax({
 		            url: form.action,
 		            type: form.method,
@@ -387,6 +423,7 @@ $(document).ready(function(){
 			,$filesList = $filesWrap.find(".b-list_files")
 			,$filesProgress = $filesWrap.find(".b-progress_files")
 			,$submitButtons = $methods.find("#submitBySelf, #submitByPhone, #submitByUpload")
+			// ,$deliveryMode = $methods.find("select[name='deliveryMode']")
 			,validatorCurrent = orderFormsValidation($methods.filter("#bySelf"))	// formBySelf validation init
 			;
 		
@@ -403,7 +440,8 @@ $(document).ready(function(){
 				$activeMethod.fadeOut(400, function(){
 					$activeMethod.removeClass("js-method_active");
 					$activeMethod = $methods.eq(methodNum).addClass("js-method_active");
-					$activeMethod.fadeIn(400);
+					$activeMethod.fadeIn(400);	// show active method
+					// validate current method form
 					validatorCurrent = orderFormsValidation($activeMethod);	// hidden method could not be initialized before
 				});
 			}
@@ -461,18 +499,28 @@ $(document).ready(function(){
 		});
 
 		// autocomplete для полів:
-			// "модель"
-				fieldAutocomplete("model", "./ajax/model.json");
-			// "марка"
-				fieldAutocomplete("brand", "./ajax/brand.json");
+		// "модель"
+		fieldAutocomplete("model", "./ajax/model.json");
+		// "марка"
+		fieldAutocomplete("brand", "./ajax/brand.json");
+		// місто доставки (із областю для кур’єра)
+		fieldAutocomplete("delivCitySelf", "./ajax/cityRegion.json");
+		// НП область
+		fieldAutocomplete("delivRegionNP", "./ajax/region.json");
+		// НП місто
+		fieldAutocomplete("delivCityNP", "./ajax/region.json");
+		// НП відділення
+		fieldAutocomplete("delivDivisionNP", "./ajax/division.json");
 
 
 		// selects stylization
-		$methods.find(".js-selectric").selectric({
-			onInit: function() {
-				$orderBlock.find(".selectric-wrapper>.selectric-items ul>li.disabled").remove();	//прибираємо неактивний пункт
+		// $methods.find("#deliveryMode").selectric();
+		$methods.find("select[name='deliveryMode']").selectric({
+			onChange: function(element) {
+				$(element).change();
 			}
 		});
+		// $deliveryMode = $methods.find("select[name='deliveryMode']")
 
 		// show thanks page
 		// $submitButtons.click(function(event){
@@ -596,11 +644,19 @@ $(document).ready(function(){
 
 		//ajax registration city autocomplete
 		fieldAutocomplete("regCity", "./ajax/city.json")
-
+		
 		// валідація
-		$("#vehicleForm").submit(function(event){
+		var  $vehicleForm = $("#vehicleForm")
+			,$cityId = $vehicleForm.find("#cityId")
+			,$cityName = $vehicleForm.find("#regCity")
+			;
+		$vehicleForm.submit(function(event){
 			event.preventDefault();
-			showPropositions($containerAjax);	// load of propositions
+			if (!$cityId.val()){
+				$cityName.focus();
+			} else {
+				showPropositions($containerAjax);	// load of propositions
+			}
 		});
 	};
 

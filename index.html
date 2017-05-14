@@ -137,15 +137,8 @@
                         <span class="b-calculator__heading b-calculator__heading_registration">Регистрация и эксплуатация</span>
                         <div class="b-block_select b-selectBlock_registration">
                             <label for="regCity" class="b-label_registration">Место регистрации транспортного средства</label>
-<!--
-                            <select name="regCity" class="js-selectric" id="regCity">
-                                <option value="Kyiv" selected>Киев</option>
-                                <option value="Zhytomyr">Житомир</option>
-                                <option value="Hmelnytsky">Хмельницкий</option>
-                            </select>
--->
-                            <input type="text" class="b-autocomplete selectric js-autocomplete" id="regCity">
-                            <input type="text" class="hidden" name="regCityId" id="cityId">
+                            <input type="text" class="b-autocomplete b-autocomplete_vehicle selectric" id="regCity" title="Введите и выберите город">
+                            <input type="hidden" class="hidden" name="regCityId" id="cityId">
                         </div>
                         <div class="b-block_select b-selectBlock_franshiza">
                             <label for="franshiza" class="b-label_registration">Франшиза</label>
@@ -199,7 +192,6 @@
                     </div>
                 </div>
             </div>
-                    
         </div>
 	</section>
 	<section class="b-section_reasons">
@@ -945,7 +937,7 @@
                                         <div class="row">
                                             <div class="col-l col-12">
                                                 <label for="feedback1" class="b-label_registration">Ваш отзыв</label>
-                                                <textarea name="feedback" id="feedback1" required></textarea>
+                                                <textarea class="b-comment" name="feedback" id="feedback1" required></textarea>
                                             </div>
                                         </div>
                                         <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">
@@ -994,7 +986,7 @@
                                         <div class="row">
                                             <div class="col-l col-12">
                                                 <label for="feedback2" class="b-label_registration">Ваш отзыв</label>
-                                                <textarea name="feedback" id="feedback2" required></textarea>
+                                                <textarea class="b-comment" name="feedback" id="feedback2" required></textarea>
                                             </div>
                                         </div>
                                         <button type="submit" class="b-form__submit_feedback b-form__submit_vehicle">

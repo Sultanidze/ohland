@@ -172,8 +172,8 @@
                                                 <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                                 <span class="icon_tooltip fa fa-info-circle" aria-hidden="true"></span>
                                             </label>
-                                            <input type="text" id="brand">
-                                            <input type="text" name="brand" class="hidden" id="brandId">
+                                            <input type="text" class="js-autocomplete" id="brand">
+                                            <input type="hidden" name="brand" class="hidden" id="brandId">
                                         </div>
                                         <div class="b-form__cell">
                                             <label for="model" class="b-label_finalize" title="модель авто">Модель 
@@ -181,8 +181,8 @@
                                                 <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                                 <span class="icon_tooltip fa fa-info-circle" aria-hidden="true" ></span>
                                             </label>
-                                            <input type="text" id="model">
-                                            <input type="text" name="model" class="hidden" id="modelId">
+                                            <input type="text" class="js-autocomplete" id="model">
+                                            <input type="hidden" name="model" class="hidden" id="modelId">
                                         </div>
                                         <div class="b-form__cell">
                                             <label for="year" class="b-label_finalize">Год выпуска авто
@@ -226,25 +226,69 @@
                         <div class="b-container">
                             <div class="b-container_finalize">
                                 <div class="b-form__heading_finalize">Выберите способ доставки</div>
+                                
                                 <div class="row row_form">
-                                    <div class="b-form__cell b-form__cell_rightShift">
-                                        <label for="city_delivery" class="b-label_finalize">Город доставки 
-                                            <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
-                                            <span class="fa_error fa fa-times" aria-hidden="true"></span>
-                                        </label>
-                                        <select name="delivCity" class="js-selectric" id="city_delivery">
-                                            <option value="0" disabled selected hidden></option>
-                                            <option value="Kyiv">Киев</option>
-                                            <option value="Zhytomyr">Житомир</option>
-                                            <option value="Hmelnytsky">Хмельницкий</option>
+                                    <div class="b-form__cell">
+                                        <label class="b-label_finalize">&nbsp;</label>
+                                        <select name="deliveryMode" class="js-selectric" id="deliveryMode">
+                                            <option value="bySelf" selected>Самовывоз</option>
+                                            <option value="byCourier">Курьер</option>
+                                            <option value="byNP">Новая почта</option>
                                         </select>
                                     </div>
                                     <div class="b-form__cell">
-                                        <label for="address_delivery" class="b-label_finalize">Адрес доставки
+                                        <label for="delivCitySelf" class="b-label_finalize">Город доставки 
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
-                                        <input type="text" name="deliveryAddr" id="address_delivery">
+                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivCitySelf">
+                                        <input type="hidden" name="delivCityId" class="hidden" id="delivCityIdSelf">
+                                    </div>
+                                    <div class="b-form__cell">
+                                        <label for="deliveryAddrSelf" class="b-label_finalize">Адрес доставки
+                                            <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
+                                            <span class="fa_error fa fa-times" aria-hidden="true"></span>
+                                        </label>
+                                        <input type="text" name="deliveryAddr" id="deliveryAddrSelf">
+                                    </div>
+                                </div>
+                                
+                                <div class="row row_form">
+                                    <div class="b-form__cell">
+                                        <label for="delivRegionNP" class="b-label_finalize">Выберите область
+                                            <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
+                                            <span class="fa_error fa fa-times" aria-hidden="true"></span>
+                                        </label>
+                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivRegionNP">
+                                        <input type="hidden" name="delivRegionIdNP" class="hidden" id="delivRegionIdNP">
+                                    </div>
+                                    <div class="b-form__cell">
+                                        <label for="delivCityNP" class="b-label_finalize">Выберите город
+                                            <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
+                                            <span class="fa_error fa fa-times" aria-hidden="true"></span>
+                                        </label>
+                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivCityNP" disabled>
+                                        <input type="hidden" name="delivCityIdNP" class="hidden" id="delivCityIdNP">
+                                    </div>
+                                    <div class="b-form__cell">
+                                        <label for="delivDivisionNP" class="b-label_finalize">Выберите отделение
+                                            <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
+                                            <span class="fa_error fa fa-times" aria-hidden="true"></span>
+                                        </label>
+                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivDivisionNP" disabled>
+                                        <input type="hidden" name="delivDivisionIdNP" class="hidden" id="delivDivisionIdNP">
+                                    </div>
+                                </div>
+                                
+                                <div class="row row_form">
+                                    <div class="b-form__cell b-form__cell_comment">
+                                        <label for="commentBySelf" class="b-label_finalize">Комментарий к заказу
+                                        </label>
+                                        <textarea class="b-autocomplete b-comment b-comment_finalize" id="commentBySelf"></textarea>
+                                    </div>
+                                    <div class="b-form__cell">
+                                        <label class="b-label_finalize">&nbsp;</label>
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4273.107226297036!2d30.515630968815113!3d50.44473723949905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cef476aeabf7%3A0x7a1e66ef15f87549!2z0KHRgtGA0LDRhdC-0LLQutCwINCe0KHQkNCT0J4g0LIg0JrQuNC10LLQtSwg0L7QvdC70LDQudC9INC60LDQu9GM0LrRg9C70Y_RgtC-0YAg0LDQstGC0L7RhtC40LLQuNC70LrQuCDigJQgT2guVUE!5e0!3m2!1suk!2sua!4v1494764523312" frameborder="0" class="b-map b-map_finalize" id="map" allowfullscreen></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -392,7 +436,7 @@
                         </div>
                     </div>
                 </div>
-                    <div class="b-form__block b-form__pay_byupload">
+                    <div class="b-form__block b-form__pay b-form__pay_byupload">
                         <div class="b-container">
                            <div class="b-container_finalize">
                                 <div class="b-form__heading_finalize">Выберите способ оплаты</div>
