@@ -231,12 +231,12 @@ $(document).ready(function(){
 	var orderFormsValidation = function($method){	//$method - блок з формою (самостійно, по телефону, відвантаживши документи)
 		// для полів з автокомплітом: валідація при втраті фокусу
 		var	$autoCompleteFields = $method.find(".js-autocomplete");
-		console.log($autoCompleteFields);
+		// console.log($autoCompleteFields);
 		$autoCompleteFields.blur(function(){
 			if ($(this).next().val()){
-				$(this).parent(".b-form__cell").addClass("b-cell_valid")
+				$(this).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid")
 			} else{
-				$(this).parent(".b-form__cell").addClass("b-cell_error")
+				$(this).parent(".b-form__cell").removeClass("b-cell_valid").addClass("b-cell_error")
 			}
 		});
 		
@@ -386,24 +386,29 @@ $(document).ready(function(){
 					,bValid = true
 					;
 				$autoCompleteFields.each(function(){
-					if ($(this).next().val()){
-						$(this).parent(".b-form__cell").addClass("b-cell_valid")
-					} else{
-						$(this).parent(".b-form__cell").addClass("b-cell_error");
-						bValid = false;
-						if (!bFocused){
-							bFocused = true;
+					if($(this).attr("disabled") == ""){
+						if ($(this).next().val() ){
+							$(this).parent(".b-form__cell").addClass("b-cell_valid")
+						} else{
+							$(this).parent(".b-form__cell").addClass("b-cell_error");
+							bValid = false;
+							if (!bFocused){
+								$(this).focus();
+								bFocused = true;
+							}
 						}
 					}
 				});
-		        $.ajax({
-		            url: form.action,
-		            type: form.method,
-		            data: $(form).serialize(),
-		            success: function(response) {
-		                showThanks($containerAjax, response);
-		            }            
-		        });
+				if (bValid){
+					$.ajax({
+						url: form.action,
+						type: form.method,
+						data: $(form).serialize(),
+						success: function(response) {
+							showThanks($containerAjax, response);
+						}            
+					});
+				}
 		    }
         };
         
@@ -465,9 +470,6 @@ $(document).ready(function(){
 			// дати початку дії поліса
 		$methods.find("input[name='date']").mask("?99.99.9999");
 
-		// formBySelf validation init
-		// orderFormsValidation($methods.filter("#bySelf"));
-
 		// pickadate initialization
 		var pickadayOptions = {
 			min: +1,
@@ -515,9 +517,12 @@ $(document).ready(function(){
 
 		// selects stylization
 		// $methods.find("#deliveryMode").selectric();
+		// var deliveryNum;
 		$methods.find("select[name='deliveryMode']").selectric({
 			onChange: function(element) {
 				$(element).change();
+				// $(element).parents(".selectric-js-selectric")
+				// console.log($(element).parent());
 			}
 		});
 		// $deliveryMode = $methods.find("select[name='deliveryMode']")
@@ -693,6 +698,7 @@ $(document).ready(function(){
 			    onSelect: function (event, term, item) {
 			    	var itemIndex = items.indexOf(term);	// індекс міста в масиві
 			    	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id міста прихованому елементу форми
+					objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
 			    }
 			});
 		// objToComplete.focus(function(){
