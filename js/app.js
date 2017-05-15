@@ -515,24 +515,34 @@ $(document).ready(function(){
 
 		// autocomplete для полів:
 		// "марка"
-		fieldAutocomplete("#brand", "./ajax/brand.json", null, function(){
+		// fieldAutocomplete("#brand", "./ajax/brand.json", null, function(){
+		// fieldAutocomplete("#" + $("input[name = 'brand']").prev().attr("id"), "./ajax/brand.json", null, function(){
+		// 	$model.prop("disabled", false);
+		// });
+		fieldAutocomplete($("input[name = 'brand']").prev(), "./ajax/brand.json", null, function(){
 			$model.prop("disabled", false);
 		});
+		// console.log($("input[name = 'delivRegionIdNP']").prev().attr("id"));
 		// "модель"
-		fieldAutocomplete("#model", "./ajax/model.json", $brand.next().val());
+		fieldAutocomplete($("#model"), "./ajax/model.json", $brand.next().val());
 		// місто доставки (із областю для кур’єра)
-		fieldAutocomplete("#delivCitySelf", "./ajax/cityRegion.json");
+		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
 		// НП область
-		fieldAutocomplete("#delivRegionNP", "./ajax/region.json");
+		// fieldAutocomplete("#" + $("input[name = 'delivRegionIdNP']").prev().attr("id"), "./ajax/region.json");
+		// fieldAutocomplete("#delivRegionIdNP, #delivRegionNP_byUpload", "./ajax/region.json");
+		// fieldAutocomplete("#delivRegionNP", "./ajax/region.json");
+		// fieldAutocomplete("#delivRegionNP_byUpload", "./ajax/region.json");
+		fieldAutocomplete($("input[name = 'delivRegionIdNP']").prev(), "./ajax/region.json");
 		// НП місто
-		fieldAutocomplete("#delivCityNP", "./ajax/region.json");
+		// fieldAutocomplete("#" + $("input[name = 'delivCityIdNP']").prev().attr("id"), "./ajax/region.json");
+		fieldAutocomplete($("input[name = 'delivCityIdNP']").prev(), "./ajax/region.json");
 		// НП відділення
-		fieldAutocomplete("#delivDivisionNP", "./ajax/division.json");
+		// fieldAutocomplete("#" + $("input[name = 'delivDivisionIdNP']").prev().attr("id"), "./ajax/division.json");
+		fieldAutocomplete($("input[name = 'delivDivisionIdNP']").prev(), "./ajax/division.json");
 
 
 		// selects stylization
 		var oSelectrics = $deliveryMode.selectric({	// стилізуємо селекти вибора доставки
-			onInit: function() {},
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
 				deliveryStr = $(element).val();	// current select value				
 				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $deliveryMode selects
@@ -712,7 +722,7 @@ $(document).ready(function(){
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete("#regCity", "./ajax/city.json")
+		fieldAutocomplete($("#regCity"), "./ajax/city.json")
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -722,6 +732,7 @@ $(document).ready(function(){
 		$vehicleForm.submit(function(event){
 			event.preventDefault();
 			if (!$cityId.val()){
+			// if (false){
 				$cityName.focus();
 			} else {
 				showPropositions($containerAjax);	// load of propositions
@@ -732,15 +743,17 @@ $(document).ready(function(){
 	// autocomplete function 
 	// (enter string, shows items, select item -> send item id)
 	// note: under autocompleted field must be placed hidden input with name attr, to return item id
-	var fieldAutocomplete = function(fieldSelector, jsonAddr, dataIdtoSend, callbackFn){
+	var fieldAutocomplete = function($objToComplete, jsonAddr, dataIdtoSend, callbackFn){
 		var  oJS
 			,items = []
 		    ,itemIds = []
 		    // ,objToComplete = $("#" + fieldId)
-		    ,objToComplete = $(fieldSelector)
+		    // ,objToComplete = $(fieldSelector)
 			;
 
-		objToComplete.autoComplete({
+		$objToComplete.each(function(){
+			var t = this;
+			$(t).autoComplete({
 				minChars: 2,
 			    source: function(term, response){
 			      //   $.getJSON(jsonAddr, { city: term }, function(data){
@@ -777,13 +790,14 @@ $(document).ready(function(){
 			    },
 			    onSelect: function (event, term, item) {
 			    	var itemIndex = items.indexOf(term);	// індекс елемента в масиві
-			    	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
-					objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
+			    	$(t).next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
+					$(t).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
 					if (callbackFn){
 						callbackFn();
 					}
 			    }
 			});
+		});
 		// objToComplete.focus(function(){
 		// 	var e = jQuery.Event( "keydown", { keyCode: 128 } );
 		// 	$(this).trigger(e);
