@@ -420,7 +420,8 @@ $(document).ready(function(){
 		var  $orderBlock = $("#finalize")
 			,$methodBtns = $orderBlock.find(".b-finalize__btn_method")
 			,$methods = $orderBlock.find(".b-finalize__method")
-			,$trash = $orderBlock.find(".b-method__trash")
+			,$activeMethod = $methods.filter(".js-method_active")	// метод "Заповнити самостійно"
+			,$trash = $orderBlock.find(".b-method__trash")	// блок хлопець-дівчина
 			,$trashTabs = $trash.find(".b-trash__tab")
 			,$trashCard = $trash.find(".b-trash__sides")
 			,$filesWrap = $orderBlock.find(".b-wrap_files")
@@ -428,16 +429,26 @@ $(document).ready(function(){
 			,$filesList = $filesWrap.find(".b-list_files")
 			,$filesProgress = $filesWrap.find(".b-progress_files")
 			,$submitButtons = $methods.find("#submitBySelf, #submitByPhone, #submitByUpload")
-			// ,$deliveryMode = $methods.find("select[name='deliveryMode']")
 			,validatorCurrent = orderFormsValidation($methods.filter("#bySelf"))	// formBySelf validation init
+			// змінні для логіки відображення доставки
+			,$deliveryMode = $methods.find("select[name='deliveryMode']")	// селекти методів доставки
+			,deliveryStr = "bySelf"	//самовывоз
+			// наступних елементів буде по 2 об'єкти - один в формі методу "Заповнити самостійно", другий в "Отправить документы"
+			,$selfMap = $methods.find(".b-form__cell_map")
+			,$courierCity = $methods.find("input[name='delivCityId']").prev()
+			,$courierAddr = $methods.find("input[name='deliveryAddr']")
+			,$newPostRegion = $methods.find("input[name='delivRegionIdNP']").prev()
+			,$newPostCity = $methods.find("input[name='delivCityIdNP']").prev()
+			,$newPostDivision = $methods.find("input[name='delivDivisionIdNP']").prev()
+			,$newPostRow = $newPostDivision.parents(".row_form")
 			;
 		
 		// show only selected buy method
 		$methodBtns.click(function(){
 			var $activeBtn = $methodBtns.filter(".b-finalize__btn_active")
 				,methodNum = $methodBtns.index($(this))
-				,$activeMethod = $methods.filter(".js-method_active")
 				;
+				// $activeMethod = $methods.filter(".js-method_active");
 				
 			if($activeBtn[0] != $(this)[0]){
 				$activeBtn.removeClass("b-finalize__btn_active");
@@ -485,7 +496,7 @@ $(document).ready(function(){
 				,filesListStr=""
 				;
 			// console.log("before:", this.files.length);
-			if (this.files.length > 10){
+			if (this.files.length > 10){	// обмеження за к-тю файлів
 				this.files.length = 10;
 				// console.log("after:", this.files.length);
 			}
@@ -516,17 +527,66 @@ $(document).ready(function(){
 
 
 		// selects stylization
-		// $methods.find("#deliveryMode").selectric();
-		// var deliveryNum;
-		$methods.find("select[name='deliveryMode']").selectric({
-			onChange: function(element) {
-				$(element).change();
-				// $(element).parents(".selectric-js-selectric")
-				// console.log($(element).parent());
+		var oSelectrics = $deliveryMode.selectric({	// стилізуємо селекти вибора доставки
+			onInit: function() {},
+			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+				deliveryStr = $(element).val();	// current select value				
+				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $deliveryMode selects
+				
+				// при зміні значення клікнутого селекта змінимо значення решти селектів доставки в інших методах з доставкою
+				for (var i=0; i < $deliveryMode.length; ++i){
+					if (i != indexOfThis){
+						$deliveryMode.eq(i).val(deliveryStr).selectric("refresh");	// змінюємо значення і оновлюємо selectric
+					}
+				}
+
+				switch (deliveryStr) {
+					case "bySelf":	// самовивоз
+						// елементи Кур'єра
+						$courierCity.prop("disabled", true).addClass("hidden")
+									.parent().addClass("hidden");
+						$courierAddr.prop("disabled", true).addClass("hidden")
+									.parent().addClass("hidden");
+						// елементи НП						
+						$newPostRegion.prop("disabled", true).addClass("hidden");
+						$newPostCity.prop("disabled", true).addClass("hidden");
+						$newPostDivision.prop("disabled", true).addClass("hidden");
+						$newPostRow.addClass("hidden");
+						// елементи Самовивоза
+						$selfMap.removeClass("hidden");
+						break;
+					case "byCourier":	// кур'єр
+						// елементи Самовивоза
+						$selfMap.addClass("hidden");
+						// елементи НП						
+						$newPostRegion.prop("disabled", true).addClass("hidden");
+						$newPostCity.prop("disabled", true).addClass("hidden");
+						$newPostDivision.prop("disabled", true).addClass("hidden");
+						$newPostRow.addClass("hidden");
+						// елементи Кур'єра
+						$courierCity.prop("disabled", false).removeClass("hidden")
+									.parent().removeClass("hidden");
+						$courierAddr.prop("disabled", false).removeClass("hidden")
+									.parent().removeClass("hidden");
+						break;
+					case "byNP":	// НП
+						// елементи Кур'єра
+						$courierCity.prop("disabled", true).addClass("hidden")
+									.parent().addClass("hidden");
+						$courierAddr.prop("disabled", true).addClass("hidden")
+									.parent().addClass("hidden");
+						// елементи Самовивоза
+						$selfMap.addClass("hidden");
+						// елементи НП						
+						$newPostRow.removeClass("hidden");
+						$newPostRegion.prop("disabled", false).removeClass("hidden");
+						$newPostCity.removeClass("hidden");
+						$newPostDivision.removeClass("hidden");
+						break;
+				}
+				$(element).change();	// fired by default
 			}
 		});
-		// $deliveryMode = $methods.find("select[name='deliveryMode']")
-
 		// show thanks page
 		// $submitButtons.click(function(event){
 		// 		event.preventDefault();
