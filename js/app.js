@@ -424,6 +424,8 @@ $(document).ready(function(){
 			,$trash = $orderBlock.find(".b-method__trash")	// блок хлопець-дівчина
 			,$trashTabs = $trash.find(".b-trash__tab")
 			,$trashCard = $trash.find(".b-trash__sides")
+			,$brand = $("#brand")
+			,$model = $("#model")
 			,$filesWrap = $orderBlock.find(".b-wrap_files")
 			,$filesInput = $filesWrap.find("input[type='file']")
 			,$filesList = $filesWrap.find(".b-list_files")
@@ -512,18 +514,20 @@ $(document).ready(function(){
 		});
 
 		// autocomplete для полів:
-		// "модель"
-		fieldAutocomplete("model", "./ajax/model.json");
 		// "марка"
-		fieldAutocomplete("brand", "./ajax/brand.json");
+		fieldAutocomplete("#brand", "./ajax/brand.json", null, function(){
+			$model.prop("disabled", false);
+		});
+		// "модель"
+		fieldAutocomplete("#model", "./ajax/model.json", $brand.next().val());
 		// місто доставки (із областю для кур’єра)
-		fieldAutocomplete("delivCitySelf", "./ajax/cityRegion.json");
+		fieldAutocomplete("#delivCitySelf", "./ajax/cityRegion.json");
 		// НП область
-		fieldAutocomplete("delivRegionNP", "./ajax/region.json");
+		fieldAutocomplete("#delivRegionNP", "./ajax/region.json");
 		// НП місто
-		fieldAutocomplete("delivCityNP", "./ajax/region.json");
+		fieldAutocomplete("#delivCityNP", "./ajax/region.json");
 		// НП відділення
-		fieldAutocomplete("delivDivisionNP", "./ajax/division.json");
+		fieldAutocomplete("#delivDivisionNP", "./ajax/division.json");
 
 
 		// selects stylization
@@ -708,7 +712,7 @@ $(document).ready(function(){
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete("regCity", "./ajax/city.json")
+		fieldAutocomplete("#regCity", "./ajax/city.json")
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -727,38 +731,57 @@ $(document).ready(function(){
 
 	// autocomplete function 
 	// (enter string, shows items, select item -> send item id)
-	// note: after autocompleted field must be hidden input with name attr to returnitem id
-	var fieldAutocomplete = function(fieldId, jsonAddr){
+	// note: under autocompleted field must be placed hidden input with name attr, to return item id
+	var fieldAutocomplete = function(fieldSelector, jsonAddr, dataIdtoSend, callbackFn){
 		var  oJS
 			,items = []
 		    ,itemIds = []
-		    ,objToComplete = $("#" + fieldId)
+		    // ,objToComplete = $("#" + fieldId)
+		    ,objToComplete = $(fieldSelector)
 			;
 
 		objToComplete.autoComplete({
 				minChars: 2,
 			    source: function(term, response){
-			        $.getJSON(jsonAddr, { city: term }, function(data){
-			        	items = []; // масив елементів
-			    		itemIds = [];	// масив id елементів
-			        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+			      //   $.getJSON(jsonAddr, { city: term }, function(data){
+			      //   	items = []; // масив елементів
+			    		// itemIds = [];	// масив id елементів
+			      //   	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 
-			        	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
-			        		items.push(oJS.items[i].name);
-			        		itemIds.push(oJS.items[i].id);
-			        	};
-			        	response(items);
+			      //   	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
+			      //   		items.push(oJS.items[i].name);
+			      //   		itemIds.push(oJS.items[i].id);
+			      //   	};
+			      //   	response(items);
+			      //   });
+
+			        $.ajax({
+		            	type: "get",
+		            	data: {dataIdtoSend: dataIdtoSend},
+		            	url : jsonAddr,
+		            	error : function(){
+		            	    alert('error');
+		            	},
+			        	success: function(data){
+				        	items = []; // масив елементів
+				    		itemIds = [];	// масив id елементів
+				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+
+				        	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
+				        		items.push(oJS.items[i].name);
+				        		itemIds.push(oJS.items[i].id);
+				        	};
+				        	response(items);
+				        }
 			        });
 			    },
-			    // renderItem: function (item, search){
-			    //     search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-			    //     var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-			    //     return '<div class="autocomplete-suggestion" data-langname="'+item[0]+'" data-lang="'+item[1]+'" data-val="'+search+'"><img src="img/'+item[1]+'.png"> '+item[0].replace(re, "<b>$1</b>")+'</div>';
-			    // },
 			    onSelect: function (event, term, item) {
-			    	var itemIndex = items.indexOf(term);	// індекс міста в масиві
-			    	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id міста прихованому елементу форми
+			    	var itemIndex = items.indexOf(term);	// індекс елемента в масиві
+			    	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
 					objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
+					if (callbackFn){
+						callbackFn();
+					}
 			    }
 			});
 		// objToComplete.focus(function(){
