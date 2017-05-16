@@ -314,6 +314,9 @@ $(document).ready(function(){
         		date: {
         			required: true,
                     pattern: /[0-9\.]+/
+        		},
+        		regionNP:{
+        			required: true
         		}
         	},
         	messages: {
@@ -378,6 +381,9 @@ $(document).ready(function(){
         		date: {
                     required: "Поле обязательно для заполнения!",
                     pattern: "формат: ДД.ММ.ГГГГ"
+        		},
+        		regionNP:{
+        			required: "Выберите область"
         		}
         	},
 			submitHandler: function(form) {	// replaces default form submit behavior
@@ -436,6 +442,7 @@ $(document).ready(function(){
 			// змінні для логіки відображення доставки
 			,$deliveryMode = $methods.find("select[name='deliveryMode']")	// селекти методів доставки
 			,deliveryStr = "bySelf"	//самовывоз
+			,regionId = "bySelf"	//самовывоз
 			// наступних елементів буде по 2 об'єкти - один в формі методу "Заповнити самостійно", другий в "Отправить документы"
 			,$selfMap = $methods.find(".b-form__cell_map")
 			,$courierCity = $methods.find("input[name='delivCityId']").prev()
@@ -521,29 +528,11 @@ $(document).ready(function(){
 		});
 		// "модель"
 		fieldAutocomplete($model, "./ajax/model.json", $brand.next());
-
-		// місто доставки (із областю для кур’єра) delivRegionIdNP
-		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
-
-		// НП:
-			// область
-		fieldAutocomplete($newPostRegion, "./ajax/region.json", null, function(){
-			$newPostCity.each(function(index){
-				$(this).prop("disabled", false)
-			});
-		});
-			// місто
-		fieldAutocomplete($newPostCity, "./ajax/region.json", null, function(){
-			$newPostDivision.each(function(index){
-				$(this).prop("disabled", false)
-			});
-		});
-			// відділення
-		fieldAutocomplete($newPostDivision, "./ajax/division.json");
-
-
-		// selects stylization
-		var oSelectrics = $deliveryMode.selectric({	// стилізуємо селекти вибора доставки
+// - Delivery fields -------------------------
+	// delivery selects stylization
+		// delivery method select
+		// var oSelectric = 
+		$deliveryMode.selectric({	// стилізуємо селекти вибора доставки
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
 				deliveryStr = $(element).val();	// current select value				
 				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $deliveryMode selects
@@ -602,6 +591,67 @@ $(document).ready(function(){
 				$(element).change();	// fired by default
 			}
 		});
+		$newPostRegion.selectric({
+			onInit: function() {
+				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+			},
+			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+				regionId = $(element).val();	// current select value				
+				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $newPostRegion selects
+				
+				// при зміні значення клікнутого селекта змінимо значення решти селектів доставки в інших методах з доставкою
+				for (var i=0; i < $deliveryMode.length; ++i){
+					if (i != indexOfThis){
+						$newPostRegion.eq(i).val(regionId).selectric("refresh");	// змінюємо значення і оновлюємо selectric
+						$newPostRegion.eq(i).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+					}
+				}
+
+				//треба показати поле міста, видалити значення з нього і прихованого поля
+				$newPostCity.each(function(index){
+					$(this).val("");
+					$(this).next().val("");
+					$(this).prop("disabled", false);
+				});
+				$newPostDivision.each(function(index){
+					$(this).val("");
+					$(this).next().val("");
+					$(this).prop("disabled", true)
+				});
+				//треба сховати поле відділення, видалити значення з нього і прихованого поля
+
+
+				$(element).change();	// fired by default
+			}
+		});
+		
+
+	// delivery selects stylization end
+	
+	//delivery autocompletes...
+		// місто доставки (із областю для кур’єра) delivRegionIdNP
+		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
+
+		// НП:
+			// область
+		// fieldAutocomplete($newPostRegion, "./ajax/region.json", null, function(){
+		// 	$newPostCity.each(function(index){
+		// 		$(this).prop("disabled", false)
+		// 	});
+		// });
+			// місто
+		fieldAutocomplete($newPostCity, "./ajax/city.json", null, function(){
+			$newPostDivision.each(function(index){
+				$(this).val("");
+				$(this).next().val("");
+				$(this).prop("disabled", false)
+			});
+		});
+			// відділення
+		fieldAutocomplete($newPostDivision, "./ajax/division.json");
+
+//- Delivery fields END -------------------------
+
 		// show thanks page
 		// $submitButtons.click(function(event){
 		// 		event.preventDefault();
@@ -745,30 +795,19 @@ $(document).ready(function(){
 	// (enter string, shows items, select item -> send item id)
 	// note: under autocompleted field must be placed hidden input with name attr, to return item id
 	var fieldAutocomplete = function($objToComplete, jsonAddr, $dataIdtoSend, callbackFn){
-		var  oJS
-			,items = []
-		    ,itemIds = []
+		var  oJS		//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+			,items = []		// масив елементів
+		    ,itemIds = []	// масив id елементів
 		    // ,objToComplete = $("#" + fieldId)
 		    // ,objToComplete = $(fieldSelector)
 		    ,criteria = null
 			;
 
-		$objToComplete.each(function(){
+		$objToComplete.each(function(index){
 			var t = this;
 			$(t).autoComplete({
 				minChars: 2,
 			    source: function(term, response){
-			      //   $.getJSON(jsonAddr, { city: term }, function(data){
-			      //   	items = []; // масив елементів
-			    		// itemIds = [];	// масив id елементів
-			      //   	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
-
-			      //   	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
-			      //   		items.push(oJS.items[i].name);
-			      //   		itemIds.push(oJS.items[i].id);
-			      //   	};
-			      //   	response(items);
-			      //   });
 
 					if ($dataIdtoSend instanceof jQuery){
 						criteria = $dataIdtoSend.val();
@@ -799,8 +838,20 @@ $(document).ready(function(){
 			    },
 			    onSelect: function (event, term, item) {
 			    	var itemIndex = items.indexOf(term);	// індекс елемента в масиві
-			    	$(t).next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
-					$(t).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
+			    	var currentId = itemIds[itemIndex];		// id обраного елемента
+			    	// $(t).next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
+			    	$objToComplete.each(function(){
+			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта н
+			    			$(this).val(term);
+			    		};
+			    		$(this).next().val(currentId);	// повертаємо id елемента прихованому елементу форми
+			    	});
+			    	// $objToComplete.val(itemIds[index]);
+			    	// $objToComplete.val(term);
+			    	// $objToComplete.next().val(itemIds[index]);	// повертаємо id елемента прихованому елементу форми
+
+					// $(t).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
+					$objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
 					if (callbackFn){
 						callbackFn();
 					}
@@ -811,30 +862,8 @@ $(document).ready(function(){
 		// 	var e = jQuery.Event( "keydown", { keyCode: 128 } );
 		// 	$(this).trigger(e);
 		// })
-
-		// objToComplete.autoComplete({
-		// 	minChars: 2,
-		//     source: function(term, response){
-		//         $.getJSON(jsonAddr, { city: term }, function(data){
-		//         	items = []; // масив елементів
-		//     		itemIds = [];	// масив id елементів
-		//         	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
-
-		//         	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
-		//         		items.push(oJS.items[i].name);
-		//         		itemIds.push(oJS.items[i].id);
-		//         	};
-		//         	response(items);
-		//         });
-		//     },
-		//     onSelect: function (event, term, item) {
-		//     	var itemIndex = items.indexOf(term);	// індекс міста в масиві
-		//     	objToComplete.next().val(itemIds[itemIndex]);	// повертаємо id міста прихованому елементу форми
-		//     }
-		// });
 	}
 				
-
 
 //	vehicle calculator js initialization
 	vehicleCalcInit($containerAjax);	//
