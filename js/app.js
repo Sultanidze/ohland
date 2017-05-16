@@ -400,16 +400,16 @@ $(document).ready(function(){
 						}
 					}
 				});
-				// if (bValid){
-				// 	$.ajax({
-				// 		url: form.action,
-				// 		type: form.method,
-				// 		data: $(form).serialize(),
-				// 		success: function(response) {
-				// 			showThanks($containerAjax, response);
-				// 		}            
-				// 	});
-				// }
+				if (bValid){
+					$.ajax({
+						url: form.action,
+						type: form.method,
+						data: $(form).serialize(),
+						success: function(response) {
+							showThanks($containerAjax, response);
+						}            
+					});
+				}
 		    }
         };
         
@@ -425,8 +425,8 @@ $(document).ready(function(){
 			,$trash = $orderBlock.find(".b-method__trash")	// блок хлопець-дівчина
 			,$trashTabs = $trash.find(".b-trash__tab")
 			,$trashCard = $trash.find(".b-trash__sides")
-			,$brand = $("#brand")
-			,$model = $("#model")
+			,$brand = $("input[name = 'brand']")
+			,$model = $("input[name = 'model']")
 			,$filesWrap = $orderBlock.find(".b-wrap_files")
 			,$filesInput = $filesWrap.find("input[type='file']")
 			,$filesList = $filesWrap.find(".b-list_files")
@@ -514,34 +514,32 @@ $(document).ready(function(){
 			$filesList.html(filesListStr);
 		});
 
-		// autocomplete для полів:
+	// autocomplete для полів:
 		// "марка"
-		// fieldAutocomplete("#brand", "./ajax/brand.json", null, function(){
-		// fieldAutocomplete("#" + $("input[name = 'brand']").prev().attr("id"), "./ajax/brand.json", null, function(){
-		// 	$model.prop("disabled", false);
-		// });
-		fieldAutocomplete($("input[name = 'brand']").prev(), "./ajax/brand.json", null, function(){
+		fieldAutocomplete($brand, "./ajax/brand.json", null, function(){
 			$model.prop("disabled", false);
 		});
-		// console.log($("input[name = 'delivRegionIdNP']").prev().attr("id"));
 		// "модель"
-		fieldAutocomplete($("input[name = 'model']").prev(), "./ajax/model.json", $brand.next(), function(){
-			// console.log($brand.next())
-		});
-		// місто доставки (із областю для кур’єра)
+		fieldAutocomplete($model, "./ajax/model.json", $brand.next());
+
+		// місто доставки (із областю для кур’єра) delivRegionIdNP
 		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
-		// НП область
-		// fieldAutocomplete("#" + $("input[name = 'delivRegionIdNP']").prev().attr("id"), "./ajax/region.json");
-		// fieldAutocomplete("#delivRegionIdNP, #delivRegionNP_byUpload", "./ajax/region.json");
-		// fieldAutocomplete("#delivRegionNP", "./ajax/region.json");
-		// fieldAutocomplete("#delivRegionNP_byUpload", "./ajax/region.json");
-		fieldAutocomplete($("input[name = 'delivRegionIdNP']").prev(), "./ajax/region.json");
-		// НП місто
-		// fieldAutocomplete("#" + $("input[name = 'delivCityIdNP']").prev().attr("id"), "./ajax/region.json");
-		fieldAutocomplete($("input[name = 'delivCityIdNP']").prev(), "./ajax/region.json");
-		// НП відділення
-		// fieldAutocomplete("#" + $("input[name = 'delivDivisionIdNP']").prev().attr("id"), "./ajax/division.json");
-		fieldAutocomplete($("input[name = 'delivDivisionIdNP']").prev(), "./ajax/division.json");
+
+		// НП:
+			// область
+		fieldAutocomplete($newPostRegion, "./ajax/region.json", null, function(){
+			$newPostCity.each(function(index){
+				$(this).prop("disabled", false)
+			});
+		});
+			// місто
+		fieldAutocomplete($newPostCity, "./ajax/region.json", null, function(){
+			$newPostDivision.each(function(index){
+				$(this).prop("disabled", false)
+			});
+		});
+			// відділення
+		fieldAutocomplete($newPostDivision, "./ajax/division.json");
 
 
 		// selects stylization
@@ -789,12 +787,13 @@ $(document).ready(function(){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
 				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
-
-				        	for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
-				        		items.push(oJS.items[i].name);
-				        		itemIds.push(oJS.items[i].id);
-				        	};
-				        	response(items);
+				        	if (oJS.length != 0){	// перевіряємо чи не відсутні співпадіння (чи відповідь не пустий масив)
+				        		for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
+				        			items.push(oJS.items[i].name);
+				        			itemIds.push(oJS.items[i].id);
+				        		};
+				        		response(items);
+				        	}
 				        }
 			        });
 			    },
