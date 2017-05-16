@@ -232,8 +232,14 @@ $(document).ready(function(){
 		// для полів з автокомплітом: валідація при втраті фокусу
 		var	$autoCompleteFields = $method.find(".js-autocomplete");
 		// console.log($autoCompleteFields);
-		$autoCompleteFields.blur(function(){
-			if ($(this).next().val()){
+		$autoCompleteFields.blur(function(){	// втрата фокуса поля автокомпліта
+			// var  dataItem = $(this).attr("data-item")
+			// 	,fieldValue = $(this).val()
+			// 	;
+			// if (dataItem && (fieldValue != dataItem)){
+			// 	$(this).val(dataItem);
+			// }
+			if ($(this).next().val()){	// додамо позначку помилки валідації якщо не вибрали значення автокомпліта
 				$(this).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid")
 			} else{
 				$(this).parent(".b-form__cell").removeClass("b-cell_valid").addClass("b-cell_error")
@@ -584,8 +590,16 @@ $(document).ready(function(){
 						// елементи НП						
 						$newPostRow.removeClass("hidden");
 						$newPostRegion.prop("disabled", false).removeClass("hidden");
+						// Якщо є введені значення в полях міста чи відділення, то при тимчасовій зміні вибору способа доставки 
+						// при поверненні значення зберігаються в цих полях, але вони disabled, виправимо це
+						if ($newPostCity.next().val()){
+							$newPostCity.prop("disabled", false);
+						}
 						$newPostCity.removeClass("hidden");
-						$newPostDivision.removeClass("hidden");
+						if ($newPostDivision.next().val()){
+							$newPostDivision.prop("disabled", false);
+						}
+						$newPostDivision.removeClass("hidden");	// покажемо рядок опцій НП
 						break;
 				}
 				$(element).change();	// fired by default
@@ -594,6 +608,9 @@ $(document).ready(function(){
 		$newPostRegion.selectric({
 			onInit: function() {
 				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+				$(this).each(function(){
+					$(this).prop("disabled", true)
+				})
 			},
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
 				regionId = $(element).val();	// current select value				
@@ -606,7 +623,7 @@ $(document).ready(function(){
 						$newPostRegion.eq(i).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
 					}
 				}
-
+				$(this).parents(".b-form__cell").removeClass("b-cell_error");	// фікс незникаючої помилки валідації поля
 				//треба показати поле міста, видалити значення з нього і прихованого поля
 				$newPostCity.each(function(index){
 					$(this).val("");
@@ -620,7 +637,6 @@ $(document).ready(function(){
 				});
 				//треба сховати поле відділення, видалити значення з нього і прихованого поля
 
-
 				$(element).change();	// fired by default
 			}
 		});
@@ -630,7 +646,7 @@ $(document).ready(function(){
 	
 	//delivery autocompletes...
 		// місто доставки (із областю для кур’єра) delivRegionIdNP
-		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
+		fieldAutocomplete($courierCity, "./ajax/cityRegion.json");
 
 		// НП:
 			// область
@@ -651,8 +667,15 @@ $(document).ready(function(){
 		fieldAutocomplete($newPostDivision, "./ajax/division.json");
 
 //- Delivery fields END -------------------------
-
-		// show thanks page
+	
+		$("#formBySelf, #formByUpload").submit(function(event){
+			event.preventDefault();
+			$(".js-autocomplete").each(function(){
+				if (!$(this).prop("disabled")){
+					$(this).focus().blur();
+				}
+			})
+		});
 		// $submitButtons.click(function(event){
 		// 		event.preventDefault();
 		// 		console.log(validatorCurrent.numberOfInvalids());
@@ -844,6 +867,7 @@ $(document).ready(function(){
 			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта н
 			    			$(this).val(term);
 			    		};
+			    		$(this).attr("data-item", term);	// додаємо атрибут в якому зберігатиметься вибраний item
 			    		$(this).next().val(currentId);	// повертаємо id елемента прихованому елементу форми
 			    	});
 			    	// $objToComplete.val(itemIds[index]);
@@ -858,6 +882,14 @@ $(document).ready(function(){
 			    }
 			});
 		});
+		$objToComplete.blur(function(){
+			var  dataItem = $(this).attr("data-item")
+				,fieldValue = $(this).val()
+				;
+			if (dataItem && (fieldValue != dataItem)){
+				$(this).val(dataItem);
+			}
+		})
 		// objToComplete.focus(function(){
 		// 	var e = jQuery.Event( "keydown", { keyCode: 128 } );
 		// 	$(this).trigger(e);
