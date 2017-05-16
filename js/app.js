@@ -385,9 +385,10 @@ $(document).ready(function(){
 				var  bFocused = false
 					,bValid = true
 					;
+
 				$autoCompleteFields.each(function(){
-					if($(this).attr("disabled") == ""){
-						if ($(this).next().val() ){
+					if(!$(this).prop("disabled")){
+						if ($(this).next().val()){
 							$(this).parent(".b-form__cell").addClass("b-cell_valid")
 						} else{
 							$(this).parent(".b-form__cell").addClass("b-cell_error");
@@ -399,16 +400,16 @@ $(document).ready(function(){
 						}
 					}
 				});
-				if (bValid){
-					$.ajax({
-						url: form.action,
-						type: form.method,
-						data: $(form).serialize(),
-						success: function(response) {
-							showThanks($containerAjax, response);
-						}            
-					});
-				}
+				// if (bValid){
+				// 	$.ajax({
+				// 		url: form.action,
+				// 		type: form.method,
+				// 		data: $(form).serialize(),
+				// 		success: function(response) {
+				// 			showThanks($containerAjax, response);
+				// 		}            
+				// 	});
+				// }
 		    }
         };
         
@@ -524,7 +525,9 @@ $(document).ready(function(){
 		});
 		// console.log($("input[name = 'delivRegionIdNP']").prev().attr("id"));
 		// "модель"
-		fieldAutocomplete($("#model"), "./ajax/model.json", $brand.next().val());
+		fieldAutocomplete($("input[name = 'model']").prev(), "./ajax/model.json", $brand.next(), function(){
+			// console.log($brand.next())
+		});
 		// місто доставки (із областю для кур’єра)
 		fieldAutocomplete($("#delivCitySelf"), "./ajax/cityRegion.json");
 		// НП область
@@ -722,7 +725,7 @@ $(document).ready(function(){
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete($("#regCity"), "./ajax/city.json")
+		fieldAutocomplete($("#regCity"), "./ajax/city.json", $("#cityId").val())
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -743,12 +746,13 @@ $(document).ready(function(){
 	// autocomplete function 
 	// (enter string, shows items, select item -> send item id)
 	// note: under autocompleted field must be placed hidden input with name attr, to return item id
-	var fieldAutocomplete = function($objToComplete, jsonAddr, dataIdtoSend, callbackFn){
+	var fieldAutocomplete = function($objToComplete, jsonAddr, $dataIdtoSend, callbackFn){
 		var  oJS
 			,items = []
 		    ,itemIds = []
 		    // ,objToComplete = $("#" + fieldId)
 		    // ,objToComplete = $(fieldSelector)
+		    ,criteria = null
 			;
 
 		$objToComplete.each(function(){
@@ -768,9 +772,15 @@ $(document).ready(function(){
 			      //   	response(items);
 			      //   });
 
+					if ($dataIdtoSend instanceof jQuery){
+						criteria = $dataIdtoSend.val();
+						// console.log($dataIdtoSend).val();
+					}
+					// console.log(criteria);
 			        $.ajax({
 		            	type: "get",
-		            	data: {dataIdtoSend: dataIdtoSend},
+		            	data: {item: term, criteria: criteria},
+		            	// , criteria: criteria
 		            	url : jsonAddr,
 		            	error : function(){
 		            	    alert('error');
