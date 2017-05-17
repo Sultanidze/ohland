@@ -453,7 +453,7 @@ $(document).ready(function(){
 			,$selfMap = $methods.find(".b-form__cell_map")
 			,$courierCity = $methods.find("input[name='delivCityId']").prev()
 			,$courierAddr = $methods.find("input[name='deliveryAddr']")
-			,$newPostRegion = $methods.find("input[name='delivRegionIdNP']").prev()
+			,$newPostRegion = $methods.find("select[name='regionNP']")
 			,$newPostCity = $methods.find("input[name='delivCityIdNP']").prev()
 			,$newPostDivision = $methods.find("input[name='delivDivisionIdNP']").prev()
 			,$newPostRow = $newPostDivision.parents(".row_form")
@@ -656,7 +656,7 @@ $(document).ready(function(){
 		// 	});
 		// });
 			// місто
-		fieldAutocomplete($newPostCity, "./ajax/city.json", null, function(){
+		fieldAutocomplete($newPostCity, "./ajax/city.json", $newPostRegion, function(){
 			$newPostDivision.each(function(index){
 				$(this).val("");
 				$(this).next().val("");
@@ -664,7 +664,7 @@ $(document).ready(function(){
 			});
 		});
 			// відділення
-		fieldAutocomplete($newPostDivision, "./ajax/division.json");
+		fieldAutocomplete($newPostDivision, "./ajax/division.json", $newPostCity.next());
 
 //- Delivery fields END -------------------------
 	
@@ -796,7 +796,7 @@ $(document).ready(function(){
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete($("#regCity"), "./ajax/city.json", $("#cityId").val())
+		fieldAutocomplete($("#regCity"), "./ajax/city.json")
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -825,7 +825,7 @@ $(document).ready(function(){
 		    // ,objToComplete = $(fieldSelector)
 		    ,criteria = null
 			;
-
+		console.log($dataIdtoSend);
 		$objToComplete.each(function(index){
 			var t = this;
 			$(t).autoComplete({
