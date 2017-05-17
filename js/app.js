@@ -789,10 +789,11 @@ $(document).ready(function(){
 			var index = $vehicles.index($(this))	// індекс типу тз (від 0 до 3)
 				,$paramBlockActive = $paramBlocks.filter(".js-params_active")
 				;
-				// console.log(index);
+
 			if ($paramBlockActive != $(this)){
 				$paramBlockActive.removeClass("js-params_active");
 				$paramBlocks.eq(index).addClass("js-params_active");
+				$paramBlocks.eq(index).find("input").eq(1).prop("checked", true);	// вибиратимемо 2й радіобатн вибраного тз
 				$paramBlockActive.fadeOut(0, function(){
 					$paramBlocks.eq(index).fadeIn(0);
 				})
@@ -881,7 +882,7 @@ $(document).ready(function(){
 			    onSelect: function (event, term, item) {
 			    	itemIndex = items.indexOf(term);	// індекс елемента в масиві
 			    	currentId = itemIds[itemIndex];		// id обраного елемента
-			    	console.log(itemOtherIds[itemIndex]);
+
 		    		if (bLength3){currentOtherId = itemOtherIds[itemIndex]}	// зберігаємо обраний zone_id (якщо такі є)
 			    	$objToComplete.each(function(){	// заповнимо решту однакових полів однаковими значеннями
 			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта
