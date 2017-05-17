@@ -796,7 +796,7 @@ $(document).ready(function(){
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete($("#regCity"), "./ajax/city.json")
+		fieldAutocomplete($("#regCity"), "./ajax/cityRegion.json")
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -820,12 +820,16 @@ $(document).ready(function(){
 	var fieldAutocomplete = function($objToComplete, jsonAddr, $dataIdtoSend, callbackFn){
 		var  oJS		//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 			,items = []		// масив елементів
+			,propertiesLength	// зберігаємо тут к-ть властивостей item-а
+			,bLength3
 		    ,itemIds = []	// масив id елементів
-		    // ,objToComplete = $("#" + fieldId)
-		    // ,objToComplete = $(fieldSelector)
+		    ,itemOtherIds = []	// масив додаткових id елементів
 		    ,criteria = null
+		    ,itemIndex
+		    ,currentId
+		    ,currentOtherId
 			;
-		console.log($dataIdtoSend);
+		// console.log($dataIdtoSend);
 		$objToComplete.each(function(index){
 			var t = this;
 			$(t).autoComplete({
@@ -849,10 +853,20 @@ $(document).ready(function(){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
 				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+				        	// propertiesLength = oJS.items[0].length;
+				        	propertiesLength = 0;
+				        	var i;
+				        	for (i in oJS.items[0]) {
+				        		if (oJS.items[0].hasOwnProperty(i)) {
+				        			++propertiesLength;
+				        		}
+				        	}
+				        	bLength3 = (propertiesLength == 3);	// маємо додатковий Id треба створитиїх масив itemOtherIds
 				        	if (oJS.length != 0){	// перевіряємо чи не відсутні співпадіння (чи відповідь не пустий масив)
 				        		for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
 				        			items.push(oJS.items[i].name);
 				        			itemIds.push(oJS.items[i].id);
+				        			if (bLength3) {itemOtherIds.push(oJS.items[i].zone_id)};
 				        		};
 				        		response(items);
 				        	}
@@ -860,23 +874,22 @@ $(document).ready(function(){
 			        });
 			    },
 			    onSelect: function (event, term, item) {
-			    	var itemIndex = items.indexOf(term);	// індекс елемента в масиві
-			    	var currentId = itemIds[itemIndex];		// id обраного елемента
-			    	// $(t).next().val(itemIds[itemIndex]);	// повертаємо id елемента прихованому елементу форми
-			    	$objToComplete.each(function(){
-			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта н
+			    	itemIndex = items.indexOf(term);	// індекс елемента в масиві
+			    	currentId = itemIds[itemIndex];		// id обраного елемента
+			    	console.log(itemOtherIds[itemIndex]);
+		    		if (bLength3){currentOtherId = itemOtherIds[itemIndex]}	// зберігаємо обраний zone_id (якщо такі є)
+			    	$objToComplete.each(function(){	// заповнимо решту однакових полів однаковими значеннями
+			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта
 			    			$(this).val(term);
 			    		};
 			    		$(this).attr("data-item", term);	// додаємо атрибут в якому зберігатиметься вибраний item
 			    		$(this).next().val(currentId);	// повертаємо id елемента прихованому елементу форми
+			    		if (bLength3){$(this).next().next().val(currentOtherId)}	// присвоюємо zone_id 2му прихованому полю
 			    	});
-			    	// $objToComplete.val(itemIds[index]);
-			    	// $objToComplete.val(term);
-			    	// $objToComplete.next().val(itemIds[index]);	// повертаємо id елемента прихованому елементу форми
 
-					// $(t).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
-					$objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");
-					if (callbackFn){
+					$objToComplete.parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid");	// позначаємо валідним поле
+
+					if (callbackFn){	// перевіряємо чи існує колбек ф-я в параметрах, щоб уникнути помилки
 						callbackFn();
 					}
 			    }
