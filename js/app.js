@@ -534,15 +534,14 @@ $(document).ready(function(){
 
 	// autocomplete для полів:
 		// "марка"
-		fieldAutocomplete($brand, "./ajax/brand.json", null, function(){
+		fieldAutocomplete(2, $brand, "./ajax/brand.json", null, function(){
 			$model.prop("disabled", false);
 		});
 		// "модель"
-		fieldAutocomplete($model, "./ajax/model.json", $brand.next());
+		fieldAutocomplete(2, $model, "./ajax/model.json", $brand.next());
 // - Delivery fields -------------------------
 	// delivery selects stylization
 		// delivery method select
-		// var oSelectric = 
 		$deliveryMode.selectric({	// стилізуємо селекти вибора доставки
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
 				deliveryStr = $(element).val();	// current select value				
@@ -610,7 +609,7 @@ $(document).ready(function(){
 				$(element).change();	// fired by default
 			}
 		});
-		$newPostRegion.selectric({
+		$newPostRegion.selectric({	// НП обл
 			onInit: function() {
 				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
 				$(this).each(function(){
@@ -651,17 +650,10 @@ $(document).ready(function(){
 	
 	//delivery autocompletes...
 		// місто доставки (із областю для кур’єра) delivRegionIdNP
-		fieldAutocomplete($courierCity, "./ajax/cityRegion.json");
-
+		fieldAutocomplete(2, $courierCity, "./ajax/cityRegion.json");
 		// НП:
-			// область
-		// fieldAutocomplete($newPostRegion, "./ajax/region.json", null, function(){
-		// 	$newPostCity.each(function(index){
-		// 		$(this).prop("disabled", false)
-		// 	});
-		// });
 			// місто
-		fieldAutocomplete($newPostCity, "./ajax/city.json", $newPostRegion, function(){
+		fieldAutocomplete(2, $newPostCity, "./ajax/city.json", $newPostRegion, function(){
 			$newPostDivision.each(function(index){
 				$(this).val("");
 				$(this).next().val("");
@@ -669,7 +661,7 @@ $(document).ready(function(){
 			});
 		});
 			// відділення
-		fieldAutocomplete($newPostDivision, "./ajax/division.json", $newPostCity.next());
+		fieldAutocomplete(1, $newPostDivision, "./ajax/division.json", $newPostCity.next());
 
 //- Delivery fields END -------------------------
 	
@@ -798,11 +790,10 @@ $(document).ready(function(){
 					$paramBlocks.eq(index).fadeIn(0);
 				})
 			}
-			// $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
 		});
 
 		//ajax registration city autocomplete
-		fieldAutocomplete($("#regCity"), "./ajax/cityRegion.json")
+		fieldAutocomplete(2, $("#regCity"), "./ajax/cityRegion.json")
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -823,7 +814,7 @@ $(document).ready(function(){
 	// autocomplete function 
 	// (enter string, shows items, select item -> send item id)
 	// note: under autocompleted field must be placed hidden input with name attr, to return item id
-	var fieldAutocomplete = function($objToComplete, jsonAddr, $dataIdtoSend, callbackFn){
+	var fieldAutocomplete = function(iMinChars, $objToComplete, jsonAddr, $dataIdtoSend, callbackFn){
 		var  oJS		//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 			,items = []		// масив елементів
 			,propertiesLength	// зберігаємо тут к-ть властивостей item-а
@@ -835,18 +826,17 @@ $(document).ready(function(){
 		    ,currentId
 		    ,currentOtherId
 			;
-		// console.log($dataIdtoSend);
+
 		$objToComplete.each(function(index){
 			var t = this;
 			$(t).autoComplete({
-				minChars: 2,
+				minChars: iMinChars,
 			    source: function(term, response){
 
 					if ($dataIdtoSend instanceof jQuery){
 						criteria = $dataIdtoSend.val();
-						// console.log($dataIdtoSend).val();
 					}
-					// console.log(criteria);
+
 			        $.ajax({
 		            	type: "get",
 		            	data: {item: term, criteria: criteria},
@@ -909,10 +899,6 @@ $(document).ready(function(){
 				$(this).val(dataItem);
 			}
 		})
-		// objToComplete.focus(function(){
-		// 	var e = jQuery.Event( "keydown", { keyCode: 128 } );
-		// 	$(this).trigger(e);
-		// })
 	}
 				
 
