@@ -107,23 +107,28 @@ $(document).ready(function(){
 		$containerAjax.dequeue("ajax");
 	};
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
+		var $btnsReadMore = $(".js-btn_readmore")
+			;
+			
 		// hide-show details  by click on "Подробнее"
 			// show:
-		$(".js-btn_readmore").click(function(){	// show-hide details text on "Подробнее" click
+		$btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
 			// $(this).hide();
-			var  $toggleBlock = $(this).prev(".js-content_readmore")
-				,$parentOfToggleBlock = $toggleBlock.parents(".b-proposition")
+			var  $toggleList = $(this).siblings(".js-content_readmore")
+				// ,$listItems = $toggleList().children()
+				,$toggleListItems = $toggleList.children().filter("li:nth-child(3)~li")
+				,$proposition = $toggleList.parents(".b-proposition")
 				;
 				
-			if ($toggleBlock.hasClass("js-opened")){
-				$toggleBlock.slideUp(200, function(){
-					$parentOfToggleBlock.css("z-index","0");
-					$(this).removeClass("js-opened");
+			if ($toggleList.hasClass("js-opened")){
+				$toggleListItems.slideUp(200, function(){
+					$proposition.css("z-index","0");
+					$toggleList.removeClass("js-opened");
 				});
 			} else {
-				$parentOfToggleBlock.css("z-index","1");
-				$toggleBlock.slideDown(200, function(){
-					$(this).addClass("js-opened");
+				$proposition.css("z-index","1");
+				$toggleListItems.slideDown(200, function(){
+					$toggleList.addClass("js-opened");
 				});
 			}
 		})
