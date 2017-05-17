@@ -8,7 +8,6 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 	clear: 'удалить',
 	close: 'закрыть',
 	firstDay: 1,
-	// format: 'd mmmm yyyy г.',
 	format: 'dd.mm.yyyy',
 	formatSubmit: 'dd.mm.yyyy'
 });
@@ -16,16 +15,11 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 $(document).ready(function(){
 // Global variables
 	var  $containerAjax = $(".js-ajax_calculator")
-		// ,$bCrumbs = $(".b-crumbs")
 		;
 
 	// Functions for the calc-choose-buy block AJAX loads and js-functional inits on them
 	var hideContainerAjax = function($containerAjax){
-		// $containerAjax.fadeOut({
-		// 	duration: 400,
-		// 	queue: "ajax"
-		// 	}
-		// );
+		$("#toTop").trigger("click");	// прокручуємо сторінку нагору
 		$containerAjax.animate({
 				opacity: 0,
 			},{
@@ -38,11 +32,6 @@ $(document).ready(function(){
 		);
 	};
 	var showContainerAjax = function($containerAjax){
-		// $containerAjax.fadeIn({
-		// 	duration: 400,
-		// 	queue: "ajax"
-		// 	}
-		// );
 		$containerAjax.animate({
 				opacity: 1,
 			},{
@@ -67,20 +56,12 @@ $(document).ready(function(){
 	// };
 
 
-
 	// OSAGO propositions
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
 		hideContainerAjax($containerAjax);
 
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
-			//$(this).load("./ajax/__propositions.html", function(){propositionsInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
-			// var t = this;
-			// var dequeueThis = function(t){
-			// 	return function(){
-			// 		$(t).dequeue("ajax");
-			// 	}
-			// }
 			$.ajax({
             	type: "get",
             	url : "./ajax/__propositions.html",
@@ -96,15 +77,10 @@ $(document).ready(function(){
             		$containerAjax.dequeue("ajax");
             	}
             });
-
-			// $(this).dequeue("ajax");
 			// showBcrumbs($bCrumbs);	// show breadcrumbs
 		});
 
-
-		// showContainerAjax($containerAjax);
-
-		$containerAjax.dequeue("ajax");
+		$containerAjax.dequeue("ajax");	// запустимо чергу
 	};
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
 		var $btnsReadMore = $(".js-btn_readmore")
@@ -132,15 +108,6 @@ $(document).ready(function(){
 				});
 			}
 		})
-			// hide:
-		// $(".b-proposition").mouseleave(function(){
-			// var $hiddenContent = $(this).find(".js-content_readmore");
-			// $hiddenContent.slideUp(
-				// function(){
-					// $hiddenContent.next(".js-btn_readmore").slideDown();
-				// }
-			// );
-		// })
 
 		// hide-show additional propositions by click on "Посмотреть еще предложения"
 		var  $propositionsCalc = $containerAjax.find(".b-calculator_propos")
@@ -159,40 +126,13 @@ $(document).ready(function(){
 		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
 
 		// підванатажимо блок оформлення при кліку на "Купить"
-		var  $buyBtns = $("#propositions").find(".b-proposition__buy")	// кнопки купівлі
-			; 
+		var  $buyBtns = $("#propositions").find(".b-proposition__buy");	// кнопки купівлі
+
 		$buyBtns.click(function(){
 			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
-			
-			// place for Ajax sending
-			//send proposNum
+
 			showOrderBlock(proposNum, $containerAjax);
 		});
-		
-		//propositions slider
-		// var $sliderPropos = $(".b-propositions .b-propositions__string").slick({
-		// 	arrows: false,
-		// 	infinite: false,
-		// 	speed: 400,
-		// 	slidesToShow: 4,
-		// 	slidesToScroll: 4,
-		// 	// autoplay: true,
-		// 	// autoplaySpeed: 4400
-		// });
-
-		//	morePropositions btn functionality
-			// var  $sliderProposMoreBtn = $sliderPropos.parents(".b-calculator_propos").find("#morePropositions");
-			// $sliderProposMoreBtn.click(function(event){
-			// 	event.preventDefault();
-			// 	$sliderPropos.slick("slickNext");
-			// });
-
-
-
-		// $("#propositions .b-proposition__buy").click(function(){
-		// 	var propositonId = $(this).attr("data-proposition");	// id пропозиції яку треба передати
-		// 	//$(this).load("./ajax/__calcVehicle.html", function(){vehicleCalcInit($containerAjax)});
-		// });
 	};
 	
 	// order block
@@ -216,13 +156,8 @@ $(document).ready(function(){
             		$containerAjax.dequeue("ajax");
             	}
             });
-			// $(this).load("./ajax/__orderBlock.html", function(){orderBlockInit($containerAjax)});	// підвантажуємо пропозиції та ініціалізуємо на них js-функціонал
-			 
-			// $(this).dequeue("ajax");
-			// hideBcrumbs($bCrumbs);	// show breadcrumbs
+			// hideBcrumbs($bCrumbs);	// hide breadcrumbs
 		});
-
-		// showContainerAjax($containerAjax);
 		
 		$containerAjax.dequeue("ajax");
 	}
@@ -236,17 +171,11 @@ $(document).ready(function(){
 	var orderFormsValidation = function($method){	//$method - блок з формою (самостійно, по телефону, відвантаживши документи)
 		// для полів з автокомплітом: валідація при втраті фокусу
 		var	$autoCompleteFields = $method.find(".js-autocomplete");
-		// console.log($autoCompleteFields);
+
 		$autoCompleteFields.blur(function(){	// втрата фокуса поля автокомпліта
-			// var  dataItem = $(this).attr("data-item")
-			// 	,fieldValue = $(this).val()
-			// 	;
-			// if (dataItem && (fieldValue != dataItem)){
-			// 	$(this).val(dataItem);
-			// }
 			if ($(this).next().val()){	// додамо позначку помилки валідації якщо не вибрали значення автокомпліта
 				$(this).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid")
-			} else{
+			} else{						// а як навпаки, то позначимо валідним
 				$(this).parent(".b-form__cell").removeClass("b-cell_valid").addClass("b-cell_error")
 			}
 		});
@@ -757,11 +686,6 @@ $(document).ready(function(){
 		// selects stylization
 		$(".js-selectric").selectric();
 		// vehicles labels select
-		// $(".b-vehicle").click(function(){
-			// $(".b-vehicle").removeClass("b-vehicle_active");
-			// $(this).addClass("b-vehicle_active");
-			// // $("#" + $(this).attr("data-id")).trigger("click");	//перемикання радіобатонів об’єму при кліку на тз
-		// });
 		var  $vehicles = $(".b-vehicle")	//	блоки тз з картинками
 			,$vehiclesBlock = $(".b-vehicles")	// $vehicles container
 			,$paramBlocks = $(".b-params")	// відповідні блоки з радіобатонами до кожного тз
@@ -802,8 +726,7 @@ $(document).ready(function(){
 			;
 		$vehicleForm.submit(function(event){
 			event.preventDefault();
-			if (!$cityId.val()){
-			// if (false){
+			if (!$cityId.val()){	//якщо не вибране місто реєстрації (відповідне приховане поле без значення)
 				$cityName.focus();
 			} else {
 				showPropositions($containerAjax);	// load of propositions
@@ -849,7 +772,6 @@ $(document).ready(function(){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
 				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
-				        	// propertiesLength = oJS.items[0].length;
 				        	propertiesLength = 0;
 				        	var i;
 				        	for (i in oJS.items[0]) {
@@ -891,12 +813,12 @@ $(document).ready(function(){
 			    }
 			});
 		});
-		$objToComplete.blur(function(){
-			var  dataItem = $(this).attr("data-item")
-				,fieldValue = $(this).val()
+		$objToComplete.blur(function(){	// при втраті фокуса, якщо ми змінили значення, але не обрали з меню автокомпліта, то повернемо раніше обране значення полю
+			var  dataItem = $(this).attr("data-item")	// раніше обране значення, збережене в атрибуті "data-item"
+				,fieldValue = $(this).val()	// поточне значення
 				;
-			if (dataItem && (fieldValue != dataItem)){
-				$(this).val(dataItem);
+			if (dataItem && (fieldValue != dataItem)){	// перевірка чи є попередньо обране значення (якщо)
+				$(this).val(dataItem);	// як є то запишемо вибране раніше значення
 			}
 		})
 	}
@@ -998,8 +920,6 @@ $(document).ready(function(){
 // responses slider
 	var  $sliderResp = $(".b-slider_responses")
 		,$slideResp = $(".b-slide_responses")
-		// ,$slideWrapRespFirst = $(".b-slide__wrap_first")
-		// ,$slideWrapRespLast = $(".b-slide__wrap_last")
 		,$respFedbBtn = $(".b-section_responses .b-responses__block_btns .b-rating__btn_responses")
 		,$responsesBtn = $respFedbBtn.filter(".js-btn_responses")
 		,$feedbackBtn = $respFedbBtn.filter(".js-btn_feedback")
@@ -1137,14 +1057,6 @@ $(document).ready(function(){
 	$sliderRespNextBtn.click(function(){
 		$activeSlide = $slideResp.filter(".b-slide_active");
 		$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
-
-		// $activeSlideWrap.addClass("moveLeft")
-		// $unactiveSlideWrap.addClass("moveRight")
-		// activeSlideWrap.addClass("moveLeft");
-		// $slideResp.toggleClass("b-slide_active");
-		// reshuffle($activeSlide, );
-		// moveLeft($activeSlide);
-		// moveRight($unactiveSlide);
 		if(!$activeSlide.is(":animated")){
 			reshuffle($activeSlide, $unactiveSlide, true);
 		}
@@ -1186,6 +1098,7 @@ $(document).ready(function(){
 	$modalCallbackForm.submit(function(event){
 		event.preventDefault();
 		// place for Ajax sending
+
 		// in a case of Ajax success:
 		$modals.fadeOut();
 		$modalCallbackSuccess.fadeIn();
@@ -1195,13 +1108,13 @@ $(document).ready(function(){
 	})
 	// scroll to top
 	$("#toTop").click(function(){
-		event.preventDefault();
+		// event.preventDefault();
 		var  $anchor = $($(this).find(".b-btn_toTop").attr("href"))
 			,offsetAnchor = $anchor.offset().top
 			;
-		$('html, body').animate({ scrollTop: offsetAnchor}, 600);
+		$('html, body').animate({ scrollTop: offsetAnchor}, 400);
 		return false;
 	})
 
-	
+	$("#toTop").trigger("click");	// scroll to top after page is loaded
 });
