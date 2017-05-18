@@ -347,14 +347,56 @@ $(document).ready(function(){
 					}
 				});
 				if (bValid){
-					$.ajax({
-						url: form.action,
-						type: form.method,
-						data: $(form).serialize(),
-						success: function(response) {
-							showThanks($containerAjax, response);
-						}            
-					});
+					// $.ajax({
+					// 	url: form.action,
+					// 	type: form.method,
+					// 	data: $(form).serialize(),
+					// 	success: function(response) {
+					// 		showThanks($containerAjax, response);
+					// 	}            
+					// });
+					//Show thanks function start ------
+					hideContainerAjax($containerAjax);
+                    $containerAjax.queue("ajax", function(){
+						if(form.id == 'formByUpload'){
+	                        var formData = new FormData($('#formByUpload')[0]);
+	                        $.ajax({
+	                            url: "./ajax/__thanks.html", 
+	                            type: "get",	// for local test
+	                            // type: 'POST',
+	                            // data: formData,
+	                            // contentType: false,
+	                            // processData: false,
+	                            // cache: false,
+	                            success: function(response) {
+	                                $containerAjax.html(response);
+	                            },
+	                            error: function(){
+	                                alert('ERROR at PHP side!!');
+	                            },
+	                            complete: function(){
+	                                showContainerAjax($containerAjax);
+	                                $containerAjax.dequeue("ajax");
+	                            }
+	                            //Options to tell jQuery not to process data or worry about content-type.
+	                        });
+	                    } else {
+	                        $.ajax({
+	                            url: "./ajax/__thanks.html",
+	                            type: form.method,
+	                            data: $(form).serialize(),
+	                            success: function(response){
+	                                $containerAjax.html(response);
+	                            },
+	                            complete: function(){
+	                                showContainerAjax($containerAjax);
+	                                $containerAjax.dequeue("ajax");
+	                            }          
+	                        });
+	                    }
+	                });
+	                $containerAjax.dequeue("ajax");
+					//Show thanks function end ------
 				}
 		    }
         };
@@ -612,29 +654,29 @@ $(document).ready(function(){
 	}
 	
 	// show thanks page
-	var showThanks = function($containerAjax, responseFromPhp){
-		hideContainerAjax($containerAjax);
+	// var showThanks = function($containerAjax, responseFromPhp){
+	// 	hideContainerAjax($containerAjax);
 
-		// -- temporary Ajax for static demo --
-		// !!! comment it on server
-		$containerAjax.queue("ajax", function(){
-			// place for Ajax sending
-			$.ajax({
-            	type: "get",
-            	url : "./ajax/__thanks.html",
-            	error : function(){
-            	    alert('error');
-            	},
-            	success: function(response){
-            	    $containerAjax.html(response);
-            	    // thanksInit($containerAjax);
-            	},
-            	complete: function(){
-            		showContainerAjax($containerAjax);
-            		$containerAjax.dequeue("ajax");
-            	}
-            });
-		});
+	// 	// -- temporary Ajax for static demo --
+	// 	// !!! comment it on server
+	// 	$containerAjax.queue("ajax", function(){
+	// 		// place for Ajax sending
+	// 		$.ajax({
+ //            	type: "get",
+ //            	url : "./ajax/__thanks.html",
+ //            	error : function(){
+ //            	    alert('error');
+ //            	},
+ //            	success: function(response){
+ //            	    $containerAjax.html(response);
+ //            	    // thanksInit($containerAjax);
+ //            	},
+ //            	complete: function(){
+ //            		showContainerAjax($containerAjax);
+ //            		$containerAjax.dequeue("ajax");
+ //            	}
+ //            });
+	// 	});
 		//-----------------------------------
 
 		// !!! 
@@ -645,8 +687,8 @@ $(document).ready(function(){
   //           $containerAjax.dequeue("ajax");
 		// });
 
-		$containerAjax.dequeue("ajax");
-	}
+	// 	$containerAjax.dequeue("ajax");
+	// }
 
 	// vehicle calculator
 	var showVehicleCalc = function($containerAjax){
