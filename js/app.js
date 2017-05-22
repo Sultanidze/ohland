@@ -60,6 +60,13 @@ $(document).ready(function(){
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
 		hideContainerAjax($containerAjax);
 
+            var type = $("#vehicleForm input[name='type']:checked").val()
+            var notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0;
+            var franshiza = $("#vehicleForm [name='franshiza']").val();
+            var city = $("#vehicleForm #cityId").val();
+            var cityName = $("#vehicleForm #regCity").val();
+            var zone = $("#vehicleForm #zoneId").val();
+
 		$containerAjax.queue("ajax", function(){
 			// place for Ajax sending
 			$.ajax({
@@ -83,9 +90,20 @@ $(document).ready(function(){
 		$containerAjax.dequeue("ajax");	// запустимо чергу
 	};
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		var $btnsReadMore = $(".js-btn_readmore")
-			;
-			
+		var $ratings = $(".b-company__rating_propos");
+		
+		$ratings.each(function(){
+			var  starsNum = $(this).attr("data-rating")
+				,$stars = $(this).children("span.fa")
+				,i
+				;
+				
+			for (i=0; i<starsNum; ++i){
+				$stars.eq(i).removeClass("fa-star-o").addClass("fa-star");
+			}
+		});
+
+		var $btnsReadMore = $(".js-btn_readmore");
 		// hide-show details  by click on "Подробнее"
 			// show:
 		$btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
@@ -383,6 +401,7 @@ $(document).ready(function(){
 	                    } else {
 	                        $.ajax({
 	                            url: "./ajax/__thanks.html",
+	                        	// url: form.action,
 	                            type: form.method,
 	                            data: $(form).serialize(),
 	                            success: function(response){
@@ -748,13 +767,15 @@ $(document).ready(function(){
 				,$paramBlockActive = $paramBlocks.filter(".js-params_active")
 				;
 
-			if ($paramBlockActive != $(this)){
-				$paramBlockActive.removeClass("js-params_active");
-				$paramBlocks.eq(index).addClass("js-params_active");
+			if ($paramBlockActive != $(this)){	// не будемо ховати і показувати вже видимий блок параметроів
+				$paramBlockActive.removeClass("js-params_active");	// робимо неактивним блоком параметрів
+				$paramBlockActive.removeClass("b-params_active");	// ховаємо неактивний блок параметрів
+				$paramBlocks.eq(index).addClass("js-params_active");// робимо активним блоком параметрів
 				$paramBlocks.eq(index).find("input").eq(1).prop("checked", true);	// вибиратимемо 2й радіобатн вибраного тз
-				$paramBlockActive.fadeOut(0, function(){
-					$paramBlocks.eq(index).fadeIn(0);
-				})
+				$paramBlocks.eq(index).addClass("b-params_active");	// показуємо активний блок параметрів
+				// $paramBlockActive.fadeOut(0, function(){
+				// 	$paramBlocks.eq(index).fadeIn(0);
+				// })
 			}
 		});
 
@@ -1110,11 +1131,35 @@ $(document).ready(function(){
 	$(".js-form_feedback").submit(function(event){
 		event.preventDefault();
 		// place for Ajax sending
-		// in a case of Ajax success:
-		$modalOvl.fadeIn();	// show success modal
-		$modalFeedbackSuccess.fadeIn();
+		var data = $(this).serialize();
+		$.ajax({
+                // type : 'post',
+                type : 'get',
+                url: './ajax/create-feedback.json',
+                data : data,
+                cache : false,
+                success : function(response){
+                    if(response.status == true)
+                    {
+                        // in a case of Ajax success:
+                        $modalOvl.fadeIn();	// show success modal
+                        $modalFeedbackSuccess.fadeIn();
+                        $(".js-form_feedback input, .js-form_feedback textarea").val('');
+                    } 
+                    else
+                    {
+                        $modalOvl.fadeIn();	// show error modal
+                        $modalError.fadeIn();
+                    }
+                },
+                error: function(){
+                    alert('There is an error!');
+                }
+            });
+
 		$feedbackBtn.trigger("click");	//розвертаємо слайд
 	})
+
 
 	// modals
 	var	 $modalOvl = $(".b-overlay_modal")
@@ -1137,17 +1182,48 @@ $(document).ready(function(){
 		$modals.fadeOut();
 	});
 
+// callback form submission
 	$modalCallbackForm.submit(function(event){
-		event.preventDefault();
-		// place for Ajax sending
+            event.preventDefault();
+            var data = $(this).serialize();
 
-		// in a case of Ajax success:
-		$modals.fadeOut();
-		$modalCallbackSuccess.fadeIn();
-		// in a case of Ajax error:
-		//$modals.fadeOut();
-		//$modalError.fadeIn();
+            $.ajax({
+                // type : 'post',
+                type : 'get',
+                url: './ajax/create-callback.json',
+                data : data,
+                cache : false,
+                success : function(response){
+                    if(response.status == true)
+                    {
+                        // in a case of Ajax success:
+                        $modals.fadeOut();	// ховаємо видимі модалки
+                        $modalCallbackSuccess.fadeIn();	// show success modal
+                        $(".js-form_callback input").val('');
+                    } 
+                    else
+                    {
+                    	$modals.fadeOut();	// ховаємо видимі модалки
+                        $modalError.fadeIn();	// show error modal
+                    }
+                },
+                error: function(){
+                    alert('There is an error!');
+                }
+            });
 	})
+
+	// $modalCallbackForm.submit(function(event){
+	// 	event.preventDefault();
+	// 	// place for Ajax sending
+
+	// 	// in a case of Ajax success:
+	// 	$modals.fadeOut();
+	// 	$modalCallbackSuccess.fadeIn();
+	// 	// in a case of Ajax error:
+	// 	//$modals.fadeOut();
+	// 	//$modalError.fadeIn();
+	// })
 	// scroll to top
 	$("#toTop").click(function(){
 		// event.preventDefault();
