@@ -533,7 +533,9 @@ $(document).ready(function(){
 		});
 
 		// додамо до поля марки статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
-		precomplete($brand);
+		precomplete($brand, function(){
+			$model.prop("disabled", false);
+		});
 
 	// autocomplete для полів:
 		// "марка"
@@ -841,7 +843,7 @@ $(document).ready(function(){
 
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
 		precomplete($("#regCity"));
-		
+
 		//ajax registration city autocomplete
 		fieldAutocomplete(2, $("#regCity"), "./ajax/cityRegion.json")
 		
@@ -865,7 +867,7 @@ $(document).ready(function(){
 	// idsNum - quantity of hidden fields after:
 	//		1 - only id
 	//		2 - additional id (zoneId)
-	var precomplete = function($field, idsNum){
+	var precomplete = function($field, clickCallbackFn){
 		// var  $field = $(context)
 		var  $idField = $field.next()
 			,$zoneIdField
@@ -915,6 +917,9 @@ $(document).ready(function(){
 			$field.blur();
 			$field.parents(".b-form__cell").removeClass("b-cell_error");
 			$field.parents(".b-form__cell").addClass("b-cell_valid");
+			if (clickCallbackFn){
+				clickCallbackFn();
+			}
 		});
 	};
 
