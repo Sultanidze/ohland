@@ -533,7 +533,7 @@ $(document).ready(function(){
 		});
 
 		// додамо до поля марки статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
-		precomplete($brand, function(){
+		precomplete(1, $brand, function(){
 			$model.prop("disabled", false);
 		});
 
@@ -842,10 +842,10 @@ $(document).ready(function(){
 		});
 
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
-		precomplete($("#regCity"));
+		precomplete(2, $("#regCity"));
 
 		//ajax registration city autocomplete
-		fieldAutocomplete(2, $("#regCity"), "./ajax/cityRegion.json")
+		fieldAutocomplete(3, $("#regCity"), "./ajax/cityRegion.json");	// EWA віддає результат, починаючи з 3х символів
 		
 		// валідація
 		var  $vehicleForm = $("#vehicleForm")
@@ -864,10 +864,8 @@ $(document).ready(function(){
 
 	// precomplete при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
 	// $field - field with autocomplete and hidden field after
-	// idsNum - quantity of hidden fields after:
-	//		1 - only id
-	//		2 - additional id (zoneId)
-	var precomplete = function($field, clickCallbackFn){
+	// clickCallbackFn - callback fn
+	var precomplete = function(iSymbols, $field, clickCallbackFn){
 		// var  $field = $(context)
 		var  $idField = $field.next()
 			,$zoneIdField
@@ -880,7 +878,7 @@ $(document).ready(function(){
 		$field.keyup(function(){
 			currentValue = $(this).val();
 			// console.log(currentValue.length);
-			if ($field.val().length<2){
+			if ($field.val().length<=iSymbols){
 				$dropMenu.show();
 			} else{
 				$dropMenu.hide();
@@ -888,7 +886,7 @@ $(document).ready(function(){
 		})
 		$field.on("focus", function(){
 			// console.log($field.val().length);
-			if ($field.val().length<2){
+			if ($field.val().length<=iSymbols){
 				$dropMenu.stop().show();
 			} 
 			// else{
