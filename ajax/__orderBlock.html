@@ -166,19 +166,6 @@
                                 <div class="b-bg_car"></div>
                                 <div class="b-form__heading_finalize">Транспортное средство </div>
                                 <div class="row row_form">
-<!--                                       test-->
-<!--
-                                        <div class="b-form__cell">
-                                            <label for="brandd" class="b-label_finalize" title="марка авто">Марка тест  
-                                                <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
-                                                <span class="fa_error fa fa-times" aria-hidden="true"></span>
-                                                <span class="icon_tooltip fa fa-info-circle" aria-hidden="true"></span>
-                                            </label>
-                                            <input type="text" class="js-autocomplete js-ignoreValidate" id="brandd">
-                                            <input type="hidden" name="brand" class="hidden">
-                                        </div>
--->
-<!--                                       test-->
                                         <div class="b-form__cell">
                                             <label for="brand" class="b-label_finalize" title="марка авто">Марка  
                                                 <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
@@ -273,13 +260,13 @@
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
 <!--                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivRegionNP">-->
+<!--                                        <input type="hidden" name="delivRegionIdNP" class="hidden" id="delivRegionIdNP">-->
                                         <select name="regionNP" id="delivRegionNP">
                                             <option value="" disabled selected hidden>Выберите область</option>
                                             <option value="1">Киевская</option>
                                             <option value="2">Житомирская</option>
                                             <option value="3">Черкасская</option>
                                         </select>
-<!--                                        <input type="hidden" name="delivRegionIdNP" class="hidden" id="delivRegionIdNP">-->
                                     </div>
                                     <div class="b-form__cell">
                                         <label for="delivCityNP" class="b-label_finalize">Выберите город
@@ -294,8 +281,13 @@
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
+<!--
                                         <input type="text" class="js-autocomplete js-ignoreValidate" id="delivDivisionNP" disabled>
                                         <input type="hidden" name="delivDivisionIdNP" class="hidden" id="delivDivisionIdNP">
+-->
+                                        <select name="delivDivisionIdNP" id="delivDivisionNP" disabled>
+                                            <option value="" disabled selected hidden>Выберите отделение</option>
+                                        </select>
                                     </div>
                                 </div>
                                 
@@ -465,13 +457,13 @@
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
 <!--                                        <input type="text" class="js-autocomplete js-ignoreValidate" id="delivRegionNP_byUpload">-->
+<!--                                        <input type="hidden" name="delivRegionIdNP" class="hidden" id="delivRegionIdNP_byUpload">-->
                                         <select name="regionNP" id="delivRegionNP_byUpload" disabled>
                                             <option value="" disabled selected hidden>Выберите область</option>
                                             <option value="1">Киевская</option>
                                             <option value="2">Житомирская</option>
                                             <option value="3">Черкасская</option>
                                         </select>
-<!--                                        <input type="hidden" name="delivRegionIdNP" class="hidden" id="delivRegionIdNP_byUpload">-->
                                     </div>
                                     <div class="b-form__cell">
                                         <label for="delivCityNP_byUpload" class="b-label_finalize">Выберите город
@@ -486,8 +478,13 @@
                                             <span class="fa_ok fa fa-check-circle" aria-hidden="true"></span>
                                             <span class="fa_error fa fa-times" aria-hidden="true"></span>
                                         </label>
+<!--
                                         <input type="text" class="js-autocomplete js-ignoreValidate" id="delivDivisionNP_byUpload" disabled>
                                         <input type="hidden" name="delivDivisionIdNP" class="hidden" id="delivDivisionIdNP_byUpload">
+-->
+                                        <select name="delivDivisionIdNP" id="delivDivisionNP_byUpload" disabled>
+                                            <option value="" disabled selected hidden>Выберите отделение</option>
+                                        </select>
                                     </div>
                                 </div>
                                 

@@ -275,6 +275,9 @@ $(document).ready(function(){
         		},
         		regionNP:{
         			required: true
+        		},
+        		delivDivisionIdNP:{
+        			required: true
         		}
         	},
         	messages: {
@@ -341,7 +344,10 @@ $(document).ready(function(){
                     pattern: "формат: ДД.ММ.ГГГГ"
         		},
         		regionNP:{
-        			required: "Выберите область"
+        			required: "Выберите область из списка"
+        		},
+        		delivDivisionIdNP:{
+        			required: "Выберите отделение из списка"
         		}
         	},
 			submitHandler: function(form) {	// replaces default form submit behavior
@@ -382,7 +388,7 @@ $(document).ready(function(){
 	                            url: "./ajax/__thanks.html", 
 	                            type: "get",	// for local test
 	                            // type: 'POST',
-	                            // data: formData,
+	                            data: formData,
 	                            // contentType: false,
 	                            // processData: false,
 	                            // cache: false,
@@ -450,7 +456,7 @@ $(document).ready(function(){
 			,$courierAddr = $methods.find("input[name='deliveryAddr']")
 			,$newPostRegion = $methods.find("select[name='regionNP']")
 			,$newPostCity = $methods.find("input[name='delivCityIdNP']").prev()
-			,$newPostDivision = $methods.find("input[name='delivDivisionIdNP']").prev()
+			,$newPostDivision = $methods.find("select[name='delivDivisionIdNP']")
 			,$newPostRow = $newPostDivision.parents(".row_form")
 			;
 		
@@ -552,9 +558,9 @@ $(document).ready(function(){
 						$courierAddr.prop("disabled", true).addClass("hidden")
 									.parent().addClass("hidden");
 						// елементи НП						
-						$newPostRegion.prop("disabled", true).addClass("hidden");
-						$newPostCity.prop("disabled", true).addClass("hidden");
-						$newPostDivision.prop("disabled", true).addClass("hidden");
+						$newPostRegion.prop("disabled", true);
+						$newPostCity.prop("disabled", true);
+						$newPostDivision.prop("disabled", true);
 						$newPostRow.addClass("hidden");
 						// елементи Самовивоза
 						$selfMap.removeClass("hidden");
@@ -563,9 +569,9 @@ $(document).ready(function(){
 						// елементи Самовивоза
 						$selfMap.addClass("hidden");
 						// елементи НП						
-						$newPostRegion.prop("disabled", true).addClass("hidden");
-						$newPostCity.prop("disabled", true).addClass("hidden");
-						$newPostDivision.prop("disabled", true).addClass("hidden");
+						$newPostRegion.prop("disabled", true);
+						$newPostCity.prop("disabled", true);
+						$newPostDivision.prop("disabled", true);
 						$newPostRow.addClass("hidden");
 						// елементи Кур'єра
 						$courierCity.prop("disabled", false).removeClass("hidden")
@@ -583,16 +589,24 @@ $(document).ready(function(){
 						$selfMap.addClass("hidden");
 						// елементи НП						
 						$newPostRow.removeClass("hidden");
-						$newPostRegion.prop("disabled", false).removeClass("hidden");
+						$newPostRegion.each(function(){
+							$(this).prop("disabled", false).removeClass("hidden");
+							$(this).selectric("refresh");
+						})
 						// Якщо є введені значення в полях міста чи відділення, то при тимчасовій зміні вибору способа доставки 
 						// при поверненні значення зберігаються в цих полях, але вони disabled, виправимо це
-						if ($newPostCity.next().val()){
-							$newPostCity.prop("disabled", false);
-						}
+						// if ($newPostCity.next().val() || $newPostRegion.val()){
+						$newPostCity.each(function(){
+							if ($(this).next().val()){
+								$(this).prop("disabled", false);
+							}
+						})
 						$newPostCity.removeClass("hidden");
-						if ($newPostDivision.next().val()){
-							$newPostDivision.prop("disabled", false);
-						}
+						$newPostDivision.each(function(){
+							if ($(this).val()){
+								$(this).prop("disabled", false);
+							}
+						})
 						$newPostDivision.removeClass("hidden");	// покажемо рядок опцій НП
 						break;
 				}
@@ -606,8 +620,11 @@ $(document).ready(function(){
 					$(this).prop("disabled", true)
 				})
 			},
+			onRefresh: function(){
+				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+			},
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
-				regionId = $(element).val();	// current select value				
+				var regionId = $(element).val();	// current select value				
 				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $newPostRegion selects
 				
 				// при зміні значення клікнутого селекта змінимо значення решти селектів доставки в інших методах з доставкою
@@ -626,7 +643,7 @@ $(document).ready(function(){
 				});
 				$newPostDivision.each(function(index){
 					$(this).val("");
-					$(this).next().val("");
+					// $(this).next().val("");
 					$(this).prop("disabled", true)
 				});
 				//треба сховати поле відділення, видалити значення з нього і прихованого поля
@@ -634,8 +651,33 @@ $(document).ready(function(){
 				$(element).change();	// fired by default
 			}
 		});
-		
-
+		$newPostDivision.selectric({	// НП відділення
+			onInit: function() {
+				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+				$(this).each(function(){
+					$(this).prop("disabled", true);
+					// $(this).selectric("refresh");
+				})
+			},
+			onRefresh: function(){
+				$(this).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+			},
+			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+				var divisionId = $(element).val();	// current select value				
+				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $newPostDivision selects
+				
+				// при зміні значення клікнутого селекта змінимо значення решти селектів доставки в інших методах з доставкою
+				for (var i=0; i < $deliveryMode.length; ++i){
+					if (i != indexOfThis){
+						$newPostDivision.eq(i).val(divisionId).selectric("refresh");	// змінюємо значення і оновлюємо selectric
+						$newPostDivision.eq(i).parents(".selectric-wrapper").find(".selectric-items li.disabled").remove();	//прибираємо з меню неактивний пункт (placeholder)
+					}
+				}
+				$(this).parents(".b-form__cell").removeClass("b-cell_error");	// фікс незникаючої помилки валідації поля
+				
+				$(element).change();	// fired by default
+			}
+		});
 	// delivery selects stylization end
 	
 	//delivery autocompletes...
@@ -645,13 +687,30 @@ $(document).ready(function(){
 			// місто
 		fieldAutocomplete(2, $newPostCity, "./ajax/city.json", $newPostRegion, function(){
 			$newPostDivision.each(function(index){
-				$(this).val("");
-				$(this).next().val("");
-				$(this).prop("disabled", false)
+				var t = this;
+				$(t).val("");
+				// $(this).next().val("");
+				$.ajax({
+					type: "get",
+					// data: {cityId: iCityId},
+					url : "./ajax/__division.html",
+	            	error : function(){
+	            	    alert('error');
+	            	},
+	            	success: function(response){
+	            		var html = $.parseHTML(response);
+	            		$(t).append(response);
+	            	},
+	            	complete: function(){
+	            		$(t).prop("disabled", false);
+						$(t).selectric("refresh");
+	            	}
+				})
+				
 			});
 		});
 			// відділення
-		fieldAutocomplete(1, $newPostDivision, "./ajax/division.json", $newPostCity.next());
+		// fieldAutocomplete(1, $newPostDivision, "./ajax/division.json", $newPostCity.next());
 
 //- Delivery fields END -------------------------
 	
@@ -663,13 +722,6 @@ $(document).ready(function(){
 				}
 			})
 		});
-		// $submitButtons.click(function(event){
-		// 		event.preventDefault();
-		// 		console.log(validatorCurrent.numberOfInvalids());
-		// 	// if (validatorCurrent.numberOfInvalids() == 0){
-		// 	// 	showThanks($containerAjax);
-		// 	// }
-		// });
 	}
 	
 	// show thanks page
