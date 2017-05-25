@@ -191,6 +191,7 @@ $(document).ready(function(){
 		var	$autoCompleteFields = $method.find(".js-autocomplete");
 
 		$autoCompleteFields.blur(function(){	// втрата фокуса поля автокомпліта
+			if ($(this).has("js-autocomplete_pre")){return false};
 			if ($(this).next().val()){	// додамо позначку помилки валідації якщо не вибрали значення автокомпліта
 				$(this).parent(".b-form__cell").removeClass("b-cell_error").addClass("b-cell_valid")
 			} else{						// а як навпаки, то позначимо валідним
@@ -383,12 +384,14 @@ $(document).ready(function(){
 					hideContainerAjax($containerAjax);
                     $containerAjax.queue("ajax", function(){
 						if(form.id == 'formByUpload'){
-	                        var formData = new FormData($('#formByUpload')[0]);
+	                        // var formData = new FormData($('#formByUpload')[0]);
+	                        // console.log(formData);
 	                        $.ajax({
 	                            url: "./ajax/__thanks.html", 
-	                            type: "get",	// for local test
 	                            // type: 'POST',
-	                            data: formData,
+	                            // data: formData,
+	                            type: "get",	// for local test
+	                            data: $(form).serialize(),	// for local test
 	                            // contentType: false,
 	                            // processData: false,
 	                            // cache: false,
@@ -408,7 +411,8 @@ $(document).ready(function(){
 	                        $.ajax({
 	                            url: "./ajax/__thanks.html",
 	                        	// url: form.action,
-	                            type: form.method,
+	                            // type: form.method,
+	                            type: "get",
 	                            data: $(form).serialize(),
 	                            success: function(response){
 	                                $containerAjax.html(response);
@@ -527,6 +531,9 @@ $(document).ready(function(){
 			},400);
 			$filesList.html(filesListStr);
 		});
+
+		// додамо до поля марки статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
+		precomplete($brand);
 
 	// autocomplete для полів:
 		// "марка"
@@ -692,7 +699,7 @@ $(document).ready(function(){
 				// $(this).next().val("");
 				$.ajax({
 					type: "get",
-					// data: {cityId: iCityId},
+					data: {cityId: $newPostCity.next().val()},	// send cityId to obtain divisions
 					url : "./ajax/__division.html",
 	            	error : function(){
 	            	    alert('error');
@@ -715,12 +722,13 @@ $(document).ready(function(){
 //- Delivery fields END -------------------------
 	
 		$("#formBySelf, #formByUpload").submit(function(event){
-			event.preventDefault();
+			// event.preventDefault();
 			$(".js-autocomplete").each(function(){
 				if (!$(this).prop("disabled")){
 					$(this).focus().blur();
 				}
-			})
+			});
+			$(".js-autocomplete_pre").focus();
 		});
 	}
 	
@@ -831,6 +839,9 @@ $(document).ready(function(){
 			}
 		});
 
+		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
+		precomplete($("#regCity"));
+		
 		//ajax registration city autocomplete
 		fieldAutocomplete(2, $("#regCity"), "./ajax/cityRegion.json")
 		
@@ -846,6 +857,64 @@ $(document).ready(function(){
 			} else {
 				showPropositions($containerAjax);	// load of propositions
 			}
+		});
+	};
+
+	// precomplete при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
+	// $field - field with autocomplete and hidden field after
+	// idsNum - quantity of hidden fields after:
+	//		1 - only id
+	//		2 - additional id (zoneId)
+	var precomplete = function($field, idsNum){
+		// var  $field = $(context)
+		var  $idField = $field.next()
+			,$zoneIdField
+			,$dropMenu = $idField.siblings(".js-precomplete")
+			,$menuItems = $dropMenu.children()
+			,fieldValue
+			,currentValue
+			;
+
+		$field.keyup(function(){
+			currentValue = $(this).val();
+			// console.log(currentValue.length);
+			if ($field.val().length<2){
+				$dropMenu.show();
+			} else{
+				$dropMenu.hide();
+			}
+		})
+		$field.on("focus", function(){
+			// console.log($field.val().length);
+			if ($field.val().length<2){
+				$dropMenu.stop().show();
+			} 
+			// else{
+			// 	$dropMenu.hide();
+			// }
+		});
+		$field.on("blur",function(){
+			$dropMenu.fadeOut();
+		});
+		$menuItems.click(function(event){
+			var  
+				 selectedItem = $(this).text()
+				,selectedID = $(this).attr("data-id")
+				,selectedZoneID = $(this).attr("data-zone")
+				;
+
+			$field.val(selectedItem);
+			$field.attr("data-item", selectedItem);
+			$idField.val(selectedID);
+			if (selectedZoneID){	// перевіряємо чи є додатковий id який треба зберегти
+				// $zoneIdField = $idField.next();
+				// console.log("sdfgsd")
+				$idField.next().val(selectedZoneID)
+			};
+			// $dropMenu.hide();
+			$field.blur();
+			$field.parents(".b-form__cell").removeClass("b-cell_error");
+			$field.parents(".b-form__cell").addClass("b-cell_valid");
 		});
 	};
 
@@ -894,7 +963,7 @@ $(document).ready(function(){
 				        			++propertiesLength;
 				        		}
 				        	}
-				        	bLength3 = (propertiesLength == 3);	// маємо додатковий Id треба створитиїх масив itemOtherIds
+				        	bLength3 = (propertiesLength == 3);	// маємо додатковий Id (zoneId), треба створити їх масив itemOtherIds
 				        	if (oJS.length != 0){	// перевіряємо чи не відсутні співпадіння (чи відповідь не пустий масив)
 				        		for (var i = 0; i < oJS.items.length; ++i) {	// наповнимо масив елементів і їхніх id
 				        			items.push(oJS.items[i].name);
