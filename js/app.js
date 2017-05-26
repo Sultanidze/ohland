@@ -214,13 +214,13 @@ $(document).ready(function(){
                     required: true,
                     minlength: 2,
                     maxlength: 100,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-\s]+$/
                 },
         		firstName:{
                     required: true,
                     minlength: 2,
                     maxlength: 75,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-\s]+$/
         		},
         		email:    {
                     required: true,
@@ -233,7 +233,7 @@ $(document).ready(function(){
                     required: true,
                     minlength: 1,
                     maxlength: 10,
-                    pattern: /[0-9]+/
+                    pattern: /^[0-9]+$/
                 },
         		phone:    {
         			required: true,
@@ -243,13 +243,13 @@ $(document).ready(function(){
         			required: true,
                     minlength: 2,
                     maxlength: 255,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+$/
         		},
         		deliveryAddr:  {
         			required: true,
                     minlength: 2,
                     maxlength: 255,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-\s\,\.\/0-9]+$/
         		},
         		year:     {
         			required: true,
@@ -262,17 +262,17 @@ $(document).ready(function(){
         			required: true,
                     minlength: 2,
                     maxlength: 17,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-0-9]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-0-9]+$/
         		},
         		plateNum: {
         			required: true,
                     minlength: 2,
                     maxlength: 10,
-                    pattern: /[A-Za-zА-Яа-яЁёІіЇї\-0-9]+/
+                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-0-9]+$/
         		},
         		date: {
         			required: true,
-                    pattern: /[0-9\.]+/
+                    pattern: /^[0-9\.]+$/
         		},
         		regionNP:{
         			required: true
@@ -980,13 +980,9 @@ $(document).ready(function(){
 			        });
 			    },
 			    onSelect: function (event, term, item) {
-			    	itemIndex = items.indexOf(String(term));	// індекс елемента в масиві
+			    	itemIndex = items.indexOf(String(term));	// індекс елемента в масиві (обов'язково type String)
 			    	currentId = itemIds[itemIndex];		// id обраного елемента
-			    	console.log(term);
-			    	console.log(items);
-			    	console.log(itemIndex);
-			    	console.log(itemIds);
-			    	console.log(currentId);
+
 		    		if (bLength3){currentOtherId = itemOtherIds[itemIndex]}	// зберігаємо обраний zone_id (якщо такі є)
 			    	$objToComplete.each(function(){	// заповнимо решту однакових полів однаковими значеннями
 			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта
