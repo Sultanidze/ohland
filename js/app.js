@@ -1114,14 +1114,30 @@ $(document).ready(function(){
 		,$sliderRespPrevBtn = $sliderResp.find(".b-slider__controls_responses .b-slider__control_left")
 		,$sliderRespNextBtn = $sliderResp.find(".b-slider__controls_responses .b-slider__control_right")
 		,$activeSlide = $slideResp.filter(".b-slide_active")
-		,$unactiveSlide = $slideResp.filter(":not(.b-slide_active)"); 
+		,$unactiveSlide = $slideResp.filter(":not(.b-slide_active)")
+		,$slidesContent = $("#slides").children()	// знаходимо відгуки в прихованому блоці
+		,slidesArray = []	// масив з html відгуків
+		,responseNum	// зберігає індекс останнього завантаженого відгуку
+		,bPrevNext		// чи попередній напрямок запитів "Наступний слайд"
 		;
 
-	$unactiveSlide.css("top", "0px");
-	$unactiveSlide.css("left", "0px");
-	$activeSlide.css("top", "30px");
-	$activeSlide.css("left", "404px");
-	var  moveLeft = function($slide, bNext){
+	var  sliderInit = function(){
+			// initial slides content
+			$slidesContent.each(function(index, element){	// заповнюємо масив html відгуків
+				slidesArray.push($(element).html())
+			});
+			// наповнимо слайди початковим контенотом
+			$slideResp.eq(0).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[0]);			
+			$slideResp.eq(1).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[1]);
+			responseNum = 1;	// 2й відгук завантажували останнім
+			bPrevNext =true;	// порядок завантаження слайдів був прямий
+			// initial positions
+			$unactiveSlide.css("top", "0px");
+			$unactiveSlide.css("left", "0px");
+			$activeSlide.css("top", "30px");
+			$activeSlide.css("left", "404px");	
+		}
+		,moveLeft = function($slide, bNext){
 			$slide.animate({
 					top: 20,
 					left: 444
@@ -1154,11 +1170,55 @@ $(document).ready(function(){
 						// завантажимо новий контент слайда
 						var $slideContent = $(this).find(".b-slide__side_front .b-slide__wrap");
 						$slideContent.fadeOut(100);
+						console.log("зараз next: " ,bNext);
+						console.log("раніше next: " ,bPrevNext);
 						if(bNext){
-							$slideContent.load("./ajax/__nextSlide.html")
-						} else{
-							$slideContent.load("./ajax/__prevSlide.html")
+							// $slideContent.load("./ajax/__nextSlide.html")
+							if(bPrevNext){
+								// перевірка індекса масива перед інкрементом на 1
+								if (responseNum == slidesArray.length-1){
+									responseNum = 0
+								} else {
+									++responseNum;
+								}
+								$slideContent.html(slidesArray[responseNum]);	// відмальовуєм відгук з індексом responseNum
+							} else {
+								// перевірка індекса масива перед інкрементом на 2
+								if (responseNum == slidesArray.length-1){
+									responseNum = 1
+								} else if (responseNum == slidesArray.length-2){
+									responseNum = 0;
+								} else {
+									responseNum+=2;
+								}
+								$slideContent.html(slidesArray[responseNum]);
+							}
+							console.log(responseNum);
+							bPrevNext = true;
+						} else {
+							if(!bPrevNext){
+								// перевірка індекса масива перед декрементом на 1
+								if (responseNum == 0){
+									responseNum = slidesArray.length - 1
+								} else {
+									--responseNum;
+								}
+								// if (responseNum = -1){responseNum = slidesArray.length}
+								$slideContent.html(slidesArray[responseNum]);
+							} else {
+								// перевірка індекса масива перед декрементом на 2
+								if (responseNum == 1){
+									responseNum = slidesArray.length - 1
+								} else if (responseNum == 0){
+									responseNum = slidesArray.length - 2
+								} else {
+									responseNum-=2;
+								}
+								$slideContent.html(slidesArray[responseNum]);
+							}
+							bPrevNext = false;
 						}
+						
 						$slideContent.fadeIn(100);
 					}
 				}
@@ -1215,6 +1275,7 @@ $(document).ready(function(){
 			moveRight($unActive);
 		}
 
+	sliderInit();
 	$responsesBtn.click(function(){
 		$respFedbBtn.removeClass("b-rating__btn_active");
 		$responsesBtn.addClass("b-rating__btn_active");
