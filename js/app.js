@@ -733,6 +733,7 @@ $(document).ready(function(){
 			});
 			$(".js-autocomplete_pre").focus();
 		});
+
 	}
 	
 	// show thanks page
@@ -1010,7 +1011,39 @@ $(document).ready(function(){
 			}
 		})
 	}
-				
+
+// breadcrumbs click event listener
+    $(document).on('click', '.b-crumbs__link', function(){
+
+        var step = +$(this).attr('data-step');	// 1 - вибір ТЗ, 2 - пропозиції
+
+	    switch (step){
+	        case 1:
+				showVehicleCalc($containerAjax);
+	            break;
+	        case 2:
+        		hideContainerAjax($containerAjax);
+		        $containerAjax.queue("ajax", function(){
+		        	$.ajax({
+			        	type: "get",
+			        	// url = "/ohproject/osago/osago-show-propositions",
+			        	url : "./ajax/__propositions.html",
+			        	error : function(){
+			        	    alert('error');
+			        	},
+			        	success: function(response){
+			        	    $containerAjax.html(response);
+			        	    propositionsInit($containerAjax);
+			        	},
+			        	complete: function(){
+			        		showContainerAjax($containerAjax);
+			        		$containerAjax.dequeue("ajax");
+			        	}
+			        });
+			    });
+	        	$containerAjax.dequeue("ajax");
+	    }
+    });	
 
 //	vehicle calculator js initialization
 	vehicleCalcInit($containerAjax);	//
