@@ -1171,10 +1171,7 @@ $(document).ready(function(){
 						// завантажимо новий контент слайда
 						var $slideContent = $(this).find(".b-slide__side_front .b-slide__wrap");
 						$slideContent.fadeOut(100);
-						console.log("зараз next: " ,bNext);
-						console.log("раніше next: " ,bPrevNext);
 						if(bNext){
-							// $slideContent.load("./ajax/__nextSlide.html")
 							if(bPrevNext){
 								// перевірка індекса масива перед інкрементом на 1
 								if (responseNum == slidesArray.length-1){
@@ -1194,7 +1191,6 @@ $(document).ready(function(){
 								}
 								$slideContent.html(slidesArray[responseNum]);
 							}
-							console.log(responseNum);
 							bPrevNext = true;
 						} else {
 							if(!bPrevNext){
@@ -1204,7 +1200,6 @@ $(document).ready(function(){
 								} else {
 									--responseNum;
 								}
-								// if (responseNum = -1){responseNum = slidesArray.length}
 								$slideContent.html(slidesArray[responseNum]);
 							} else {
 								// перевірка індекса масива перед декрементом на 2
