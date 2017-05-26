@@ -1026,7 +1026,7 @@ $(document).ready(function(){
 		        $containerAjax.queue("ajax", function(){
 		        	$.ajax({
 			        	type: "get",
-			        	// url = "/ohproject/osago/osago-show-propositions",
+			        	// url: "/ohproject/osago/osago-show-propositions",
 			        	url : "./ajax/__propositions.html",
 			        	error : function(){
 			        	    alert('error');
