@@ -708,6 +708,7 @@ $(document).ready(function(){
 	            	},
 	            	success: function(response){
 	            		var html = $.parseHTML(response);
+	            		$(t).html('<option value="" disabled selected hidden>Выберите отделение</option>');
 	            		$(t).append(response);
 	            	},
 	            	complete: function(){
