@@ -272,7 +272,7 @@ body{
     cursor: pointer;
 }
 .b-vehicle_active{
-    cursor: default;
+/*    cursor: default;*/
 }
 .b-vehicle:last-child{
     border-right: none;

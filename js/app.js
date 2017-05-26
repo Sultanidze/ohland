@@ -980,9 +980,13 @@ $(document).ready(function(){
 			        });
 			    },
 			    onSelect: function (event, term, item) {
-			    	itemIndex = items.indexOf(term);	// індекс елемента в масиві
+			    	itemIndex = items.indexOf(String(term));	// індекс елемента в масиві
 			    	currentId = itemIds[itemIndex];		// id обраного елемента
-
+			    	console.log(term);
+			    	console.log(items);
+			    	console.log(itemIndex);
+			    	console.log(itemIds);
+			    	console.log(currentId);
 		    		if (bLength3){currentOtherId = itemOtherIds[itemIndex]}	// зберігаємо обраний zone_id (якщо такі є)
 			    	$objToComplete.each(function(){	// заповнимо решту однакових полів однаковими значеннями
 			    		if($(this) != $(t)){	// значення в полі на якому ми вибрали значення автокомпліта
@@ -1128,8 +1132,8 @@ $(document).ready(function(){
 				slidesArray.push($(element).html())
 			});
 			// наповнимо слайди початковим контенотом
-			$slideResp.eq(0).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[0]);			
-			$slideResp.eq(1).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[1]);
+			$slideResp.eq(0).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[1]);			
+			$slideResp.eq(1).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[0]);
 			responseNum = 1;	// 2й відгук завантажували останнім
 			bPrevNext =true;	// порядок завантаження слайдів був прямий
 			// initial positions
