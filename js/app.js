@@ -279,7 +279,10 @@ $(document).ready(function(){
         		},
         		delivDivisionIdNP:{
         			required: true
-        		}
+        		},
+				docScan:{
+					required: true
+				}
         	},
         	messages: {
         		lastName: {
@@ -349,13 +352,20 @@ $(document).ready(function(){
         		},
         		delivDivisionIdNP:{
         			required: "Выберите отделение из списка"
+        		},
+				docScan:{
+        			required: "Выберите фото документов"
         		}
         	},
 			submitHandler: function(form) {	// replaces default form submit behavior
 				// треба також перевірити поля автокомпліта
 				var  bFocused = false
 					,bValid = true
+					,$fileFieldsVisible = $method.find("input[type='file']").filter(":visible")
+					,i = 0
+					,tempField
 					;
+				console.log($fileFieldsVisible);	
 
 				$autoCompleteFields.each(function(){
 					if(!$(this).prop("disabled")){
@@ -371,7 +381,37 @@ $(document).ready(function(){
 						}
 					}
 				});
-				if (bValid){
+				for (i = 0; i < $fileFieldsVisible.length; ++i){
+				 	if ($fileFieldsVisible.eq(i).val()){
+						$fileFieldsVisible.eq(i).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
+						break;
+					}
+				}
+					console.log(i);
+				if (i == $fileFieldsVisible.length){
+					bValid = false;
+					$fileFieldsVisible.eq(0).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error");
+					$fileFieldsVisible.eq(0).focus();
+				}
+				// $fileFieldsVisible.each(function(){
+					// if ($(this).val()){
+						// $(this).parents(".b-form__cell").addClass("b-cell_valid")
+					// }
+				// });
+				// if ($(this).val()){
+						// $(this).parents(".b-form__cell").addClass("b-cell_valid")
+					// } else{
+						// $(this).parents(".b-form__cell").addClass("b-cell_error");
+						// bValid = false;
+						// if (!bFocused){
+							// $(this).focus();
+							// bFocused = true;
+						// }
+					// }
+				
+				
+				// if (bValid){
+				if (false){
 					// $.ajax({
 					// 	url: form.action,
 					// 	type: form.method,
@@ -446,8 +486,8 @@ $(document).ready(function(){
 			,$model = $("input[name = 'model']")
 			,$filesWrap = $orderBlock.find(".b-wrap_files")
 			,$filesInput = $filesWrap.find("input[type='file']")
-			,$filesList = $filesWrap.find(".b-list_files")
-			,$filesProgress = $filesWrap.find(".b-progress_files")
+			// ,$filesList = $filesWrap.find(".b-list_files")
+			// ,$filesProgress = $filesWrap.find(".b-progress_files")
 			,$submitButtons = $methods.find("#submitBySelf, #submitByPhone, #submitByUpload")
 			,validatorCurrent = orderFormsValidation($methods.filter("#bySelf"))	// formBySelf validation init
 			// змінні для логіки відображення доставки
@@ -504,7 +544,7 @@ $(document).ready(function(){
 
 		// pickadate initialization
 		var pickadayOptions = {
-			min: +1,
+			min: +1,	// початкова дата - завтрашній день
 			onClose: function () {
 			   $("#bySelf").find(".picker__holder").blur();	// заборонимо спливати календарю при згортанні-розгортанні вікна браузера (коли фокус на даті)
 			}
@@ -513,23 +553,88 @@ $(document).ready(function(){
 
 		//	file input logic
 		$filesInput.change(function (){
-			var  fileNames = []
-				,filesListStr=""
+			$(this).blur();
+			var  filesNum = this.files.length	// задумувалось для багатьох файлів, а зараз лише один файл
+				,filesListStr=""	// рядок з html рядком імен файлів
+				,$button = $(this).next("button")	// кнопка вибору файла (над input)
+				,$fileProgress = $button.find(".b-progress_files")	// div прогреса завантаження :-D
+				,$filesList = $button.next(".b-list_files")	// div з іменами файлів
+				,i
+				,tempField
 				;
-			// console.log("before:", this.files.length);
-			if (this.files.length > 10){	// обмеження за к-тю файлів
-				this.files.length = 10;
-				// console.log("after:", this.files.length);
+			
+			if (filesNum > 0){	// якщо вибрали файл
+				// помітимо поле як валідоване
+				$(this).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
+				// анімуємо смужку прогреса
+				$fileProgress.animate({
+					width: "" + this.files.length*102 + "%"
+				},400);
+				// і покажемо найперше пусте приховане поле
+				for (i = 1; i < $filesInput.length; ++i){
+					tempField = $filesInput[i];
+					if (!$(tempField).val() && $(tempField).parent(".b-wrap_files").hasClass("hidden")){
+						$filesWrap.eq(i).removeClass("hidden");
+						break;
+					}
+				}
+				
+				// покажемо імена файлів
+				filesListStr += '<span class="b-filename">' + this.files[0].name;
+				if ($(this).attr("name") != "docScan"){
+					filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
+				} else {
+					filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
+				}
+			} else {	// якщо видалили файли
+				// перевіримо чи є іще заповнені файлові поля, якщо ні то покажемо помилку валідації
+				var filledNum = 0;
+				$filesInput.each(function(){
+					if (filledNum > 1){
+						return false	// якщо заповнених видимих полів більше ніж одне то виходимо з цикла
+					} else if ($(this).val() && !$(this).parent(".b-wrap_files").hasClass("hidden")){
+						++filledNum;
+					}
+				});
+				if (filledNum >= 1){	// якщо є заповнені видимі поля то validation success 
+					$(this).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid")
+				} else {
+					$(this).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error")
+				}
+				
+				$fileProgress.css("width", "0px")	// якщо видалили файли, то сховаємо смужку прогреса
+				if ($(this).attr("name") != "docScan"){	// якщо видалили файли, і це не перше поле з валідацією
+					var emptyNum = 0;	// лічильник к-ті пустих видимих полів
+					
+					$filesInput.each(function(){
+						if (emptyNum > 1){
+							return false	// якщо пустих видимих полів більше ніж одне поточне то виходимо з цикла
+						} else if (!$(this).val() && !$(this).parent(".b-wrap_files").hasClass("hidden")){
+							++emptyNum;
+						}
+					});
+					if (emptyNum > 1){	// якщо є іще пусті видимі поля то сховаємо поточне пусте 
+						$(this).parent(".b-wrap_files").addClass("hidden")
+					}
+				} else {	// якщо видалили файли і це перше обов’язкове поле
+					// то може бути іще пусте поле, яке треба сховати
+					// $filesInput.each(function(){
+					for (i = 1; i < $filesInput.length; ++i){ // перевіряємо всі поля окрім першого пустого 
+						tempField = $filesInput[i];
+						if (!$(tempField).val() && !$(tempField).parent(".b-wrap_files").hasClass("hidden")){
+							$filesWrap.eq(i).addClass("hidden");	// видаляємо решту пустих полів
+						}
+					}
+				}
 			}
-			for (var i = 0; i < this.files.length; ++i) {
-				//fileNames.push(this.files[i].name);	// populate file names array
-				filesListStr += '<span class="b-filename">' + this.files[i].name + '<span class="fa fa-check" aria-hidden="true"></span></span>'
-			};
-
-			$filesProgress.animate({
-				width: "" + this.files.length*10 + "%"
-			},400);
 			$filesList.html(filesListStr);
+
+			$filesList.find(".js-clearFiles").click(function(){	// видалятимо файли при кліку на хрестик
+				var $fileField = $(this).parents(".b-wrap_files").find("input[type='file']");
+				$fileField.val("");	// обнулимо input
+				$(this).parents(".b-list_files").html("");	// видалимо список файлів
+				$fileField.change();
+			});
 		});
 
 		// додамо до поля марки статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
@@ -725,7 +830,7 @@ $(document).ready(function(){
 //- Delivery fields END -------------------------
 	
 		$("#formBySelf, #formByUpload").submit(function(event){
-			// event.preventDefault();
+			event.preventDefault();
 			$(".js-autocomplete").each(function(){
 				if (!$(this).prop("disabled")){
 					$(this).focus().blur();

@@ -2222,7 +2222,7 @@ body{
     display: none;
 }
 .b-form__insured_byupload{
-    height: 265px;
+    min-height: 265px;
 }
 .b-bg_man{
     position: absolute;
@@ -2245,8 +2245,9 @@ body{
     position: relative;
 }
 .b-wrap_files{
+    margin-bottom: 20px;
     width: 265px;
-    height: 40px;
+    min-height: 40px;
 }
 .b-form__cell input[type="file"]{
     position: absolute;
@@ -2296,23 +2297,30 @@ body{
     margin-left: 265px;
     width: 535px;
     max-height: 110px;
-    padding-top: 2px;
+/*    padding-top: 2px;*/
+    padding-top: 10px;
     padding-left: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-size: 16px;
-    line-height: 36px;
+/*    line-height: 36px;*/
     font-weight: 700;
     overflow: hidden;
 }
 .b-filename{
     display: inline-block;
 }
-.b-filename .fa-check{
-    color: #35bb00;
+.b-filename .fa{
     margin-left: 5px;
     margin-right: 12px;
+}
+.b-filename .fa-check{
+    color: #35bb00;
+}
+.b-filename .fa-times-circle-o{
+    color: #ff4128;
+    cursor: pointer;
 }
 
 .b-bg_mailbox{
