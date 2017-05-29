@@ -279,10 +279,7 @@ $(document).ready(function(){
         		},
         		delivDivisionIdNP:{
         			required: true
-        		},
-				docScan:{
-					required: true
-				}
+        		}
         	},
         	messages: {
         		lastName: {
@@ -352,9 +349,6 @@ $(document).ready(function(){
         		},
         		delivDivisionIdNP:{
         			required: "Выберите отделение из списка"
-        		},
-				docScan:{
-        			required: "Выберите фото документов"
         		}
         	},
 			submitHandler: function(form) {	// replaces default form submit behavior
@@ -581,7 +575,7 @@ $(document).ready(function(){
 				
 				// покажемо імена файлів
 				filesListStr += '<span class="b-filename">' + this.files[0].name;
-				if ($(this).attr("name") != "docScan"){
+				if ($(this).attr("id") != "copies_byupload"){
 					filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
 				} else {
 					filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
@@ -603,7 +597,7 @@ $(document).ready(function(){
 				}
 				
 				$fileProgress.css("width", "0px")	// якщо видалили файли, то сховаємо смужку прогреса
-				if ($(this).attr("name") != "docScan"){	// якщо видалили файли, і це не перше поле з валідацією
+				if ($(this).attr("id") != "copies_byupload"){	// якщо видалили файли, і це не перше поле з валідацією
 					var emptyNum = 0;	// лічильник к-ті пустих видимих полів
 					
 					$filesInput.each(function(){
