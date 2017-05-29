@@ -2497,21 +2497,23 @@ body{
 /* - preloader */
 .b-container_preloader{
     position: absolute;
-    max-height: 65vh;
     top: 0;right: 0;bottom: 0;left: 0;
     z-index: 100;
     text-align: center;
     background-color: #f5f5f5;
 }
+/*
 .b-container_preloader:before{
     content: '';
     display: inline-block;
     height: 100%;
     vertical-align: middle;
 }
+*/
 .b-wrap_preloader{
-    display: inline-block;
-    vertical-align: middle;
+    padding-top: 100px;
+/*    display: inline-block;*/
+/*    vertical-align: middle;*/
 }
 
 .md-preloader {
