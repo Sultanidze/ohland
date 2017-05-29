@@ -178,6 +178,7 @@ body{
 }
 
 .b-section_calculator{
+    position: relative;
     background-color: #f5f5f5;
 }
 .b-container__calculator_vehicle:after{
@@ -2492,3 +2493,107 @@ body{
     width: 600px;
 }
 /* - END ThankYou page */
+
+/* - preloader */
+.b-container_preloader{
+    position: absolute;
+    top: 0;right: 0;bottom: 0;left: 0;
+    z-index: 1;
+}
+.b-preloader{
+    position: absolute;
+}
+
+.md-preloader {
+    font-size: 0;
+    display: inline-block;
+    -webkit-animation: outer 6600ms linear infinite;
+    animation: outer 6600ms linear infinite
+}
+
+.md-preloader svg {
+    -webkit-animation: inner 1320ms linear infinite;
+    animation: inner 1320ms linear infinite
+}
+
+.md-preloader svg circle {
+    fill: none;
+    stroke: #6f37a1;
+    stroke-linecap: round;
+    -webkit-animation: arc 1320ms cubic-bezier(.8, 0, .4, .8) infinite;
+    animation: arc 1320ms cubic-bezier(.8, 0, .4, .8) infinite
+}
+
+@-webkit-keyframes outer {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes outer {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes inner {
+    0% {
+        -webkit-transform: rotate(-100.8deg);
+        transform: rotate(-100.8deg)
+    }
+    100% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+}
+
+@keyframes inner {
+    0% {
+        -webkit-transform: rotate(-100.8deg);
+        transform: rotate(-100.8deg)
+    }
+    100% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+}
+
+@-webkit-keyframes arc {
+    0% {
+        stroke-dasharray: 1 210.48670779px;
+        stroke-dashoffset: 0
+    }
+    40% {
+        stroke-dasharray: 151.55042961px, 210.48670779px;
+        stroke-dashoffset: 0
+    }
+    100% {
+        stroke-dasharray: 1 210.48670779px;
+        stroke-dashoffset: -151.55042961px
+    }
+}
+
+@keyframes arc {
+    0% {
+        stroke-dasharray: 1 210.48670779px;
+        stroke-dashoffset: 0
+    }
+    40% {
+        stroke-dasharray: 151.55042961px, 210.48670779px;
+        stroke-dashoffset: 0
+    }
+    100% {
+        stroke-dasharray: 1 210.48670779px;
+        stroke-dashoffset: -151.55042961px
+    }
+}

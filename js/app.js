@@ -359,7 +359,7 @@ $(document).ready(function(){
 					,i = 0
 					,tempField
 					;
-				console.log($fileFieldsVisible);	
+				// console.log($fileFieldsVisible);	
 
 				$autoCompleteFields.each(function(){
 					if(!$(this).prop("disabled")){
@@ -375,17 +375,20 @@ $(document).ready(function(){
 						}
 					}
 				});
-				for (i = 0; i < $fileFieldsVisible.length; ++i){
-				 	if ($fileFieldsVisible.eq(i).val()){
-						$fileFieldsVisible.eq(i).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
-						break;
+
+				if ($fileFieldsVisible.length){	// перевіряємо чи це форма з полями відвантаження
+					for (i = 0; i < $fileFieldsVisible.length; ++i){
+					 	if ($fileFieldsVisible.eq(i).val()){
+							$fileFieldsVisible.eq(i).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
+							break;
+						}
 					}
-				}
-					console.log(i);
-				if (i == $fileFieldsVisible.length){
-					bValid = false;
-					$fileFieldsVisible.eq(0).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error");
-					$fileFieldsVisible.eq(0).focus();
+						// console.log(i);
+					if (i == $fileFieldsVisible.length){
+						bValid = false;
+						$fileFieldsVisible.eq(0).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error");
+						$fileFieldsVisible.eq(0).focus();
+					}
 				}
 				// $fileFieldsVisible.each(function(){
 					// if ($(this).val()){
@@ -404,8 +407,7 @@ $(document).ready(function(){
 					// }
 				
 				
-				// if (bValid){
-				if (false){
+				if (bValid){
 					// $.ajax({
 					// 	url: form.action,
 					// 	type: form.method,
