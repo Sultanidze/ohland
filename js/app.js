@@ -417,6 +417,7 @@ $(document).ready(function(){
 					// 	}            
 					// });
 					//Show thanks function start ------
+					$(".b-container_preloader").fadeIn();	// показуємо лоадер
 					hideContainerAjax($containerAjax);
                     $containerAjax.queue("ajax", function(){
 						if(form.id == 'formByUpload'){
@@ -440,6 +441,7 @@ $(document).ready(function(){
 	                            complete: function(){
 	                                showContainerAjax($containerAjax);
 	                                $containerAjax.dequeue("ajax");
+	                                $(".b-container_preloader").fadeOut();	// ховаємо лоадер
 	                            }
 	                            //Options to tell jQuery not to process data or worry about content-type.
 	                        });
@@ -456,6 +458,7 @@ $(document).ready(function(){
 	                            complete: function(){
 	                                showContainerAjax($containerAjax);
 	                                $containerAjax.dequeue("ajax");
+	                				$(".b-container_preloader").fadeOut();	// ховаємо лоадер
 	                            }          
 	                        });
 	                    }
