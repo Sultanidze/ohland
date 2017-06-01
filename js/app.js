@@ -147,8 +147,13 @@ $(document).ready(function(){
 		var  $buyBtns = $("#propositions").find(".b-proposition__buy");	// кнопки купівлі
 
 		$buyBtns.click(function(){
-			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
+			// GTM variables
+			var  nameOfCompany = $(this).siblings(".b-company__name").text()
+				,price = $(this).find(".b-text_btn").attr("data-fullprice")
+				;
+			dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
 
+			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
 			showOrderBlock(proposNum, $containerAjax);
 		});
 	};
@@ -416,6 +421,7 @@ $(document).ready(function(){
 					// 		showThanks($containerAjax, response);
 					// 	}            
 					// });
+
 					//Show thanks function start ------
 					$(".b-container_preloader").fadeIn();	// показуємо лоадер
 					hideContainerAjax($containerAjax);
@@ -433,7 +439,10 @@ $(document).ready(function(){
 	                            // processData: false,
 	                            // cache: false,
 	                            success: function(response) {
-	                                $containerAjax.html(response);
+	                            	// GTM
+	                            	dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'document'});
+
+	                                $containerAjax.html(response);	// вставляємо сенкю
 	                            },
 	                            error: function(){
 	                                alert('ERROR at PHP side!!');
@@ -441,7 +450,7 @@ $(document).ready(function(){
 	                            complete: function(){
 	                                showContainerAjax($containerAjax);
 	                                $containerAjax.dequeue("ajax");
-	                                $(".b-container_preloader").fadeOut();	// ховаємо лоадер
+	                                $(".b-container_preloader").fadeOut();
 	                            }
 	                            //Options to tell jQuery not to process data or worry about content-type.
 	                        });
@@ -453,7 +462,14 @@ $(document).ready(function(){
 	                            type: "get",
 	                            data: $(form).serialize(),
 	                            success: function(response){
-	                                $containerAjax.html(response);
+	                            	// GTM
+	                            	if (form.id == 'formBySelf'){
+	                            		dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'form'});
+	                            	} else if(form.id == 'formByPhone'){
+	                            		dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'by phone'});
+	                            	}
+
+	                                $containerAjax.html(response);	// вставляємо сенкю
 	                            },
 	                            complete: function(){
 	                                showContainerAjax($containerAjax);
