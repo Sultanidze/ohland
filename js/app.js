@@ -576,9 +576,20 @@ $(document).ready(function(){
 				,$filesList = $button.next(".b-list_files")	// div з іменами файлів
 				,i
 				,tempField
+				//,filesExt = ["jpe", "jpg", "jpeg", "jpe", "jfif", "jfif-tbnl", "png", "tif", "tiff", "webp"]	// розширення файлів які можна
+				,bValidType
+				,t = this
 				;
+
+			var checkType = function(t){
+				var re = /image\/(jpeg|pjpeg|png|webp)/i;	// allowed MIME file types
+				// return t.files[0].type.match('image.*');
+				return t.files[0].type.match(re);
+			}
+
+			bValidType = checkType(t);
 			
-			if (filesNum > 0){	// якщо вибрали файл
+			if (filesNum > 0 && bValidType){	// якщо вибрали файл і він з дозволеним розширенням
 				// помітимо поле як валідоване
 				$(this).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
 				// анімуємо смужку прогреса
