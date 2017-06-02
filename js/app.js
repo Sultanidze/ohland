@@ -1517,15 +1517,21 @@ $(document).ready(function(){
 		,$modalCallbackForm = $modalCallback.find(".js-form_callback")
 		;
 
+	var hideModals = function(){	// hide modals function
+		$modalOvl.fadeOut();
+		$modals.fadeOut();
+	}
+
 	$("#callbackBtn").click(function(){
 		$modalOvl.fadeIn();
 		$modalCallback.fadeIn();
 	});
+	$modals.click(function(event){
+		event.stopPropagation()
+	})
+	$modalCloseBtn.click(hideModals);	// hide modals by close button click
+	$modalOvl.click(hideModals);	// hide modals by click on overlay
 
-	$modalCloseBtn.click(function(){	// hide modals
-		$modalOvl.fadeOut();
-		$modals.fadeOut();
-	});
 
 // callback form submission
 	$modalCallbackForm.submit(function(event){
