@@ -160,7 +160,7 @@ $(document).ready(function(){
 				var callBack = function(){
 					$proposition.css("z-index","1");
 					$toggleList.css("overflow", "visible")
-							   .css("max-height", "unset");
+							   .css("max-height", "none");
 					$toggleList.addClass("js-opened");
 				};
 
