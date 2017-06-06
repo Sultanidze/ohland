@@ -140,22 +140,46 @@ $(document).ready(function(){
 				,$toggleListItems = $toggleList.children().filter("li:nth-child(3)~li")
 				,$proposition = $toggleList.parents(".b-proposition")
 				;
-				
-			if ($toggleList.hasClass("js-opened")){
-				$toggleListItems.slideUp(200, function(){
+
+			var closeContent = function(){
+				var callBack = function(){
 					$proposition.css("z-index","0");
 					$toggleList.css("overflow", "hidden")
 							   .css("max-height", detailsMaxHeight);
 					$toggleList.removeClass("js-opened");
-				});
-			} else {
-				$proposition.css("z-index","1");
+				};
+
+				if ($toggleListItems.length){
+					$toggleListItems.slideUp(200, callBack);
+				}else{
+					callBack();
+				}
+			};
+
+			var openContent = function(){
+				var callBack = function(){
+					$proposition.css("z-index","1");
 					$toggleList.css("overflow", "visible")
 							   .css("max-height", "unset");
-				$toggleListItems.slideDown(200, function(){
 					$toggleList.addClass("js-opened");
-				});
-			}
+				};
+
+					callBack();
+					$toggleListItems.slideDown(200);
+				if ($toggleListItems.length){
+				}else{
+				}
+			};
+
+			var toggleContent = function(){
+				if ($toggleList.hasClass("js-opened")){
+					closeContent();
+				} else {
+					openContent()
+				}
+			};
+
+			toggleContent();
 		})
 
 		// hide-show additional propositions by click on "Посмотреть еще предложения"
