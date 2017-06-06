@@ -1,3 +1,22 @@
+// Determines if the passed element is overflowing its bounds,
+// either vertically or horizontally.
+// Will temporarily modify the "overflow" style to detect this
+// if necessary.
+function checkOverflow(el)
+{
+   var curOverflow = el.style.overflow;
+
+   if ( !curOverflow || curOverflow === "visible" )
+      el.style.overflow = "hidden";
+
+   var isOverflowing = el.clientWidth < el.scrollWidth 
+      || el.clientHeight < el.scrollHeight;
+
+   el.style.overflow = curOverflow;
+
+   return isOverflowing;
+}
+
 // pickadate plugin defaults
 jQuery.extend( jQuery.fn.pickadate.defaults, {
 	monthsFull: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
@@ -90,10 +109,11 @@ $(document).ready(function(){
 		$containerAjax.dequeue("ajax");	// запустимо чергу
 	};
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		var $ratings = $(".b-company__rating_propos");
-		
+		// зафарбуємо необхідну к-ть зірочок рейтингу компанії в кожній пропозиції
+		var $ratings = $(".b-company__rating_propos");	// контейнер із зірочками
+
 		$ratings.each(function(){
-			var  starsNum = $(this).attr("data-rating")
+			var  starsNum = $(this).attr("data-rating")	// к-ть зірочок для зафарбування в атрибуті "data-rating" контейнера
 				,$stars = $(this).children("span.fa")
 				,i
 				;
@@ -103,13 +123,20 @@ $(document).ready(function(){
 			}
 		});
 
-		var $btnsReadMore = $(".js-btn_readmore");
+		var  $btnsReadMore = $(".js-btn_readmore")
+			,detailsMaxHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("max-height")	// save max-height from styles.css
+			;
+		// покажемо кнопку readMore там де вона треба
+		$btnsReadMore.each(function(){
+			var $detailsList = $(this).siblings(".js-content_readmore");
+			if (checkOverflow($detailsList[0]) || ($detailsList.children().length > 3)){
+				$(this).css("display", "block");
+			}
+		});
 		// hide-show details  by click on "Подробнее"
 			// show:
 		$btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
-			// $(this).hide();
 			var  $toggleList = $(this).siblings(".js-content_readmore")
-				// ,$listItems = $toggleList().children()
 				,$toggleListItems = $toggleList.children().filter("li:nth-child(3)~li")
 				,$proposition = $toggleList.parents(".b-proposition")
 				;
@@ -117,10 +144,14 @@ $(document).ready(function(){
 			if ($toggleList.hasClass("js-opened")){
 				$toggleListItems.slideUp(200, function(){
 					$proposition.css("z-index","0");
+					$toggleList.css("overflow", "hidden")
+							   .css("max-height", detailsMaxHeight);
 					$toggleList.removeClass("js-opened");
 				});
 			} else {
 				$proposition.css("z-index","1");
+					$toggleList.css("overflow", "visible")
+							   .css("max-height", "unset");
 				$toggleListItems.slideDown(200, function(){
 					$toggleList.addClass("js-opened");
 				});

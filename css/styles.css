@@ -1698,6 +1698,12 @@ body{
 .b-details__list{
     margin-bottom: 5px;
     padding-left: 20px;
+    
+    font-size: 14px;
+    line-height: 1.15; /* 14*1.15=16.1px */
+    max-height: 48.3px; /* 3 рядки текста  (3*16.1px)*/
+    overflow: hidden;
+    
     font-weight: 300;
     color: #fff;
 }
@@ -1706,6 +1712,7 @@ body{
 }
 .b-details__btn_readmore{
 /*    margin-bottom: 20px;*/
+    display: none;
     border: none;
     padding: 0;
     background-color: transparent;
