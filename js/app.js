@@ -1146,6 +1146,7 @@ $(document).ready(function(){
 			        	success: function(data){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
+				    		itemOtherIds = [];	// масив додаткових id елементів
 				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 				        	propertiesLength = 0;
 				        	var i;
