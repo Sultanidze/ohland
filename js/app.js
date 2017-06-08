@@ -492,7 +492,7 @@ $(document).ready(function(){
 	                            // cache: false,
 	                            success: function(response) {
 	                            	// GTM
-	                            	dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'document'});
+	                            	dataLayer.push({'event': 'GAeventDocument', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'document'});
 
 	                                $containerAjax.html(response);	// вставляємо сенкю
 	                            },
@@ -516,9 +516,9 @@ $(document).ready(function(){
 	                            success: function(response){
 	                            	// GTM
 	                            	if (form.id == 'formBySelf'){
-	                            		dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'form'});
+	                            		dataLayer.push({'event': 'GAeventForm', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'form'});
 	                            	} else if(form.id == 'formByPhone'){
-	                            		dataLayer.push({'event': 'GAevent', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'by phone'});
+	                            		dataLayer.push({'event': 'GAeventByPhone', 'eventCategory': 'formSentOsagoLanding', 'eventAction': 'by phone'});
 	                            	}
 
 	                                $containerAjax.html(response);	// вставляємо сенкю
