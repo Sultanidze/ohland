@@ -195,6 +195,12 @@ $(document).ready(function(){
 		//	Повертаємось до вибора тз при кліку на "Изменить данные"
 		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
 
+		//	Повертаємось до вибора тз при кліку на лого Oh.ua
+		$(".b-logo__link").click(function(e){
+			e.preventDefault();	// не перевантажуємо сторінку
+			showVehicleCalc($containerAjax)
+		});
+
 		// підванатажимо блок оформлення при кліку на "Купить"
 		var  $buyBtns = $("#propositions").find(".b-proposition__buy");	// кнопки купівлі
 

@@ -91,6 +91,7 @@ body{
 }
 .b-logo__link{
     padding-top: 0;
+    cursor: pointer;
 }
 .b-logo{
     padding-top: 0;
