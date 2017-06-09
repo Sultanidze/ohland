@@ -108,20 +108,26 @@ $(document).ready(function(){
 
 		$containerAjax.dequeue("ajax");	// запустимо чергу
 	};
-	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		// зафарбуємо необхідну к-ть зірочок рейтингу компанії в кожній пропозиції
-		var $ratings = $(".b-company__rating_propos");	// контейнер із зірочками
 
-		$ratings.each(function(){
-			var  starsNum = $(this).attr("data-rating")	// к-ть зірочок для зафарбування в атрибуті "data-rating" контейнера
-				,$stars = $(this).children("span.fa")
-				,i
-				;
-				
-			for (i=0; i<starsNum; ++i){
-				$stars.eq(i).removeClass("fa-star-o").addClass("fa-star");
-			}
-		});
+	var fillStar = function(){	// ф-я для зафарбовування зірочок для кожного контейнера $("РейтингКонтейнер").each(fillStar)
+		var  starsNum = $(this).attr("data-rating")	// к-ть зірочок для зафарбування в атрибуті "data-rating" контейнера
+			,$stars = $(this).children("span.fa")
+			,i
+			;
+		// 	fa-star-o контур зірочки
+		// 	fa-star зафарбований контур зірочки
+		for (i=0; i<starsNum; ++i){
+			$stars.eq(i).removeClass("fa-star-o").addClass("fa-star");
+		}
+	};
+	var fillAllStars = function(sSelector){	// sSelector - селектор контейнера із зрочками
+		var $ratings = $(sSelector);	// контейнер із зірочками
+			$ratings.each(fillStar);
+	}
+
+	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
+		// зафарбуємо необхідну к-ть зірочок рейтингу компанії
+		fillAllStars(".b-company__rating");
 
 		var  $btnsReadMore = $(".js-btn_readmore")
 			,detailsLineHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("line-height")	// save line height from styles.css
@@ -319,13 +325,12 @@ $(document).ready(function(){
         			number: true,
         			min: 1960,
         			max: 2018
-                    //pattern: /[0-9]{4}/
         		},
         		chassis:  {
         			required: true,
                     minlength: 2,
                     maxlength: 17,
-                    pattern: /^[A-Za-zА-Яа-яЁёІіЇї\-0-9]+$/
+                    pattern: /^[A-Za-z]*\d+[A-Za-z]*$/
         		},
         		plateNum: {
         			required: true,
@@ -395,7 +400,7 @@ $(document).ready(function(){
         			required: "Поле обязательно для заполнения!",
                     minlength: "не менее 2х символов",
                     maxlength: "не более 17 символов",
-                    pattern: "латинница, кириллица, дефис, цифры"
+                    pattern: "латинница, минимум одна цифра"
         		},
         		plateNum: {
                     required: "Поле обязательно для заполнения!",
@@ -1260,6 +1265,9 @@ $(document).ready(function(){
 		event.preventDefault();
 		$sliderReasons.slick("slickNext");
 	});
+
+// зафарбуємо необхідну к-ть зірочок рейтингу компанії в (РЕЙТИНГ КЛИЕНТОВ OH.UA)
+	fillAllStars(".b-company__rating");
 
 // clientsRating/mtsb switch
 	var  $ratingBtns = $(".b-section_rating .b-rating__btn")
