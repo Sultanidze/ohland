@@ -45,7 +45,7 @@
                 <span class="fa fa-envelope-open-o" aria-hidden="true"></span>
                 &nbsp;&nbsp;sales@oh.ua
             </a>
-            <button class="b-header__btn" id="callbackBtn">Обратный звонок</button>
+            <button class="b-header__btn" id="callbackBtn">Перезвоните мне</button>
         </div>
 	</header>
 	<section class="b-section_calculator" id="calculator">
@@ -145,7 +145,7 @@
                                 <label for="motorcycle">более 300 см<sup>3</sup></label>
                             </div>
                         </div>
-                        <span class="b-calculator__heading b-calculator__heading_registration">Регистрация и эксплуатация</span>
+                        <span class="b-calculator__heading b-calculator__heading_registration">Место регистрации авто <span class="fa fa-question-circle" aria-hidden="true" title="Введите несколько букв названия населенного пункта, затем выберете населенный пункт из списка. Место регистрации вашего ТС необходимо указывать согласно технического паспорта. (Не путать с местом жительства или прописки)"></span></span>
                         <div class="b-block_select b-selectBlock_registration">
                             <label for="regCity" class="b-label_registration">Место регистрации транспортного средства</label>
                             <input type="text" class="b-autocomplete b-autocomplete_vehicle selectric" id="regCity" title="Введите и выберите город">
@@ -222,6 +222,36 @@
             </div>
         </div>
 	</section>
+    <section class="b-section_video">
+        <div class="b-container">
+            <div class="b-card b-card_video">
+                <div class="b-video__overlay">
+                    <div class="b-overlay__btn b-btn_play">
+                        <span class="fa fa-circle" aria-hidden="true"></span>
+                        <span class="fa fa-play-circle" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="b-videohelp">
+                <div class="b-heading_videohelp">Видео<br>Помощник<br>Oh.ua</div>
+                <p class="b-descr_videohelp">Вы зашли на сайт сервиса сравнения цен и подбора страховок № 1 в Украине - Oh.ua.</p>
+                <ol class="b-stages_videohelp">
+                    <li>
+                        <div class="b-stage_videohelp"><span class="g-bold">Вверху страницы выберите тип транспортного средства и место регистрации авто,</span></div>
+                    </li>
+                    <li>
+                        <div class="b-stage_videohelp">затем <span class="g-bold">нажмите кнопку</span><span class="g-bold g-highlited"> “Узнать стоимость ОСАГО”</span>.</div>
+                    </li>
+                    <li>
+                        <div class="b-stage_videohelp"><span class="g-bold">Выберите предложение по страховке,</span> которое вам понравилось,</div>
+                    </li>
+                    <li>
+                        <div class="b-stage_videohelp"><span class="g-bold">нажмите кнопку “Купить”</span> и оформите удобным способом.</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
 	<section class="b-section_reasons">
         <div class="b-container">
 	        <span class="b-section__heading">
@@ -298,6 +328,19 @@
             </div>
         </div>
 	</section>
+	<section class="b-section_map">
+	    <div class="b-container b-container_map">
+	        <div class="b-card b-card_contacts">
+	            <div class="b-map__header">Мы находимся по адресу</div>
+	            <p class="b-map__address">01032, Украина,<br>г. Киев, ул. Пушкинская, 9</p>
+	            <p class="b-map__address"><span>Звоните нам:</span>(044) 290 36 71</p>
+	            <p class="b-map__address"><span>Или пишите:</span>sales@oh.ua</p>
+	        </div>
+	        <div class="b-card b-card_map">
+	            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.715301864317!2d30.51680831566454!3d50.446403395537665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cef476aeabf7%3A0x7a1e66ef15f87549!2z0KHRgtGA0LDRhdC-0LLQutCwINCe0KHQkNCT0J4g0LIg0JrQuNC10LLQtSwg0L7QvdC70LDQudC9INC60LDQu9GM0LrRg9C70Y_RgtC-0YAg0LDQstGC0L7RhtC40LLQuNC70LrQuCDigJQgT2guVUE!5e0!3m2!1suk!2sua!4v1497353903019" width="625" height="454" frameborder="0" style="border:0" allowfullscreen></iframe>
+	        </div>
+	    </div>
+	</section>
 	<section class="b-section_howto">
         <div class="b-container">
 	        <span class="b-section__heading b-section__heading_howto">Как вы можете оформить полис ОСАГО на сайте Oh.ua?</span>
@@ -345,6 +388,9 @@
 	                <p>сумма, которую выплачивает застрахованный самостоятельно, бывает 0, 1000, 2000 грн</p>
 	            </div>
 	        </div>
+	        <a href="#calculator" class="b-form__submit_vehicle b-anchor_calculator">
+                <span class="b-text_btn">Вернуться к калькулятору</span><span class="fa fa-angle-up" aria-hidden="true"></span>
+            </a>
         </div>
     </section>
 	<section class="b-section_rating">
@@ -945,6 +991,19 @@
                                                 <input type="tel" name="phone" id="phone1" required pattern="[0-9()\s+-]{19}">
                                             </div>
                                         </div>
+                                        <div class="b-feedbackForm__rating">
+                                            <input type="radio" id="star5" name="rating" value="5" class="sr-only" required>
+                                            <label class="fa" for="star5" title="восхитительно"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" class="sr-only">
+                                            <label class="fa" for="star4" title="отлично"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" class="sr-only">
+                                            <label class="fa" for="star3" title="хорошо"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" class="sr-only">
+                                            <label class="fa" for="star2" title="удовлетворительно"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" class="sr-only">
+                                            <label class="fa" for="star1" title="плохо"></label>
+                                            <span class="b-label_rating">Ваша оценка</span>
+                                        </div>
                                         <div class="row">
                                             <div class="col-l col-12">
                                                 <label for="feedback1" class="b-label_registration">Ваш отзыв</label>
@@ -978,6 +1037,19 @@
                                                 <input type="tel" name="phone" id="phone2" required pattern="[0-9()\s+-]{19}">
                                             </div>
                                         </div>
+                                        <div class="b-feedbackForm__rating">
+                                            <input type="radio" id="star5" name="rating" value="5" class="sr-only" required>
+                                            <label class="fa" for="star5" title="восхитительно"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" class="sr-only">
+                                            <label class="fa" for="star4" title="отлично"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" class="sr-only">
+                                            <label class="fa" for="star3" title="хорошо"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" class="sr-only">
+                                            <label class="fa" for="star2" title="удовлетворительно"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" class="sr-only">
+                                            <label class="fa" for="star1" title="плохо"></label>
+                                            <span class="b-label_rating">Ваша оценка</span>
+                                        </div>
                                         <div class="row">
                                             <div class="col-l col-12">
                                                 <label for="feedback2" class="b-label_registration">Ваш отзыв</label>
@@ -1002,16 +1074,40 @@
     </section>
     <footer class="b-footer">
         <div class="b-footer__toTop" id="toTop">
-            <span class="b-heading_toTop">На вверх&nbsp;</span>
+            <span class="b-heading_toTop">Вверх&nbsp;</span>
             <a href="#header" class="b-btn_toTop">
                 <span class="fa fa-arrow-up" aria-hidden="true"></span>
             </a>
         </div>
+        <div class="b-container_wide b-container_header b-container_footer">
+            <a href="/index.html" class="b-logo__link">
+                <img src="./img/logo.svg" alt="OH.UA лого" class="b-logo">
+            </a>
+            <span class="b-header__address">Украина, г. Киев, ул. Пушкинская, 9</span>
+            <a href="tel:0987336718" class="b-header__link b-header__link_phone">
+<!--                <span class="fa fa-phone" aria-hidden="true"></span>-->
+                <span class="b-icon_phone"></span>
+                &nbsp;&nbsp;(098) 733 67 18
+            </a>
+            <a href="mailto:sales@oh.ua" class="b-header__link b-header__link_email">
+                <span class="fa fa-envelope-open-o" aria-hidden="true"></span>
+                &nbsp;&nbsp;sales@oh.ua
+            </a>
+            <a href="viber://add?number=0987336718" class="b-header__link b-header__link_phone">
+<!--                <span class="fa fa-phone" aria-hidden="true"></span>-->
+                <span class="b-icon_viber"></span>
+                &nbsp;&nbsp;(098) 733 67 18
+            </a>
+            <a href="https://www.facebook.com/ohua.online/" class="b-header__link b-header__link_facebook b-header__link_email">
+                <span class="b-icon_fb"></span>oh.ua
+            </a>
+            
+            <button class="b-header__btn" id="callbackBtn">Вам перезвонить?</button>
+        </div>
         <div class="b-container">
             <div class="b-container_footer">
-                <img src="./img/ewa.png" alt="EWA" class="b-logo_ewa">
                 <p class="b-footer__pay">
-                   Мы принимаем:<br>
+                   Мы принимаем:
                    <span class="fa fa-cc-visa" aria-hidden="true"></span>
                    <span class="fa fa-cc-mastercard" aria-hidden="true"></span>
                    <span class="fa fa-cc-paypal" aria-hidden="true"></span>
@@ -1060,7 +1156,13 @@
         <div class="b-slide__wrap">
             <div class="b-slide__heading">0Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="0">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1069,12 +1171,20 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">1/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="b-slide__wrap">
             <div class="b-slide__heading">1Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="1">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1083,12 +1193,20 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">2/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="b-slide__wrap">
             <div class="b-slide__heading">2Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="2">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1097,12 +1215,20 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">3/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="b-slide__wrap">
             <div class="b-slide__heading">3Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="3">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1111,12 +1237,20 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">4/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="b-slide__wrap">
             <div class="b-slide__heading">4Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="4">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1125,12 +1259,20 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">5/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="b-slide__wrap">
             <div class="b-slide__heading">5Сергей Зарицкий</div>
             <div class="b-slide__content">
-                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <span class="b-company__rating b-company__rating_propos" data-rating="5">
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true"></span>
+                </span>
                 <div class="b-slide__aside_marks">
                     <div class="b-mark__heading">Качество сервиса </div>
                     <div class="b-mark__num">5/10</div>
@@ -1139,6 +1281,8 @@
                     <div class="b-mark__heading">Выбор компаний </div>
                     <div class="b-mark__num">6/10</div>
                 </div>
+                <p class="b-slide__response"><span class="b-response__highlight">Воспользовался сервисом на прошлой неделе.</span>Всё быстро и качественно. Рекомендую. Девочка Юля предложила варианты, выбрали, в электронной форме всё оформили, курьер привёз полис. Я доволен :)</p>
+                <a href="#" class="b-link_response g-bold">Смотреть на FACEBOOK<span  class="fa fa-chevron-right" aria-hidden="true"></span></a>
             </div>
         </div>
     </div>
