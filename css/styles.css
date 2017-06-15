@@ -1603,19 +1603,25 @@ body{
 }
 
 .b-feedbackForm__rating{
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 11px;
     position: relative;
     direction: rtl;
     text-align: left;
     font-size: 0;
 }
-.b-feedbackForm__rating:not(:checked)>input{
-    left: 38%;
-    bottom: 7%;
-    width: 1px;
-    height: 1px;
+.b-feedbackForm__rating input[type="radio"]{
+    margin-bottom: 0;
+    display: inline-block;
+    width: 22px;
     padding: 0;
-    margin: 1px;
+    vertical-align: baseline;
+}
+.b-feedbackForm__rating:not(:checked)>input{
+    position:absolute;
+    height: 100%;
+    /*    left:-9999px;*/
+    clip:rect(0,0,0,0);
 }
 .b-feedbackForm__rating:not(:checked)>label{
     margin-bottom: 0;
