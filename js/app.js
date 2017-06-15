@@ -1615,7 +1615,7 @@ $(document).ready(function(){
 		$modals.fadeOut();
 	}
 
-	$("#callbackBtn").click(function(){
+	$("#callbackBtn, #callbackBtn_footer").click(function(){
 		$modalOvl.fadeIn();
 		$modalCallback.fadeIn();
 	});
