@@ -1,5 +1,6 @@
 <div class="b-container b-container__calculator_vehicle">
                 <div class="b-calculator b-calculator_vehicle">
+                    <span class="b-calculator__heading_main">ОСАГО по лучшей цене за 3 минуты!</span>
                     <form action="" class="b-form_calculator b-form_vehicle" id="vehicleForm">
                         <span class="b-calculator__heading">Выберите страховку на свое авто</span>
                         <div class="b-vehicles">
@@ -58,6 +59,7 @@
                                 </span>
                             </label>
                         </div>
+                        <span class="b-calculator__heading b-calculator__heading_registration">Объем двигателя  <span class="fa fa-question-circle" aria-hidden="true" title="Выберите обьем двигателя вашего ТС"></span></span>
                         <div class="b-vehicle__params">
                             <div class="b-params b-params_car js-params_active b-params_active">
                                 <input type="radio" class="radio sr-only" id="small" value="3" name="type">
@@ -88,9 +90,9 @@
                                 <label for="motorcycle">более 300 см<sup>3</sup></label>
                             </div>
                         </div>
-                        <span class="b-calculator__heading b-calculator__heading_registration">Регистрация и эксплуатация</span>
+                        <span class="b-calculator__heading b-calculator__heading_registration">Место регистрации авто <span class="fa fa-question-circle" aria-hidden="true" title="Введите несколько букв названия населенного пункта, затем выберете населенный пункт из списка. Место регистрации вашего ТС необходимо указывать согласно технического паспорта. (Не путать с местом жительства или прописки)"></span></span>
                         <div class="b-block_select b-selectBlock_registration">
-                            <label for="regCity" class="b-label_registration">Место регистрации транспортного средства</label>
+<!--                            <label for="regCity" class="b-label_registration">Место регистрации транспортного средства</label>-->
                             <input type="text" class="b-autocomplete b-autocomplete_vehicle selectric" id="regCity" title="Введите и выберите город">
                             <input type="hidden" class="hidden" name="regCityId" id="cityId">
                             <input type="hidden" class="hidden" name="zoneId" id="zoneId">
@@ -111,6 +113,7 @@
                                 <div class="autocomplete-suggestion" data-id="44" data-zone="3">Николаев (г.), Николаевская обл.</div>
                             </div>
                         </div>
+<!--
                         <div class="b-block_select b-selectBlock_franshiza">
                             <label for="franshiza" class="b-label_registration">Франшиза</label>
                             <select name="franshiza" class="js-selectric" id="franshiza">
@@ -120,6 +123,7 @@
                                 <option value="10000">10 000 грн</option>
                             </select>
                         </div>
+-->
                         <label class="b-block_checkbox">
                            <input type="checkbox" class="sr-only" id="notTaxi" value="true" name="notTaxi" checked>
                            <span class="fa fa-check-square-o" aria-hidden="true"></span> 
@@ -130,16 +134,43 @@
                             <span class="b-text_btn">Узнать стоимость ОСАГО</span><span class="fa fa-angle-right" aria-hidden="true"></span>
                         </button>
                     </form>
+                    <ul class="b-crumbs_aside">
+                        <li class="b-crumbs__item_aside b-item_active">
+                            <div class="b-item__link">
+                                <span class="b-item__pre">1</span>
+                                <span class="b-item__text">Расчет</span>
+                            </div>
+                        </li>
+                        <li class="b-crumbs__item_aside b-item_unactive">
+                            <div class="b-item__link">
+                                <span class="b-item__pre">2</span>
+                                <span class="b-item__text">Выбор</span>
+                            </div>
+                        </li>
+                        <li class="b-crumbs__item_aside b-item_unactive">
+                            <div class="b-item__link">
+                                <span class="b-item__pre">3</span>
+                                <span class="b-item__text">Оформление</span>
+                            </div>
+                        </li>
+                        <li class="b-crumbs__item_aside b-item_unactive">
+                            <div class="b-item__link">
+                                <span class="b-item__pre">4</span>
+                                <span class="b-item__text">Оплата</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="b-advantages">
-                   <span class="b-advantages_heading">ОСАГО по<br>лучшей цене<br>за 3 минуты!</span>
-                   <ul class="b-advantages__list">
+                    <span class="b-advantages__heading">Oh.UA ЭТО:</span>
+                    <ul class="b-advantages__list">
                        <li><span class="fa fa-check b-list__tick" aria-hidden="true"></span>Топ 10 страховых компаний</li>
                        <li><span class="fa fa-check b-list__tick" aria-hidden="true"></span>Самые низкие цены</li>
-                       <li><span class="fa fa-check b-list__tick" aria-hidden="true"></span>Оплата онлайн или при<br>получении</li>
+                       <li><span class="fa fa-check b-list__tick" aria-hidden="true"></span>Оплата онлайн или при получении</li>
                        <li><span class="fa fa-check b-list__tick" aria-hidden="true"></span>Бесплатная доставка</li>
-                   </ul>
+                    </ul>
                 </div>
+<!--
                 <div class="b-calculator__progress">
                     <div class="b-gauge b-gauge_vehicle">
                         <span class="b-progress__status">10%</span>
@@ -162,4 +193,5 @@
                         <div class="b-notch"></div>
                     </div>
                 </div>
+-->
             </div>
