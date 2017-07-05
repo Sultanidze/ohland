@@ -1,483 +1,394 @@
 <div class="b-container b-container__calculator_propositions" id="propositions">
-    <div class="b-section_crumbs">
-        <div class="b-container">
-            <ol class="b-crumbs">
-                <li class="b-crumbs__item b-crumbs__item_unactive" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span class="b-crumbs__link" data-step="1">
-                        Расчет
-                    </span>
-                </li>
-                <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span>Выбор</span>
-                </li>
-            </ol>
-        </div>
-    </div>
-    <div class="b-propositions__block_aside">
-        <div class="b-data_your">
-            <div class="b-calculator__heading b-data__heading">Ваши данные:</div>
-            <div class="b-data__part">
-                <div>Обьект страхования</div>
-                <div class="bold">Легковой автомобиль</div>
-            </div>
-            <div class="b-data__part">
-                <div>Обьм двигателя</div>
-                <div class="bold">До 1600 см3</div>
-            </div>
-            <div class="b-data__part">
-                <div>Место регистрации транспортного средства</div>
-                <div class="bold">Киев</div>
-            </div>
-            <button type="button" class="b-form__submit_vehicle" id="vehicleEdit">
-                <span class="b-text_btn">Изменить данные</span><span class="fa fa-angle-left" aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="b-propositions__tip">
-            <div class="b-tip__icon"><span class="fa fa-clock-o" aria-hidden="true"></span></div>
-            <p class="b-tip__text"><span class="bold">Мы уже сэкономили ваше время </span>(всё самое важное о лучших компаниях вы узнали за несколько секунд).</p>
-        </div>
-        <div class="b-propositions__tip">
-            <div class="b-tip__icon"><span class="fa fa-tag" aria-hidden="true"></span></div>
-            <p class="b-tip__text"><span class="bold">Цена страховки на сайте ниже, чем в страховой компании, </span>гарантируем, что вы непереплатите.</p>
-        </div>
-    </div>
-    <div class="b-calculator b-calculator_propos">
-            <div class="b-calculator__heading b-calculator__heading_propos">Выберите страховку на свое авто:</div>
-            <div class="b-propositions">
-                <div class="b-propositions__string">
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Топ продаж
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="2">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Рейтинг финансовой устойчивости на уровне uaAA+</li>
-                                    <li class="b-propos__detail">Работает в системе прямого урегулирования</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="1">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="4">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="2">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Рекомендуем
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="3">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="3">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="5">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="4">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
+                <div class="b-section_crumbs">
+                    <div class="b-container">
+                        <ol class="b-crumbs">
+                            <li class="b-crumbs__item b-crumbs__item_unactive" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <span class="b-crumbs__link" data-step="1">
+                                    Расчет
+                                </span>
+                            </li>
+                            <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <span>Выбор</span>
+                            </li>
+                        </ol>
                     </div>
                 </div>
-                <div class="b-propos__guaranties">
-                    <div class="b-guaranties__heading">Гарантия лучшей цены</div>
-                    <p>Мы гарантируем самые низкие цены. Не дороже, чем напрямую в страховой компании. Если вы нашли цену ниже, мы компенсируем вам эту разницу.</p>
+                <div class="b-calculator b-calculator_propos">
+                    <div class="b-calculator__heading b-calculator__heading_propos">
+                        Результаты расчета для <span class="b-propositions__link b-propositions__link_unscrolled">Легковой автомобиль до 1600 см3 Киев</span>
+                    </div>
+                    <form action="" class="b-propos__recalc">
+                        <div class="b-select__container_propos b-selectBlock_engineCapacity">
+                            <label for="vehicle" class="b-label_registration">Обьект страхования</label>
+                            <select name="vehicle" class="js-selectric" id="vehicle">
+                                <option value="1" selected>Легковой автомобиль</option>
+                                <option value="2">Грузовой автомобиль</option>
+                                <option value="3">Пассажирский автобус</option>
+                                <option value="4">Мотоцикл, мотороллер</option>
+                            </select>
+                        </div>
+                        <div class="b-select__container_propos b-selectBlock_engineCapacity js-vehicle js-car">
+                            <label for="engineCapacity" class="b-label_registration">Обьем двигателя</label>
+                            <select name="engineCapacity" class="js-selectric" id="engineCapacity">
+                                <option value="3">до 1600 см&sup3;</option>
+                                <option value="4" selected>1601 - 2000 см&sup3;</option>
+                                <option value="5">2001 - 3000 см&sup3;</option>
+                                <option value="6">от 3001 см&sup3;</option>
+                            </select>
+                        </div>
+                        <div class="b-select__container_propos b-selectBlock_engineCapacity js-vehicle js-trailer">
+                            <label for="tonnage" class="b-label_registration">Грузоподьемность</label>
+                            <select name="engineCapacity" class="js-selectric" id="tonnage">
+                                <option value="7">до 2т</option>
+                                <option value="8" selected>более 2т</option>
+                            </select>
+                        </div>
+                        <div class="b-select__container_propos b-selectBlock_engineCapacity js-vehicle js-bus">
+                            <label for="passengers" class="b-label_registration">Пассажировместительность</label>
+                            <select name="engineCapacity" class="js-selectric" id="passengers">
+                                <option value="9">до 20 человек</option>
+                                <option value="10" selected>более 20 человек</option>
+                            </select>
+                        </div>
+                        <div class="b-select__container_propos b-selectBlock_engineCapacity js-vehicle js-moto">
+                            <label for="engineCapacity" class="b-label_registration">Обьем двигателя</label>
+                            <select name="engineCapacity" class="js-selectric" id="engineCapacity">
+                                <option value="1">до 300 см&sup3;</option>
+                                <option value="2" selected>более 300 см&sup3;</option>
+                            </select>
+                        </div>
+                        <div class="b-select__container_propos">
+                            <label for="regCity" class="b-label_registration">Место регистрации</label>
+                            <input class="b-autocomplete selectric" id="regCity" title="Введите и выберите город" name="regCity" value="г. Киев, Украина" autocomplete="off" type="text">
+                            <input class="hidden" name="regCityId" id="cityId" value="1" type="hidden">
+                            <input class="hidden" name="zoneId" id="zoneId" value="1" type="hidden">
+                            <div class="autocomplete-suggestions b-precomplete_brand js-precomplete">
+                                <div class="autocomplete-suggestion" data-id="1" data-zone="1">Киев (г.), Киевская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="9" data-zone="3">Харьков (г.), Харьковская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="14" data-zone="3">Днепропетровск (г.), Днепропетровская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="46" data-zone="3">Мариуполь (г.), Донецкая обл.</div>
+                                <div class="autocomplete-suggestion" data-id="15" data-zone="3">Львов (г.), Львовская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="10" data-zone="3">Одесса (г.), Одесская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="12" data-zone="3">Запорожье (г.), Запорожская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="5237" data-zone="3">Красноармейск (г.), Донецкая обл.</div>
+                                <div class="autocomplete-suggestion" data-id="47" data-zone="3">Черкассы (г.), Черкасская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="3" data-zone="3">Бровары (г.), Киевская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="37" data-zone="3">Житомир (г.), Житомирская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="32" data-zone="3">Полтава (г.), Полтавская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="13" data-zone="6">Кривой Рог (г.), Днепропетровская обл.</div>
+                                <div class="autocomplete-suggestion" data-id="44" data-zone="3">Николаев (г.), Николаевская обл.</div>
+                            </div>
+                        </div>
+                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                            <span class="b-text_btn">Изменить данные</span>
+                        </button>
+                    </form>
+                    <div class="b-propositions">
+                        <div class="b-propositions__header">
+                            <div class="b-container__filter b-container__filter_name">
+                                <span class="b-filter b-filter_name js-filter js-filter_name">
+                                    Страховая компания <span class="b-order js-order">А-Я</span>
+                                </span>
+                            </div>
+                            <div class="b-container__filter b-container__filter_price">
+                                <span class="b-filter b-filter_price js-filter js-filter_price">
+                                    <span class="b-order js-order">
+                                        Цена<span class="fa fa-angle-up" aria-hidden="true"></span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="b-container__filter b-container__filter_rating">
+                                <span class="b-filter b-filter_rating js-filter js-filter_rating">
+                                    <span class="b-order js-order">Рейтинг надежности</span>
+                                </span>
+                            </div>
+                        </div>
+                        <ul class="b-propositions__list js-list_propositions g-visible-4_only">
+                            <li class="js-proposition">
+                                <div class="b-proposition_row">
+                                    <div class="b-container__filter b-container__filter_name b-proposition__company">
+                                        <img src="./img/vusq-dark.png" alt="" class="b-img_company">
+                                        <span class="b-filter b-filter_rating">
+                                            Рейтинг надежности <span class="b-order">9 из 10</span>
+                                        </span>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_price b-proposition__price">
+                                        <span class="b-price">816<span class="b-currency"> грн</span></span>
+                                        <div class="b-discont">
+                                            <span class="b-discont__num">15%</span>
+                                             скидка от Oh.ua<br>
+                                             Напрямую у страховой <span class="g-bold">1478</span> грн
+                                        </div>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_rating b-proposition__about">
+                                        <ul class="b-details__list_propos">
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_dark">
+                                                    <span class="fa fa-truck" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Бесплатная доставка</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-money" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Франшиза 0 грн</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-retweet" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Работает в системе прямого урегулирования!</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_light">
+                                                    23
+                                                </div>
+                                                <span class="b-text_detail">Человек уже купили эту страховку в июле</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="b-proposition__buy_row">
+                                        <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
+                                            <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                                            <span class="b-text_btn">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="b-proposition__tab">
+                                        Топ продаж
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="js-proposition">
+                                <div class="b-proposition_row">
+                                    <div class="b-container__filter b-container__filter_name b-proposition__company">
+                                        <img src="./img/alpha-dark.png" alt="" class="b-img_company">
+                                        <span class="b-filter b-filter_rating">
+                                            Рейтинг надежности <span class="b-order">9 из 10</span>
+                                        </span>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_price b-proposition__price">
+                                        <span class="b-price">1023<span class="b-currency"> грн</span></span>
+                                        <div class="b-discont">
+                                            <span class="b-discont__num">22%</span>
+                                             скидка от Oh.ua<br>
+                                             Напрямую у страховой <span class="g-bold">1478</span> грн
+                                        </div>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_rating b-proposition__about">
+                                        <ul class="b-details__list_propos">
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-money" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Франшиза 0 грн</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-retweet" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Работает в системе прямого урегулирования!</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_light">
+                                                    23
+                                                </div>
+                                                <span class="b-text_detail">Человек уже купили эту страховку в июле</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="b-proposition__buy_row">
+                                        <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
+                                            <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                                            <span class="b-text_btn">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="js-proposition">
+                                <div class="b-proposition_row">
+                                    <div class="b-container__filter b-container__filter_name b-proposition__company">
+                                        <img src="./img/alpha-dark.png" alt="" class="b-img_company">
+                                        <span class="b-filter b-filter_rating">
+                                            Рейтинг надежности <span class="b-order">9 из 10</span>
+                                        </span>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_price b-proposition__price">
+                                        <span class="b-price">1023<span class="b-currency"> грн</span></span>
+                                        <div class="b-discont">
+                                            <span class="b-discont__num">22%</span>
+                                             скидка от Oh.ua<br>
+                                             Напрямую у страховой <span class="g-bold">1478</span> грн
+                                        </div>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_rating b-proposition__about">
+                                        <ul class="b-details__list_propos">
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-money" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Франшиза 0 грн</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-retweet" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Работает в системе прямого урегулирования!</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_light">
+                                                    23
+                                                </div>
+                                                <span class="b-text_detail">Человек уже купили эту страховку в июле</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="b-proposition__buy_row">
+                                        <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
+                                            <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                                            <span class="b-text_btn">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="js-proposition">
+                                <div class="b-proposition_row">
+                                    <div class="b-container__filter b-container__filter_name b-proposition__company">
+                                        <img src="./img/alpha-dark.png" alt="" class="b-img_company">
+                                        <span class="b-filter b-filter_rating">
+                                            Рейтинг надежности <span class="b-order">9 из 10</span>
+                                        </span>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_price b-proposition__price">
+                                        <span class="b-price">1023<span class="b-currency"> грн</span></span>
+                                        <div class="b-discont">
+                                            <span class="b-discont__num">22%</span>
+                                             скидка от Oh.ua<br>
+                                             Напрямую у страховой <span class="g-bold">1478</span> грн
+                                        </div>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_rating b-proposition__about">
+                                        <ul class="b-details__list_propos">
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-money" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Франшиза 0 грн</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-retweet" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Работает в системе прямого урегулирования!</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_light">
+                                                    23
+                                                </div>
+                                                <span class="b-text_detail">Человек уже купили эту страховку в июле</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="b-proposition__buy_row">
+                                        <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
+                                            <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                                            <span class="b-text_btn">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="js-proposition">
+                                <div class="b-proposition_row">
+                                    <div class="b-container__filter b-container__filter_name b-proposition__company">
+                                        <img src="./img/alpha-dark.png" alt="" class="b-img_company">
+                                        <span class="b-filter b-filter_rating">
+                                            Рейтинг надежности <span class="b-order">9 из 10</span>
+                                        </span>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_price b-proposition__price">
+                                        <span class="b-price">1023<span class="b-currency"> грн</span></span>
+                                        <div class="b-discont">
+                                            <span class="b-discont__num">22%</span>
+                                             скидка от Oh.ua<br>
+                                             Напрямую у страховой <span class="g-bold">1478</span> грн
+                                        </div>
+                                    </div>
+                                    <div class="b-container__filter b-container__filter_rating b-proposition__about">
+                                        <ul class="b-details__list_propos">
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-money" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Франшиза 0 грн</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img g-color-corporate-dark">
+                                                    <span class="fa fa-retweet" aria-hidden="true"></span>
+                                                </div>
+                                                <span class="b-text_detail">Работает в системе прямого урегулирования!</span>
+                                            </li>
+                                            <li class="b-detail__item_propos">
+                                                <div class="b-item__block_img bg-corporate_light">
+                                                    23
+                                                </div>
+                                                <span class="b-text_detail">Человек уже купили эту страховку в июле</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="b-proposition__buy_row">
+                                        <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
+                                            <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
+                                            <span class="b-text_btn">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="b-propos__guaranties">
+                        <ul class="b-crumbs_aside">
+                            <li class="b-crumbs__item_aside b-item_done js-crumbs__link" data-step="1">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre"></span>
+                                    <span class="b-item__text">Расчет</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_active">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre">2</span>
+                                    <span class="b-item__text">Выбор</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_unactive">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre">3</span>
+                                    <span class="b-item__text">Оформление</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_unactive">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre">4</span>
+                                    <span class="b-item__text">Оплата</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="b-guaranties__heading">Гарантия лучшей цены</div>
+                        <p>Мы гарантируем самые низкие цены. Не дороже, чем напрямую в страховой компании. Если вы нашли цену ниже, мы компенсируем вам эту разницу.</p>
+                    </div>
+                    <button type="button" class="b-form__submit_vehicle b-propos__btn_more" id="morePropositions">
+                        <span class="b-text_btn">Больше предложений</span>
+                        <span class="fa fa-angle-down" aria-hidden="true"></span>
+                    </button>
                 </div>
-                <div class="b-propositions__string b-propositions__string_hidden">
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Топ продаж
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="2">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="1">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="4">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="2">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Рекомендуем
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="3">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="3">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="5">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="4">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="b-propositions__string b-propositions__string_hidden">
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Топ продаж
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="2">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="1">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="4">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="2">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <div class="b-proposition__tab">
-                                Рекомендуем
-                            </div>
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="3">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="3">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                    <div class="b-proposition__wrap">
-                        <div class="b-proposition b-gradient_bg">
-                            <img src="./img/unica.png" alt="" class="b-proposition__logo">
-                            <span class="b-company__name">СК УНИКА</span>
-                            <span class="b-company__rating b-company__rating_propos" data-rating="5">
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                                <span class="fa fa-star-o" aria-hidden="true"></span>
-                            </span>
-                            <div class="b-propos__details">
-                                <ul class="b-details__list js-content_readmore">
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                    <li class="b-propos__detail">Франшиза 0</li>
-                                    <li class="b-propos__detail">Карта Assistance</li>
-                                    <li class="b-propos__detail">Прямое урегулирование</li>
-                                </ul>
-                                <button class="b-details__btn_readmore js-btn_readmore">Подробнее</button>
-                            </div>
-                            <div class="b-discont">
-                                <span class="b-discont__num">15%</span>
-                                 скидка от Oh.ua
-                            </div>
-                            <button type="button" class="b-form__submit_vehicle b-proposition__buy" data-proposition="4">
-                                <span class="b-text_btn" data-fullprice="960">Купить за 816 грн </span><span class="fa fa-angle-right" aria-hidden="true"></span>
-                            </button>
-                            <span class="b-proposition__gain">Экономия 155 грн</span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-            <button type="button" class="b-form__submit_vehicle" id="morePropositions">
-                <span class="b-text_btn">Посмотреть еще предложения</span><span class="fa fa-angle-down" aria-hidden="true"></span>
-            </button>
-    </div>
-    
-    <div class="b-calculator__progress b-progress_propositions">
-        <div class="b-gauge b-gauge_propositions">
-            <span class="b-progress__status">30%</span>
-        </div>
-        <div class="b-scale">
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-            <div class="b-notch"></div>
-        </div>
-    </div>
-</div>

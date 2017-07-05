@@ -2,20 +2,20 @@
 // either vertically or horizontally.
 // Will temporarily modify the "overflow" style to detect this
 // if necessary.
-function checkOverflow(el)
-{
-   var curOverflow = el.style.overflow;
+// function checkOverflow(el)
+// {
+//    var curOverflow = el.style.overflow;
 
-   if ( !curOverflow || curOverflow === "visible" )
-      el.style.overflow = "hidden";
+//    if ( !curOverflow || curOverflow === "visible" )
+//       el.style.overflow = "hidden";
 
-   var isOverflowing = el.clientWidth < el.scrollWidth 
-      || el.clientHeight < el.scrollHeight;
+//    var isOverflowing = el.clientWidth < el.scrollWidth 
+//       || el.clientHeight < el.scrollHeight;
 
-   el.style.overflow = curOverflow;
+//    el.style.overflow = curOverflow;
 
-   return isOverflowing;
-}
+//    return isOverflowing;
+// }
 
 // pickadate plugin defaults
 jQuery.extend( jQuery.fn.pickadate.defaults, {
@@ -81,7 +81,7 @@ $(document).ready(function(){
 
             var type = $("#vehicleForm input[name='type']:checked").val()
             var notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0;
-            var franshiza = $("#vehicleForm [name='franshiza']").val();
+            // var franshiza = $("#vehicleForm [name='franshiza']").val();
             var city = $("#vehicleForm #cityId").val();
             var cityName = $("#vehicleForm #regCity").val();
             var zone = $("#vehicleForm #zoneId").val();
@@ -120,6 +120,8 @@ $(document).ready(function(){
 			$stars.eq(i).removeClass("fa-star-o").addClass("fa-star");
 		}
 	};
+
+	// ф-я заповнення зірочок відповідно до рейтинга
 	var fillAllStars = function(sSelector){	// sSelector - селектор контейнера із зрочками
 		var $ratings = $(sSelector);	// контейнер із зірочками
 			$ratings.each(fillStar);
@@ -127,75 +129,86 @@ $(document).ready(function(){
 
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
 		// зафарбуємо необхідну к-ть зірочок рейтингу компанії
-		fillAllStars(".b-company__rating");
+		// fillAllStars(".b-company__rating");	// в старій версії бцли зірочки рейтинга
 
-		var  $btnsReadMore = $(".js-btn_readmore")
-			,detailsLineHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("line-height")	// save line height from styles.css
-			,detailsHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("height")	// save height from styles.css
-			,detailsMaxHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("max-height")	// save max-height from styles.css
-			;
+		// var  $btnsReadMore = $(".js-btn_readmore")
+		// 	,detailsLineHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("line-height")	// save line height from styles.css
+		// 	,detailsHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("height")	// save height from styles.css
+		// 	,detailsMaxHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("max-height")	// save max-height from styles.css
+		// 	;
 
-		var initBtnsReadMore = function(){	// визначає чи показувати кнопку ReadMore
-			var $detailsList = $(this).siblings(".js-content_readmore");
+		// var initBtnsReadMore = function(){	// визначає чи показувати кнопку ReadMore
+		// 	var $detailsList = $(this).siblings(".js-content_readmore");
 
-			if (checkOverflow($detailsList[0])){
-				$(this).css("visibility", "visible");
-			}
-		}
+		// 	if (checkOverflow($detailsList[0])){
+		// 		$(this).css("visibility", "visible");
+		// 	}
+		// }
 
 		// покажемо кнопку readMore там де вона треба
-		$btnsReadMore.each(initBtnsReadMore);
+		// $btnsReadMore.each(initBtnsReadMore);
 
 		// hide-show details  by click on "Подробнее"
 			// show:
-		$btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
-			var  $toggleList = $(this).siblings(".js-content_readmore")
-				,$proposition = $toggleList.parents(".b-proposition")
-				;
+		// $btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
+		// 	var  $toggleList = $(this).siblings(".js-content_readmore")
+		// 		,$proposition = $toggleList.parents(".b-proposition")
+		// 		;
 
-			var closeContent = function(){
-					$toggleList.animate({
-						height: detailsHeight
-					}, 400);
-					$proposition.css("z-index","0");
-					$toggleList.removeClass("js-opened");
+		// 	var closeContent = function(){
+		// 			$toggleList.animate({
+		// 				height: detailsHeight
+		// 			}, 400);
+		// 			$proposition.css("z-index","0");
+		// 			$toggleList.removeClass("js-opened");
 				
-			};
+		// 	};
 
-			var openContent = function(){
-					$proposition.css("z-index","1");
-					// $toggleList.css("height", "none");
-					$toggleList.animate({
-						height: detailsMaxHeight
-					}, 400);
-					$toggleList.addClass("js-opened");
+		// 	var openContent = function(){
+		// 			$proposition.css("z-index","1");
+		// 			// $toggleList.css("height", "none");
+		// 			$toggleList.animate({
+		// 				height: detailsMaxHeight
+		// 			}, 400);
+		// 			$toggleList.addClass("js-opened");
 				
-			};
+		// 	};
 
-			var toggleContent = function(){
-				if ($toggleList.hasClass("js-opened")){
-					closeContent();
-				} else {
-					openContent()
-				}
-			};
+		// 	var toggleContent = function(){
+		// 		if ($toggleList.hasClass("js-opened")){
+		// 			closeContent();
+		// 		} else {
+		// 			openContent()
+		// 		}
+		// 	};
 
-			toggleContent();
-		})
+		// 	toggleContent();
+		// })
 
-		// hide-show additional propositions by click on "Посмотреть еще предложения"
-		var  $propositionsCalc = $containerAjax.find(".b-calculator_propos")
-			,$proposStrings = $propositionsCalc.find(".b-propositions__string")
-			,$hiddenProposStrings = $proposStrings.filter(".b-propositions__string_hidden")
-			,$moreProposBtn = $propositionsCalc.find("#morePropositions")
+		var  $propositionsBlock = $containerAjax.find("#propositions")
+			,$proposList = $propositionsBlock.find(".js-list_propositions")
+			,$proposListItems = $proposList.children(".js-proposition")
+			,$moreProposBtn = $propositionsBlock.find("#morePropositions")
 			;
+		// hide "Больше предложений" button if less then 5 propositions
+		var moreBtnHideCheck = function(){
+			if ($proposListItems.length < 5){
+				$moreProposBtn.css("display", "none")
+			} else{
+				$moreProposBtn.css("display", "inline-block")
+			}
+		};
+		moreBtnHideCheck();
+
+		// hide-show additional propositions by click on "Больше предложений"
 		$moreProposBtn.click(function(){
-			if (!$hiddenProposStrings.is(":animated")){
-				$hiddenProposStrings.slideToggle();
+			if (!$proposListItems.is(":animated")){
+				// $proposList.toggleClass("g-visible-4_only");
+				$proposListItems.filter(":gt(3)").slideToggle(400);
 				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 			}
 			// покажемо кнопку readMore там де вона треба
-			$btnsReadMore.each(initBtnsReadMore);
+			// $btnsReadMore.each(initBtnsReadMore);
 		});
 		
 		//	Повертаємось до вибора тз при кліку на "Изменить данные"
@@ -208,9 +221,10 @@ $(document).ready(function(){
 		});
 
 		// підванатажимо блок оформлення при кліку на "Купить"
-		var  $buyBtns = $("#propositions").find(".b-proposition__buy");	// кнопки купівлі
+		var  $buyBtns = $("#propositions").find(".js-proposition__buy");	// кнопки купівлі
 
 		$buyBtns.click(function(){
+			console.log("click on button");
 			// GTM variables
 			var  nameOfCompany = $(this).siblings(".b-company__name").text()
 				,price = $(this).find(".b-text_btn").attr("data-fullprice")
@@ -1234,7 +1248,7 @@ $(document).ready(function(){
 	}
 
 // breadcrumbs click event listener
-    $(document).on('click', '.b-crumbs__link', function(){
+    $(document).on('click', '.b-crumbs__link, .js-crumbs__link', function(){
 
         var step = +$(this).attr('data-step');	// 1 - вибір ТЗ, 2 - пропозиції
 
