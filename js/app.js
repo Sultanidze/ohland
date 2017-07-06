@@ -186,9 +186,13 @@ $(document).ready(function(){
 		// })
 
 		var  $propositionsBlock = $containerAjax.find("#propositions")
-			,$proposList = $propositionsBlock.find(".js-list_propositions")
-			,$proposListItems = $proposList.children(".js-proposition")
-			,$moreProposBtn = $propositionsBlock.find("#morePropositions")
+			,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
+			,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
+			,$moreProposBtn = $propositionsBlock.find("#morePropositions")	// "Больше предложений" button
+			,$sortBtns = $propositionsBlock.find(".js-filter")	// кнопки сортування
+			,$sortBtnByName = $sortBtns.filter(".js-filter_name")
+			,$sortBtnByPrice = $sortBtns.filter(".js-filter_price")
+			,$sortBtnByRating = $sortBtns.filter(".js-filter_rating")
 			;
 		// hide "Больше предложений" button if less then 5 propositions
 		var moreBtnHideCheck = function(){
@@ -210,9 +214,49 @@ $(document).ready(function(){
 			// покажемо кнопку readMore там де вона треба
 			// $btnsReadMore.each(initBtnsReadMore);
 		});
+
+	// сортування таблиці пропозицій
+		// функція сортування
+		// sName - ім'я властивості
+		// $parent - контейнер елементів, які сортуємо
+		// $children - елементи, які сортуємо
+		// bHasOrderIcon - чи є поле з сигналізацією зміни порядка
+		var sortByField = function(sName, $parent, $children, bHasOrderIcon){
+			var bDesc = $(this).data("order")=="asc";	// check previous sort order
+			$(this).data("order", (bDesc)?"desc":"asc");
+			var $orderIcon = $(this).children(".js-order");
+			
+			$children.sort(function(a,b){
+				if (bDesc){
+					return $(b).data(sName) > $(a).data(sName)
+				} else{
+			  		return $(a).data(sName) > $(b).data(sName)
+			 	}
+			}).appendTo($parent);
+
+			// change sort icon
+			if (bHasOrderIcon){
+				if (bDesc) {
+					$orderIcon.addClass("b-order__" + sName + "_revert");
+				} else {
+					$orderIcon.removeClass("b-order__" + sName + "_revert");
+				}
+			}
+		};
+		
+		$sortBtnByName.on("click", function(){
+			sortByField.call(this, "name", $proposList, $proposListItems, true);
+		});
+		$sortBtnByPrice.on("click", function(){
+			sortByField.call(this, "price", $proposList, $proposListItems, true);
+		});
+		$sortBtnByRating.on("click", function(){
+			sortByField.call(this, "rating", $proposList, $proposListItems, false);
+		});
+	// кінець ф-й сортування таблиці пропозицій
 		
 		//	Повертаємось до вибора тз при кліку на "Изменить данные"
-		$("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
+		// $("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
 
 		//	Повертаємось до вибора тз при кліку на лого Oh.ua
 		$(".b-logo__link").click(function(e){
@@ -224,7 +268,6 @@ $(document).ready(function(){
 		var  $buyBtns = $("#propositions").find(".js-proposition__buy");	// кнопки купівлі
 
 		$buyBtns.click(function(){
-			console.log("click on button");
 			// GTM variables
 			var  nameOfCompany = $(this).siblings(".b-company__name").text()
 				,price = $(this).find(".b-text_btn").attr("data-fullprice")

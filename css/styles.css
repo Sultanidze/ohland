@@ -2449,8 +2449,20 @@ body{
     color: #643292;
     text-decoration: underline;
 }
+.b-order__name:before{
+    content: 'А-Я';
+}
+.b-order__name_revert:before{
+    content: 'Я-А';
+}
 .b-order .fa{
     margin: 0 4px;
+}
+.b-order__price .fa:before{
+    content: '\f106';
+}
+.b-order__price_revert .fa:before{
+    content: '\f107';
 }
 .b-propositions__list{
     margin: 0;
