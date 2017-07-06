@@ -1,22 +1,3 @@
-// Determines if the passed element is overflowing its bounds,
-// either vertically or horizontally.
-// Will temporarily modify the "overflow" style to detect this
-// if necessary.
-// function checkOverflow(el)
-// {
-//    var curOverflow = el.style.overflow;
-
-//    if ( !curOverflow || curOverflow === "visible" )
-//       el.style.overflow = "hidden";
-
-//    var isOverflowing = el.clientWidth < el.scrollWidth 
-//       || el.clientHeight < el.scrollHeight;
-
-//    el.style.overflow = curOverflow;
-
-//    return isOverflowing;
-// }
-
 // pickadate plugin defaults
 jQuery.extend( jQuery.fn.pickadate.defaults, {
 	monthsFull: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
@@ -44,9 +25,6 @@ $(document).ready(function(){
 			},{
 				duration: 400,
 				queue: "ajax",
-				// complete: function(){
-				// 	$containerAjax.dequeue("ajax");
-				// }
 			}
 		);
 	};
@@ -59,21 +37,6 @@ $(document).ready(function(){
 			}
 		);
 	};
-	// var hideBcrumbs = function($bCrumbs){
-	// 	$bCrumbs.fadeOut({	
-	// 		duration: 400,
-	// 		queue: "ajax"
-	// 		}
-	// 	).dequeue("ajax");
-	// };
-	// var showBcrumbs = function($bCrumbs){
-	// 	$bCrumbs.fadeIn({	
-	// 		duration: 400,
-	// 		queue: "ajax"
-	// 		}
-	// 	).dequeue("ajax");
-	// };
-
 
 	// OSAGO propositions
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
@@ -86,7 +49,7 @@ $(document).ready(function(){
             var zone = $("#vehicleForm #zoneId").val();
 
 		$containerAjax.queue("ajax", function(){
-			// place for Ajax sending
+
 			$.ajax({
             	type: "get",
             	data: {type: type, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
@@ -103,7 +66,6 @@ $(document).ready(function(){
             		$containerAjax.dequeue("ajax");
             	}
             });
-			// showBcrumbs($bCrumbs);	// show breadcrumbs
 		});
 
 		$containerAjax.dequeue("ajax");	// запустимо чергу
@@ -129,6 +91,8 @@ $(document).ready(function(){
 
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
 		var  $vehicleSelect = $("#vehicle")
+			,$toggleFilters = $("#toggleFilters")
+			,$vehicleForm = $("#vehicleForm")
 			,$vehicleParameters = $(".js-vehicle__block")	// блоки з параметрами ТЗ
 			,$vehicleParamSelects = $vehicleParameters.find(".js-selectric")	// селекти параметрів ТЗ
 			,$carParameters = $vehicleParameters.filter(".js-car")
@@ -140,6 +104,12 @@ $(document).ready(function(){
 			,$motoParameters = $vehicleParameters.filter(".js-moto")
 			,$motoParamSelect = $vehicleParamSelects.filter(".js-selectric_moto")
 			;
+
+		$vehicleForm.css("display", "none");
+		$toggleFilters.click(function(){
+			$(this).toggleClass("b-link_unscrolled")
+			$vehicleForm.slideToggle(200);
+		});
 
 		$(".js-selectric").selectric();	// selects stylization
 		var vehicleChange = function(){
@@ -203,8 +173,8 @@ $(document).ready(function(){
 		})
 		
 		// валідація
-		var  $vehicleForm = $("#vehicleForm")
-			,$cityName = $vehicleForm.find("#regCity")
+		// var  $vehicleForm = $("#vehicleForm")
+		var  $cityName = $vehicleForm.find("#regCity")
 			,$cityId = $vehicleForm.find("#cityId")
 			,$cityZone = $vehicleForm.find("#zoneId")
 			,$proposListContainer = $("#propositionsList")
@@ -296,7 +266,8 @@ $(document).ready(function(){
 	            	,zone = $cityZone.val()
 	            	;
 
-	            console.log(type);
+	            // 
+
 				$.ajax({
 	            	type: "get",
             		data: {type: type, city: city, cityName: cityName, zone: zone},
@@ -340,7 +311,9 @@ $(document).ready(function(){
 		proposTableInit(true);	// ініціалізація функціоналу таблиці при початковому підвантаженні
 
 		// підванатажимо блок оформлення при кліку на "Оформить страховку"
-		var  $buyBtns = $("#propositions").find(".js-proposition__buy");
+		var  $buyBtns = $("#propositions").find(".js-proposition__buy")
+			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")
+			;
 
 		$buyBtns.on("click", function(){
 			// GTM variables
@@ -353,6 +326,17 @@ $(document).ready(function(){
 			showOrderBlock(proposNum, $containerAjax);
 		});
 
+		$quickDelivBtns.on("click", function(){
+			// GTM variables
+			var  nameOfCompany = $(this).siblings(".b-company__name").text()
+				,price = $(this).find(".b-text_btn").attr("data-fullprice")
+				;
+			dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
+
+			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
+			showQuickDeliveryBlock(proposNum, $containerAjax);
+		});
+
 		//	Повертаємось до вибора тз при кліку на лого Oh.ua
 		$(".b-logo__link").click(function(e){
 			e.preventDefault();	// не перевантажуємо сторінку
@@ -360,6 +344,35 @@ $(document).ready(function(){
 		});
 	};
 	
+	// quick Delivery
+	var showQuickDeliveryBlock = function(proposNum, $containerAjax){
+		hideContainerAjax($containerAjax);
+
+		$containerAjax.queue("ajax", function(){
+			// place for Ajax sending
+			$.ajax({
+            	type: "get",
+            	url : "./ajax/__quickDelivery.html",
+                data: {counter: proposNum},
+            	error : function(){
+            	    alert('error');
+            	},
+            	success: function(response){
+            	    $containerAjax.html(response);
+            	    orderBlockInit($containerAjax);
+            	},
+            	complete: function(){
+            		$("#byUpload").css("display", "block");
+            		$("#calculator").find(".b-finalize__btn_method[data-for='byUpload']").trigger("click");
+            		showContainerAjax($containerAjax);
+            		$containerAjax.dequeue("ajax");
+            	}
+            });
+		});
+		
+		$containerAjax.dequeue("ajax");
+	}
+
 	// order block
 	var showOrderBlock = function(proposNum, $containerAjax){
 		hideContainerAjax($containerAjax);
@@ -369,6 +382,7 @@ $(document).ready(function(){
 			$.ajax({
             	type: "get",
             	url : "./ajax/__orderBlock.html",
+                data: {counter: proposNum},
             	error : function(){
             	    alert('error');
             	},
