@@ -81,7 +81,6 @@ $(document).ready(function(){
 
             var type = $("#vehicleForm input[name='type']:checked").val()
             var notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0;
-            // var franshiza = $("#vehicleForm [name='franshiza']").val();
             var city = $("#vehicleForm #cityId").val();
             var cityName = $("#vehicleForm #regCity").val();
             var zone = $("#vehicleForm #zoneId").val();
@@ -90,6 +89,7 @@ $(document).ready(function(){
 			// place for Ajax sending
 			$.ajax({
             	type: "get",
+            	data: {type: type, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
             	url : "./ajax/__propositions.html",
             	error : function(){
             	    alert('error');
@@ -128,71 +128,90 @@ $(document).ready(function(){
 	}
 
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		// зафарбуємо необхідну к-ть зірочок рейтингу компанії
-		// fillAllStars(".b-company__rating");	// в старій версії бцли зірочки рейтинга
+		var  $vehicleSelect = $("#vehicle")
+			,$vehicleParameters = $(".js-vehicle__block")	// блоки з параметрами ТЗ
+			,$vehicleParamSelects = $vehicleParameters.find(".js-selectric")	// селекти параметрів ТЗ
+			,$carParameters = $vehicleParameters.filter(".js-car")
+			,$carParamSelect = $vehicleParamSelects.filter(".js-selectric_car")
+			,$trailerParameters = $vehicleParameters.filter(".js-trailer")
+			,$trailerParamSelect = $vehicleParamSelects.filter(".js-selectric_trailer")
+			,$busParameters = $vehicleParameters.filter(".js-bus")
+			,$busParamSelect = $vehicleParamSelects.filter(".js-selectric_bus")
+			,$motoParameters = $vehicleParameters.filter(".js-moto")
+			,$motoParamSelect = $vehicleParamSelects.filter(".js-selectric_moto")
+			;
 
-		// var  $btnsReadMore = $(".js-btn_readmore")
-		// 	,detailsLineHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("line-height")	// save line height from styles.css
-		// 	,detailsHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("height")	// save height from styles.css
-		// 	,detailsMaxHeight = $btnsReadMore.eq(0).siblings(".js-content_readmore").css("max-height")	// save max-height from styles.css
-		// 	;
+		$(".js-selectric").selectric();	// selects stylization
+		var vehicleChange = function(){
+			var sVehicle = $(this).val();
+				switch (sVehicle) {
+					case "car":	// авто
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
 
-		// var initBtnsReadMore = function(){	// визначає чи показувати кнопку ReadMore
-		// 	var $detailsList = $(this).siblings(".js-content_readmore");
+						$carParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
+						$carParamSelect.prop("disabled", false);	// відключаємо поля параметрів
+						break;
+					case "trailer":	// вантажівка
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
 
-		// 	if (checkOverflow($detailsList[0])){
-		// 		$(this).css("visibility", "visible");
-		// 	}
-		// }
+						$trailerParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
+						$trailerParamSelect.prop("disabled", false);	// відключаємо поля параметрів
+						break;
+					case "bus":	// автобус
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
 
-		// покажемо кнопку readMore там де вона треба
-		// $btnsReadMore.each(initBtnsReadMore);
+						$busParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
+						$busParamSelect.prop("disabled", false);	// відключаємо поля параметрів
+						break;
 
-		// hide-show details  by click on "Подробнее"
-			// show:
-		// $btnsReadMore.click(function(){	// show-hide details text on "Подробнее" click
-		// 	var  $toggleList = $(this).siblings(".js-content_readmore")
-		// 		,$proposition = $toggleList.parents(".b-proposition")
-		// 		;
+					case "moto": //мотоцикл
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
 
-		// 	var closeContent = function(){
-		// 			$toggleList.animate({
-		// 				height: detailsHeight
-		// 			}, 400);
-		// 			$proposition.css("z-index","0");
-		// 			$toggleList.removeClass("js-opened");
-				
-		// 	};
+						$motoParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
+						$motoParamSelect.prop("disabled", false);	// відключаємо поля параметрів
+						break;
+				}
+		};
+		$vehicleSelect.selectric({	// селект вибора ТЗ
+			onInit: function() {
+				vehicleChange.call(this);
+			},
+			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+				vehicleChange.call(this);
+				$(element).change();	// fired by default
+			}
+		});
 
-		// 	var openContent = function(){
-		// 			$proposition.css("z-index","1");
-		// 			// $toggleList.css("height", "none");
-		// 			$toggleList.animate({
-		// 				height: detailsMaxHeight
-		// 			}, 400);
-		// 			$toggleList.addClass("js-opened");
-				
-		// 	};
+		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
+		precomplete(2, $("#regCity"));
 
-		// 	var toggleContent = function(){
-		// 		if ($toggleList.hasClass("js-opened")){
-		// 			closeContent();
-		// 		} else {
-		// 			openContent()
-		// 		}
-		// 	};
+		//ajax registration city autocomplete
+		fieldAutocomplete(3, $("#regCity"), "./ajax/cityRegion.json");	// EWA віддає результат, починаючи з 3х символів
 
-		// 	toggleContent();
-		// })
-
-		var  $propositionsBlock = $containerAjax.find("#propositions")
+		// якщо ми змінили значення міста реєстрації, але не обрали з меню автокомпліта, то повернемо раніше обране значення
+		$("#regCity").blur(function(){
+			var  dataItem = $(this).attr("data-item")	// раніше обране значення, збережене в атрибуті "data-item"
+				,fieldValue = $(this).val()	// поточне значення
+				;
+			if (dataItem && (fieldValue != dataItem)){	// перевірка чи є попередньо обране значення (якщо)
+				$(this).val(dataItem);	// як є то запишемо вибране раніше значення
+			}
+		})
+		
+		// валідація
+		var  $vehicleForm = $("#vehicleForm")
+			,$cityName = $vehicleForm.find("#regCity")
+			,$cityId = $vehicleForm.find("#cityId")
+			,$cityZone = $vehicleForm.find("#zoneId")
+			,$proposListContainer = $("#propositionsList")
+			,$propositionsBlock = $containerAjax.find("#propositions")
 			,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
 			,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
 			,$moreProposBtn = $propositionsBlock.find("#morePropositions")	// "Больше предложений" button
-			,$sortBtns = $propositionsBlock.find(".js-filter")	// кнопки сортування
-			,$sortBtnByName = $sortBtns.filter(".js-filter_name")
-			,$sortBtnByPrice = $sortBtns.filter(".js-filter_price")
-			,$sortBtnByRating = $sortBtns.filter(".js-filter_rating")
 			;
 		// hide "Больше предложений" button if less then 5 propositions
 		var moreBtnHideCheck = function(){
@@ -205,69 +224,125 @@ $(document).ready(function(){
 		moreBtnHideCheck();
 
 		// hide-show additional propositions by click on "Больше предложений"
-		$moreProposBtn.click(function(){
+		$moreProposBtn.on("click",function(){
 			if (!$proposListItems.is(":animated")){
-				// $proposList.toggleClass("g-visible-4_only");
 				$proposListItems.filter(":gt(3)").slideToggle(400);
 				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 			}
-			// покажемо кнопку readMore там де вона треба
-			// $btnsReadMore.each(initBtnsReadMore);
 		});
-
-	// сортування таблиці пропозицій
-		// функція сортування
-		// sName - ім'я властивості
-		// $parent - контейнер елементів, які сортуємо
-		// $children - елементи, які сортуємо
-		// bHasOrderIcon - чи є поле з сигналізацією зміни порядка
-		var sortByField = function(sName, $parent, $children, bHasOrderIcon){
-			var bDesc = $(this).data("order")=="asc";	// check previous sort order
-			$(this).data("order", (bDesc)?"desc":"asc");
-			var $orderIcon = $(this).children(".js-order");
+		var proposTableInit = function(bSortInitialize){
+			// var  $propositionsBlock = $containerAjax.find("#propositions")
+			// 	,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
+			// 	,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
 			
-			$children.sort(function(a,b){
-				if (bDesc){
-					return $(b).data(sName) > $(a).data(sName)
-				} else{
-			  		return $(a).data(sName) > $(b).data(sName)
-			 	}
-			}).appendTo($parent);
+			var	 $sortBtns = $propositionsBlock.find(".js-filter")	// кнопки сортування
+				,$sortBtnByName = $sortBtns.filter(".js-filter_name")
+				,$sortBtnByPrice = $sortBtns.filter(".js-filter_price")
+				,$sortBtnByRating = $sortBtns.filter(".js-filter_rating")
+				;
+			
 
-			// change sort icon
-			if (bHasOrderIcon){
-				if (bDesc) {
-					$orderIcon.addClass("b-order__" + sName + "_revert");
-				} else {
-					$orderIcon.removeClass("b-order__" + sName + "_revert");
+			// сортування таблиці пропозицій
+				// функція сортування
+				// sName - ім'я властивості
+				// $parent - контейнер елементів, які сортуємо
+				// $children - елементи, які сортуємо
+				// bHasOrderIcon - чи є поле з сигналізацією зміни порядка
+			var sortByField = function(sName, $parent, $children, bHasOrderIcon){
+				console.log($parent);
+				console.log($children);
+				var bDesc = $(this).attr("data-order")=="asc";	// check previous sort order
+				$(this).attr("data-order", (bDesc)?"desc":"asc");	// first sort in ascending order (default icon - ascending)
+				var $orderIcon = $(this).children(".js-order");
+				
+				$children.sort(function(a,b){
+					if (bDesc){
+						return $(b).data(sName) > $(a).data(sName)
+					} else{
+				  		return $(a).data(sName) > $(b).data(sName)
+				 	}
+				}).appendTo($parent);
+
+				// change sort icon
+				if (bHasOrderIcon){
+					if (bDesc) {
+						$orderIcon.addClass("b-order__" + sName + "_revert");
+					} else {
+						$orderIcon.removeClass("b-order__" + sName + "_revert");
+					}
 				}
-			}
+			};
+			if (bSortInitialize){
+				$sortBtnByName.on("click", function(){
+					sortByField.call(this, "name", $proposList, $proposListItems, true);
+				});
+				$sortBtnByPrice.on("click", function(){
+					sortByField.call(this, "price", $proposList, $proposListItems, true);
+				});
+				$sortBtnByRating.on("click", function(){
+					sortByField.call(this, "rating", $proposList, $proposListItems, false);
+				});
+			};
+			// кінець ф-й сортування таблиці пропозицій
 		};
+		var reloadPropositionsTable = function(){
+			hideContainerAjax($proposListContainer);
+
+			$proposListContainer.queue("ajax", function(){
+
+				var  type = $vehicleParamSelects.filter(":not([disabled])").val()
+	            	,cityName = $cityName.val()
+	            	,city = $cityId.val()
+	            	,zone = $cityZone.val()
+	            	;
+
+	            console.log(type);
+				$.ajax({
+	            	type: "get",
+            		data: {type: type, city: city, cityName: cityName, zone: zone},
+	            	url : "./ajax/__propositionsList.html",
+	            	error : function(){
+	            	    alert('error');
+	            	},
+	            	success: function(response){
+	            	    $proposListContainer.html(response);
+	            	    $vehicleForm = $("#vehicleForm");
+						$cityId = $vehicleForm.find("#cityId");
+						$cityName = $vehicleForm.find("#regCity");
+						$proposListContainer = $("#propositionsList");
+						$propositionsBlock = $containerAjax.find("#propositions");
+						$proposList = $propositionsBlock.find(".js-list_propositions");
+						$proposListItems = $proposList.children(".js-proposition");
+						$moreProposBtn = $propositionsBlock.find("#morePropositions");
+						moreBtnHideCheck();
+						$moreProposBtn.find(".fa").addClass("fa-angle-down").removeClass("fa-angle-up");
+	            	    proposTableInit();	// ініціалізуємо функціонал завантаженої таблиці пропозицій
+	            	},
+	            	complete: function(){
+	            		showContainerAjax($containerAjax);
+	            		$proposListContainer.dequeue("ajax");
+	            	}
+	            });
+				
+			});
+			showContainerAjax($proposListContainer);
+			$proposListContainer.dequeue("ajax");
+		}
+		$vehicleForm.submit(function(event){
+			event.preventDefault();
+			if (!$cityId.val()){	//якщо не вибране місто реєстрації (відповідне приховане поле без значення)
+				$cityName.focus();
+			} else {
+				reloadPropositionsTable();	// підвантажуємо нову таблицю пропозицій
+			}
+		});
 		
-		$sortBtnByName.on("click", function(){
-			sortByField.call(this, "name", $proposList, $proposListItems, true);
-		});
-		$sortBtnByPrice.on("click", function(){
-			sortByField.call(this, "price", $proposList, $proposListItems, true);
-		});
-		$sortBtnByRating.on("click", function(){
-			sortByField.call(this, "rating", $proposList, $proposListItems, false);
-		});
-	// кінець ф-й сортування таблиці пропозицій
-		
-		//	Повертаємось до вибора тз при кліку на "Изменить данные"
-		// $("#vehicleEdit").click(function(){showVehicleCalc($containerAjax)});
+		proposTableInit(true);	// ініціалізація функціоналу таблиці при початковому підвантаженні
 
-		//	Повертаємось до вибора тз при кліку на лого Oh.ua
-		$(".b-logo__link").click(function(e){
-			e.preventDefault();	// не перевантажуємо сторінку
-			showVehicleCalc($containerAjax)
-		});
+		// підванатажимо блок оформлення при кліку на "Оформить страховку"
+		var  $buyBtns = $("#propositions").find(".js-proposition__buy");
 
-		// підванатажимо блок оформлення при кліку на "Купить"
-		var  $buyBtns = $("#propositions").find(".js-proposition__buy");	// кнопки купівлі
-
-		$buyBtns.click(function(){
+		$buyBtns.on("click", function(){
 			// GTM variables
 			var  nameOfCompany = $(this).siblings(".b-company__name").text()
 				,price = $(this).find(".b-text_btn").attr("data-fullprice")
@@ -276,6 +351,12 @@ $(document).ready(function(){
 
 			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
 			showOrderBlock(proposNum, $containerAjax);
+		});
+
+		//	Повертаємось до вибора тз при кліку на лого Oh.ua
+		$(".b-logo__link").click(function(e){
+			e.preventDefault();	// не перевантажуємо сторінку
+			showVehicleCalc($containerAjax)
 		});
 	};
 	
@@ -300,7 +381,6 @@ $(document).ready(function(){
             		$containerAjax.dequeue("ajax");
             	}
             });
-			// hideBcrumbs($bCrumbs);	// hide breadcrumbs
 		});
 		
 		$containerAjax.dequeue("ajax");
@@ -929,7 +1009,6 @@ $(document).ready(function(){
 				});
 				$newPostDivision.each(function(index){
 					$(this).val("");
-					// $(this).next().val("");
 					$(this).prop("disabled", true)
 				});
 				//треба сховати поле відділення, видалити значення з нього і прихованого поля
@@ -1114,9 +1193,6 @@ $(document).ready(function(){
 				$paramBlocks.eq(index).addClass("js-params_active");// робимо активним блоком параметрів
 				$paramBlocks.eq(index).find("input").eq(1).prop("checked", true);	// вибиратимемо 2й радіобатн вибраного тз
 				$paramBlocks.eq(index).addClass("b-params_active");	// показуємо активний блок параметрів
-				// $paramBlockActive.fadeOut(0, function(){
-				// 	$paramBlocks.eq(index).fadeIn(0);
-				// })
 			}
 		});
 
@@ -1156,7 +1232,6 @@ $(document).ready(function(){
 
 		$field.keyup(function(){
 			currentValue = $(this).val();
-			// console.log(currentValue.length);
 			if ($field.val().length<=iSymbols){
 				$dropMenu.show();
 			} else{
@@ -1164,13 +1239,9 @@ $(document).ready(function(){
 			}
 		})
 		$field.on("focus", function(){
-			// console.log($field.val().length);
 			if ($field.val().length<=iSymbols){
 				$dropMenu.stop().show();
-			} 
-			// else{
-			// 	$dropMenu.hide();
-			// }
+			}
 		});
 		$field.on("blur",function(){
 			$dropMenu.fadeOut();
@@ -1186,8 +1257,6 @@ $(document).ready(function(){
 			$field.attr("data-item", selectedItem);
 			$idField.val(selectedID);
 			if (selectedZoneID){	// перевіряємо чи є додатковий id який треба зберегти
-				// $zoneIdField = $idField.next();
-				// console.log("sdfgsd")
 				$idField.next().val(selectedZoneID)
 			};
 			// $dropMenu.hide();
@@ -1229,7 +1298,6 @@ $(document).ready(function(){
 			        $.ajax({
 		            	type: "get",
 		            	data: {item: term, criteria: criteria},
-		            	// , criteria: criteria
 		            	url : jsonAddr,
 		            	error : function(){
 		            	    alert('error');

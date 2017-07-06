@@ -1,110 +1,4 @@
-<div class="b-container b-container__calculator_propositions" id="propositions">
-                <div class="b-section_crumbs">
-                    <div class="b-container">
-                        <ol class="b-crumbs">
-                            <li class="b-crumbs__item b-crumbs__item_unactive" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <span class="b-crumbs__link" data-step="1">
-                                    Расчет
-                                </span>
-                            </li>
-                            <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <span>Выбор</span>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="b-calculator b-calculator_propos">
-                    <div class="b-calculator__heading b-calculator__heading_propos">
-                        Результаты расчета для <span class="b-propositions__link b-propositions__link_unscrolled">Легковой автомобиль до 1600 см3 Киев</span>
-                    </div>
-                    <form action="" class="b-propos__recalc" id="vehicleForm">
-                        <div class="b-select__container_propos">
-                            <label for="vehicle" class="b-label_registration">Обьект страхования</label>
-                            <select name="vehicle" class="js-selectric" id="vehicle">
-                                <option value="car" selected>Легковой автомобиль</option>
-                                <option value="trailer">Грузовой автомобиль</option>
-                                <option value="bus">Пассажирский автобус</option>
-                                <option value="moto">Мотоцикл, мотороллер</option>
-                            </select>
-                        </div>
-                        <div class="b-select__container_propos js-vehicle__block js-car">
-                            <label for="engineCapacity" class="b-label_registration">Обьем двигателя</label>
-                            <select name="engineCapacity" class="js-selectric js-selectric_car" id="engineCapacity">
-                                <option value="3">до 1600 см&sup3;</option>
-                                <option value="4" selected>1601 - 2000 см&sup3;</option>
-                                <option value="5">2001 - 3000 см&sup3;</option>
-                                <option value="6">от 3001 см&sup3;</option>
-                            </select>
-                        </div>
-                        <div class="b-select__container_propos js-vehicle__block js-trailer">
-                            <label for="tonnage" class="b-label_registration">Грузоподьемность</label>
-                            <select name="engineCapacity" class="js-selectric js-selectric_trailer" id="tonnage">
-                                <option value="7">до 2т</option>
-                                <option value="8" selected>более 2т</option>
-                            </select>
-                        </div>
-                        <div class="b-select__container_propos js-vehicle__block js-bus">
-                            <label for="passengers" class="b-label_registration">Пассажировместительность</label>
-                            <select name="engineCapacity" class="js-selectric js-selectric_bus" id="passengers">
-                                <option value="9">до 20 человек</option>
-                                <option value="10" selected>более 20 человек</option>
-                            </select>
-                        </div>
-                        <div class="b-select__container_propos js-vehicle__block js-moto">
-                            <label for="engineCapacity" class="b-label_registration">Обьем двигателя</label>
-                            <select name="engineCapacity" class="js-selectric js-selectric_moto" id="engineCapacity">
-                                <option value="1">до 300 см&sup3;</option>
-                                <option value="2" selected>более 300 см&sup3;</option>
-                            </select>
-                        </div>
-                        <div class="b-select__container_propos">
-                            <label for="regCity" class="b-label_registration">Место регистрации</label>
-                            <input type="text" class="b-autocomplete selectric" id="regCity" title="Введите и выберите город" name="regCity" value="Киев (г.), Киевская обл." autocomplete="off" data-item="Киев (г.), Киевская обл.">
-                            <input class="hidden" name="regCityId" id="cityId" value="1" type="hidden">
-                            <input class="hidden" name="zoneId" id="zoneId" value="1" type="hidden">
-                            <div class="autocomplete-suggestions b-precomplete_brand js-precomplete">
-                                <div class="autocomplete-suggestion" data-id="1" data-zone="1">Киев (г.), Киевская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="9" data-zone="3">Харьков (г.), Харьковская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="14" data-zone="3">Днепропетровск (г.), Днепропетровская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="46" data-zone="3">Мариуполь (г.), Донецкая обл.</div>
-                                <div class="autocomplete-suggestion" data-id="15" data-zone="3">Львов (г.), Львовская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="10" data-zone="3">Одесса (г.), Одесская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="12" data-zone="3">Запорожье (г.), Запорожская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="5237" data-zone="3">Красноармейск (г.), Донецкая обл.</div>
-                                <div class="autocomplete-suggestion" data-id="47" data-zone="3">Черкассы (г.), Черкасская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="3" data-zone="3">Бровары (г.), Киевская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="37" data-zone="3">Житомир (г.), Житомирская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="32" data-zone="3">Полтава (г.), Полтавская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="13" data-zone="6">Кривой Рог (г.), Днепропетровская обл.</div>
-                                <div class="autocomplete-suggestion" data-id="44" data-zone="3">Николаев (г.), Николаевская обл.</div>
-                            </div>
-                        </div>
-                        <button type="submit" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
-                            <span class="b-text_btn">Изменить данные</span>
-                        </button>
-                    </form>
-                    <div class="b-propositions">
-                        <div class="b-propositions__header">
-                            <div class="b-container__filter b-container__filter_name">
-                                <span class="b-filter b-filter_name js-filter js-filter_name">
-                                    Страховая компания <span class="b-order b-order__name js-order"></span>
-                                </span>
-                            </div>
-                            <div class="b-container__filter b-container__filter_price">
-                                <span class="b-filter b-filter_price js-filter js-filter_price">
-                                    <span class="b-order b-order__price js-order">
-                                        Цена<span class="fa" aria-hidden="true"></span>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="b-container__filter b-container__filter_rating">
-                                <span class="b-filter b-filter_rating js-filter js-filter_rating">
-                                    <span class="b-order js-order">Рейтинг надежности</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div id="propositionsList">
-                            <ul class="b-propositions__list js-list_propositions g-visible-4_only">
+<ul class="b-propositions__list js-list_propositions g-visible-4_only">
                                 <li class="js-proposition" data-name="вусо" data-price="816" data-rating="9">
                                     <div class="b-proposition_row">
                                         <div class="b-container__filter b-container__filter_name b-proposition__company">
@@ -261,7 +155,7 @@
                                 <li class="js-proposition" data-name="инго" data-price="800" data-rating="7">
                                     <div class="b-proposition_row">
                                         <div class="b-container__filter b-container__filter_name b-proposition__company">
-                                            <img src="#" alt="инго" class="b-img_company">
+                                            <img src="./img/logo.png" alt="инго" class="b-img_company">
                                             <span class="b-filter b-filter_rating">
                                                 Рейтинг надежности <span class="b-order">7 из 10</span>
                                             </span>
@@ -355,42 +249,3 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="b-propos__guaranties">
-                        <ul class="b-crumbs_aside">
-                            <li class="b-crumbs__item_aside b-item_done js-crumbs__link" data-step="1">
-                                <div class="b-item__link">
-                                    <span class="b-item__pre"></span>
-                                    <span class="b-item__text">Расчет</span>
-                                </div>
-                            </li>
-                            <li class="b-crumbs__item_aside b-item_active">
-                                <div class="b-item__link">
-                                    <span class="b-item__pre">2</span>
-                                    <span class="b-item__text">Выбор</span>
-                                </div>
-                            </li>
-                            <li class="b-crumbs__item_aside b-item_unactive">
-                                <div class="b-item__link">
-                                    <span class="b-item__pre">3</span>
-                                    <span class="b-item__text">Оформление</span>
-                                </div>
-                            </li>
-                            <li class="b-crumbs__item_aside b-item_unactive">
-                                <div class="b-item__link">
-                                    <span class="b-item__pre">4</span>
-                                    <span class="b-item__text">Оплата</span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="b-guaranties__heading">Гарантия лучшей цены</div>
-                        <p>Мы гарантируем самые низкие цены. Не дороже, чем напрямую в страховой компании. Если вы нашли цену ниже, мы компенсируем вам эту разницу.</p>
-                    </div>
-                    <button type="button" class="b-form__submit_vehicle b-propos__btn_more" id="morePropositions">
-                        <span class="b-text_btn">Больше предложений</span>
-                        <span class="fa fa-angle-down" aria-hidden="true"></span>
-                    </button>
-                </div>
-
-            </div>

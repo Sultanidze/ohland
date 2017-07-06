@@ -2377,6 +2377,7 @@ body{
     width: 768px;
     margin: 0 auto;
 */
+    margin-bottom: 35px;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -2386,6 +2387,7 @@ body{
     
 }
 .b-select__container_propos{
+    position: relative;
     margin-right: 40px;
     display: inline-block;
     vertical-align: top;
