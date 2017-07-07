@@ -17,6 +17,9 @@ font-family: 'Playfair Display', serif;
 .g-color-corporate-light{
     color: #f2c90c;
 }
+.g-pos_relative{
+    position: relative;
+}
 .bg-corporate_light{
     background-color: #f2c90c;
     color: #231f20;
@@ -2809,7 +2812,15 @@ body{
     background-color: #fff;
 }
 .b-finalize__method{
+/*    position: relative;*/
+}
+.b-form_finalize{
     position: relative;
+}
+.b-form_finalize .b-crumbs_aside{
+    position: absolute;
+    top: 0;
+    right: 120px;
 }
 .b-heading_method{
 /*    margin-top: 40px;*/

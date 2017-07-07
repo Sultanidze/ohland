@@ -24,11 +24,39 @@
         </div>
     </div>
     <div class="b-finalize__methods">
+        <div class="b-finalize__method b-finalize__method_self js-method_active" id="bySelf" style="display:none"></div>
+        <div class="b-finalize__method b-finalize__method__phone" id="byPhone" style="display:none"></div>
         <div class="b-finalize__method b-finalize__method__upload" id="byUpload">
             <div class="b-calculator__heading b-heading_finalize b-heading_method">Введите данные, чтобы получить доставку полиса быстрее</div>
             <form action="" class="b-form_finalize" id="formByUpload">
                 <div class="b-form__block b-form__insured_byupload">
-                    <div class="b-container">
+                    <div class="b-container g-pos_relative">
+                        <ul class="b-crumbs_aside">
+                            <li class="b-crumbs__item_aside b-item_done js-crumbs__link" data-step="1">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre"></span>
+                                    <span class="b-item__text">Расчет</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_done js-crumbs__link" data-step="2">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre"></span>
+                                    <span class="b-item__text">Выбор</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_active">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre">3</span>
+                                    <span class="b-item__text">Оформление</span>
+                                </div>
+                            </li>
+                            <li class="b-crumbs__item_aside b-item_unactive">
+                                <div class="b-item__link">
+                                    <span class="b-item__pre">4</span>
+                                    <span class="b-item__text">Оплата</span>
+                                </div>
+                            </li>
+                        </ul>
                         <div class="b-container_finalize">
                             <div class="b-form__heading_finalize">Страхователь</div>
                             <div class="row row_form">
@@ -62,6 +90,38 @@
                                     </label>
                                     <div class="b-wrap_files">
                                         <input type="file" name="docScan[]" accept="image/*" id="copies_byupload" class="js-ignoreValidate">
+                                        <button type="button" class="b-button_files">
+                                            <span class="b-progress_files"></span>
+                                            <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>
+                                        </button>
+                                        <div class="b-list_files"></div>
+                                    </div>
+                                    <div class="b-wrap_files hidden">
+                                        <input type="file" name="docScan[]" accept="image/*" class="js-ignoreValidate">
+                                        <button type="button" class="b-button_files">
+                                            <span class="b-progress_files"></span>
+                                            <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>
+                                        </button>
+                                        <div class="b-list_files"></div>
+                                    </div>
+                                    <div class="b-wrap_files hidden">
+                                        <input type="file" name="docScan[]" accept="image/*" class="js-ignoreValidate">
+                                        <button type="button" class="b-button_files">
+                                            <span class="b-progress_files"></span>
+                                            <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>
+                                        </button>
+                                        <div class="b-list_files"></div>
+                                    </div>
+                                    <div class="b-wrap_files hidden">
+                                        <input type="file" name="docScan[]" accept="image/*" class="js-ignoreValidate">
+                                        <button type="button" class="b-button_files">
+                                            <span class="b-progress_files"></span>
+                                            <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>
+                                        </button>
+                                        <div class="b-list_files"></div>
+                                    </div>
+                                    <div class="b-wrap_files hidden">
+                                        <input type="file" name="docScan[]" accept="image/*" class="js-ignoreValidate">
                                         <button type="button" class="b-button_files">
                                             <span class="b-progress_files"></span>
                                             <span class="b-button__text_files">Нажмите чтобы выбрать фото</span>
