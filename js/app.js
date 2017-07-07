@@ -228,12 +228,27 @@ $(document).ready(function(){
 			if (bSortInitialize){
 				$sortBtnByName.on("click", function(){
 					sortByField.call(this, "name", $proposList, $proposListItems, true);
+					$proposListItems = $proposList.children(".js-proposition");
+					if (!$moreProposBtn.hasClass("js-rolled")) {
+						$proposListItems.not(":gt(3)").slideDown(400);
+						$proposListItems.filter(":gt(3)").slideUp(400);
+					}
 				});
 				$sortBtnByPrice.on("click", function(){
 					sortByField.call(this, "price", $proposList, $proposListItems, true);
+					$proposListItems = $proposList.children(".js-proposition");
+					if (!$moreProposBtn.hasClass("js-rolled")) {
+						$proposListItems.not(":gt(3)").slideDown(400);
+						$proposListItems.filter(":gt(3)").slideUp(400);
+					}
 				});
 				$sortBtnByRating.on("click", function(){
 					sortByField.call(this, "rating", $proposList, $proposListItems, false);
+					$proposListItems = $proposList.children(".js-proposition");
+					if (!$moreProposBtn.hasClass("js-rolled")) {
+						$proposListItems.not(":gt(3)").slideDown(400);
+						$proposListItems.filter(":gt(3)").slideUp(400);
+					}
 				});
 			};
 		};
@@ -241,7 +256,6 @@ $(document).ready(function(){
 		// ф-я підвантаження нової таблиці пропозицій
 		var reloadPropositionsTable = function(){
 			hideContainerAjax($proposListContainer);
-
 
 			$proposListContainer.queue("ajax", function(){
 				var 
@@ -346,7 +360,13 @@ $(document).ready(function(){
 		// hide-show additional propositions by click on "Больше предложений"
 		$moreProposBtn.on("click",function(){
 			if (!$proposListItems.is(":animated")){
-				$proposListItems.filter(":gt(3)").slideToggle(400);
+				$(this).toggleClass("js-rolled");
+				if ($(this).hasClass("js-rolled")){
+					$proposListItems.filter(":gt(3)").slideDown(400);
+				} else {
+					$proposListItems.filter(":gt(3)").slideUp(400);
+				};
+				$proposList.removeClass("g-visible-4_only");	// далі приховуємо пропозиції без цсс, логікою js
 				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 			}
 		});
