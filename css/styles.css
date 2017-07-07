@@ -614,6 +614,7 @@ body{
     margin-right: 0;
 }
 .b-selectBlock_registration{
+    min-width: 315px;
     position: relative;
 }
 .b-selectBlock_registration .selectric-wrapper{

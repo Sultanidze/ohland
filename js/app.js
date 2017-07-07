@@ -90,10 +90,20 @@ $(document).ready(function(){
 	}
 
 	var propositionsInit = function($containerAjax){	// ф-я ініціалізації js-функціоналу на підвантаженому блоці пропозицій
-		var  $vehicleSelect = $("#vehicle")
+		var 
+			 $propositionsBlock = $containerAjax.find("#propositions")
+			,$proposListContainer = $("#propositionsList")	// контейнер списку пропозицій
+			,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
+			,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
+			
+			,$moreProposBtn = $propositionsBlock.find("#morePropositions")	// "Больше предложений" button
+			,$vehicleSelect = $("#vehicle")
 			,$toggleFilters = $("#toggleFilters")
 			,$vehicleForm = $("#vehicleForm")
-			,$vehicleParameters = $(".js-vehicle__block")	// блоки з параметрами ТЗ
+			,$cityName = $vehicleForm.find("#regCity")
+			,$cityId = $vehicleForm.find("#cityId")
+			,$cityZone = $vehicleForm.find("#zoneId")
+			,$vehicleParameters = $vehicleForm.find(".js-vehicle__block")	// блоки з параметрами ТЗ
 			,$vehicleParamSelects = $vehicleParameters.find(".js-selectric")	// селекти параметрів ТЗ
 			,$carParameters = $vehicleParameters.filter(".js-car")
 			,$carParamSelect = $vehicleParamSelects.filter(".js-selectric_car")
@@ -103,50 +113,208 @@ $(document).ready(function(){
 			,$busParamSelect = $vehicleParamSelects.filter(".js-selectric_bus")
 			,$motoParameters = $vehicleParameters.filter(".js-moto")
 			,$motoParamSelect = $vehicleParamSelects.filter(".js-selectric_moto")
+
+			,$buyBtns = $("#propositions").find(".js-proposition__buy")						// кнопка оформлення покупки
+			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")	// кнопка оформлення швидкої доставки
 			;
 
+		// ф-я ініціалізації функціонала кнопок купівлі і доставки
+		var buyBtnsInit = function(){
+			$buyBtns.on("click", function(){
+				// GTM variables
+				var  nameOfCompany = $(this).siblings(".b-company__name").text()
+					,price = $(this).find(".b-text_btn").attr("data-fullprice")
+					;
+				dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
+
+				var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
+				showOrderBlock(proposNum, $containerAjax);	// показуємо блок оформлення
+			});
+
+			$quickDelivBtns.on("click", function(){
+				// GTM variables
+				var  nameOfCompany = $(this).siblings(".b-company__name").text()
+					,price = $(this).find(".b-text_btn").attr("data-fullprice")
+					;
+				dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
+
+				var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
+				showQuickDeliveryBlock(proposNum, $containerAjax);	// показуємо блок швидкої доставки
+			});
+		};
+
+		// ф-я приховування параметрів необраних ТЗ
+		var vehicleChange = function(){
+			var sVehicle = $(this).val();
+				switch (sVehicle) {
+					case "car":	// авто
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);// відключаємо поля параметрів
+
+						$carParameters.css("display", "block");		// показуємо блок параметрів легкового авто
+						$carParamSelect.prop("disabled", false);	// вмикаємо поля параметрів легкового авто
+						break;
+					case "trailer":	// вантажівка
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);// відключаємо поля параметрів
+
+						$trailerParameters.css("display", "block");
+						$trailerParamSelect.prop("disabled", false);
+						break;
+					case "bus":	// автобус
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);// відключаємо поля параметрів
+
+						$busParameters.css("display", "block");
+						$busParamSelect.prop("disabled", false);
+						break;
+					case "moto": //мотоцикл
+						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
+						$vehicleParamSelects.prop("disabled", true);// відключаємо поля параметрів
+
+						$motoParameters.css("display", "block");
+						$motoParamSelect.prop("disabled", false);
+						break;
+				}
+		};
+
+		// hide "Больше предложений" button if less then 5 propositions
+		var moreBtnHideCheck = function(){
+			if ($proposListItems.length < 5){
+				$moreProposBtn.css("display", "none")
+			} else{
+				$moreProposBtn.css("display", "inline-block")
+			}
+		};
+
+
+		var proposTableInit = function(bSortInitialize){
+			var	 $sortBtns = $propositionsBlock.find(".js-filter")	// кнопки сортування
+				,$sortBtnByName = $sortBtns.filter(".js-filter_name")
+				,$sortBtnByPrice = $sortBtns.filter(".js-filter_price")
+				,$sortBtnByRating = $sortBtns.filter(".js-filter_rating")
+				;
+			
+			// сортування таблиці пропозицій
+				// функція сортування
+				// sName - ім'я властивості
+				// $parent - контейнер елементів, які сортуємо
+				// $children - елементи, які сортуємо
+				// bHasOrderIcon - чи є поле з сигналізацією зміни порядка
+			var sortByField = function(sName, $parent, $children, bHasOrderIcon){
+				var bDesc = $(this).attr("data-order")=="asc";	// check previous sort order
+				$(this).attr("data-order", (bDesc)?"desc":"asc");	// first sort in ascending order (default icon - ascending)
+				var $orderIcon = $(this).children(".js-order");
+				
+				$children.sort(function(a,b){
+					if (bDesc){
+						return $(b).data(sName) > $(a).data(sName)
+					} else{
+				  		return $(a).data(sName) > $(b).data(sName)
+				 	}
+				}).appendTo($parent);
+
+				// change sort icon
+				if (bHasOrderIcon){
+					if (bDesc) {
+						$orderIcon.addClass("b-order__" + sName + "_revert");
+					} else {
+						$orderIcon.removeClass("b-order__" + sName + "_revert");
+					}
+				}
+			};
+			// перевіряємо чи це первинна ініціалізація
+			// щоб не додавати по кілька однакових event listeners на поля сортування при завантаження нових таблиць пропозицій
+			if (bSortInitialize){
+				$sortBtnByName.on("click", function(){
+					sortByField.call(this, "name", $proposList, $proposListItems, true);
+				});
+				$sortBtnByPrice.on("click", function(){
+					sortByField.call(this, "price", $proposList, $proposListItems, true);
+				});
+				$sortBtnByRating.on("click", function(){
+					sortByField.call(this, "rating", $proposList, $proposListItems, false);
+				});
+			};
+		};
+
+		// ф-я підвантаження нової таблиці пропозицій
+		var reloadPropositionsTable = function(){
+			hideContainerAjax($proposListContainer);
+
+
+			$proposListContainer.queue("ajax", function(){
+				var 
+					$type = $vehicleParamSelects.filter(":not([disabled])")
+					,type = $vehicleParamSelects.filter(":not([disabled])").val()
+	            	,cityName = $cityName.val()
+	            	,city = $cityId.val()
+	            	,zone = $cityZone.val()
+	            	;
+				var changeHeader =function($toggleFilters){
+					var 
+						selectVal = function($Select){
+							return $Select.parent().siblings(".selectric-items").find("li").filter(".selected").text();
+						}
+						,sVehicle = selectVal($vehicleSelect)
+						,sParams = selectVal($type)
+						,settlement = $cityName.attr("data-item").match(/^.+?(?=, )/i)
+						,headerText = sVehicle + ' ' + sParams + ' ' + settlement[0]
+						;
+						
+					$toggleFilters.text(headerText);
+				}
+				changeHeader($toggleFilters);
+
+				$.ajax({
+	            	type: "get",
+            		data: {type: type, city: city, cityName: cityName, zone: zone},
+	            	url : "./ajax/__propositionsList.html",
+	            	error : function(){
+	            	    alert('error');
+	            	},
+	            	success: function(response){
+						$vehicleForm.slideUp(200);
+
+	            	    $proposListContainer.html(response);
+	            	    $vehicleForm = $("#vehicleForm");
+						$cityId = $vehicleForm.find("#cityId");
+						$cityName = $vehicleForm.find("#regCity");
+						$proposListContainer = $("#propositionsList");
+						$propositionsBlock = $containerAjax.find("#propositions");
+						$proposList = $propositionsBlock.find(".js-list_propositions");
+						$proposListItems = $proposList.children(".js-proposition");
+						$moreProposBtn = $propositionsBlock.find("#morePropositions");
+						moreBtnHideCheck();
+						$moreProposBtn.find(".fa").addClass("fa-angle-down").removeClass("fa-angle-up");
+	            	    proposTableInit();	// ініціалізуємо функціонал завантаженої таблиці пропозицій
+
+	            	    $buyBtns = $("#propositions").find(".js-proposition__buy")						// кнопка оформлення покупки
+						$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")	// кнопка оформлення швидкої доставки
+	            	    buyBtnsInit();
+	            	},
+	            	complete: function(){
+	            		showContainerAjax($containerAjax);
+	            		$proposListContainer.dequeue("ajax");
+	            	}
+	            });
+			});
+				
+			showContainerAjax($proposListContainer);
+			$proposListContainer.dequeue("ajax");
+		}
+
+		// сховаємо форму параметрів
 		$vehicleForm.css("display", "none");
+		// при кліку на кнопку в заголовку "Результаты расчета для" показуємо/ховаємо форму параметрів
 		$toggleFilters.click(function(){
 			$(this).toggleClass("b-link_unscrolled")
 			$vehicleForm.slideToggle(200);
 		});
 
 		$(".js-selectric").selectric();	// selects stylization
-		var vehicleChange = function(){
-			var sVehicle = $(this).val();
-				switch (sVehicle) {
-					case "car":	// авто
-						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
-						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
 
-						$carParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
-						$carParamSelect.prop("disabled", false);	// відключаємо поля параметрів
-						break;
-					case "trailer":	// вантажівка
-						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
-						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
-
-						$trailerParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
-						$trailerParamSelect.prop("disabled", false);	// відключаємо поля параметрів
-						break;
-					case "bus":	// автобус
-						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
-						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
-
-						$busParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
-						$busParamSelect.prop("disabled", false);	// відключаємо поля параметрів
-						break;
-
-					case "moto": //мотоцикл
-						$vehicleParameters.css("display", "none");	// ховаємо всі блоки з параметрами ТЗ
-						$vehicleParamSelects.prop("disabled", true);	// відключаємо поля параметрів
-
-						$motoParameters.css("display", "block");	// ховаємо всі блоки з параметрами ТЗ
-						$motoParamSelect.prop("disabled", false);	// відключаємо поля параметрів
-						break;
-				}
-		};
-		$vehicleSelect.selectric({	// селект вибора ТЗ
+		$vehicleSelect.selectric({	//селект вибора ТЗ
 			onInit: function() {
 				vehicleChange.call(this);
 			},
@@ -172,26 +340,8 @@ $(document).ready(function(){
 			}
 		})
 		
-		// валідація
-		// var  $vehicleForm = $("#vehicleForm")
-		var  $cityName = $vehicleForm.find("#regCity")
-			,$cityId = $vehicleForm.find("#cityId")
-			,$cityZone = $vehicleForm.find("#zoneId")
-			,$proposListContainer = $("#propositionsList")
-			,$propositionsBlock = $containerAjax.find("#propositions")
-			,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
-			,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
-			,$moreProposBtn = $propositionsBlock.find("#morePropositions")	// "Больше предложений" button
-			;
-		// hide "Больше предложений" button if less then 5 propositions
-		var moreBtnHideCheck = function(){
-			if ($proposListItems.length < 5){
-				$moreProposBtn.css("display", "none")
-			} else{
-				$moreProposBtn.css("display", "inline-block")
-			}
-		};
-		moreBtnHideCheck();
+		// ініціалізація функціоналу таблиці при початковому підвантаженні
+		proposTableInit(true);	
 
 		// hide-show additional propositions by click on "Больше предложений"
 		$moreProposBtn.on("click",function(){
@@ -200,105 +350,15 @@ $(document).ready(function(){
 				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 			}
 		});
-		var proposTableInit = function(bSortInitialize){
-			// var  $propositionsBlock = $containerAjax.find("#propositions")
-			// 	,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
-			// 	,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
-			
-			var	 $sortBtns = $propositionsBlock.find(".js-filter")	// кнопки сортування
-				,$sortBtnByName = $sortBtns.filter(".js-filter_name")
-				,$sortBtnByPrice = $sortBtns.filter(".js-filter_price")
-				,$sortBtnByRating = $sortBtns.filter(".js-filter_rating")
-				;
-			
+		// hide "Больше предложений" button if less then 5 propositions
+		moreBtnHideCheck();
 
-			// сортування таблиці пропозицій
-				// функція сортування
-				// sName - ім'я властивості
-				// $parent - контейнер елементів, які сортуємо
-				// $children - елементи, які сортуємо
-				// bHasOrderIcon - чи є поле з сигналізацією зміни порядка
-			var sortByField = function(sName, $parent, $children, bHasOrderIcon){
-				console.log($parent);
-				console.log($children);
-				var bDesc = $(this).attr("data-order")=="asc";	// check previous sort order
-				$(this).attr("data-order", (bDesc)?"desc":"asc");	// first sort in ascending order (default icon - ascending)
-				var $orderIcon = $(this).children(".js-order");
-				
-				$children.sort(function(a,b){
-					if (bDesc){
-						return $(b).data(sName) > $(a).data(sName)
-					} else{
-				  		return $(a).data(sName) > $(b).data(sName)
-				 	}
-				}).appendTo($parent);
+		// підванатажимо блок: 
+		//		оформлення при кліку на "Оформить страховку"
+		// 		швидкої доставки при кліку на "Заказать доставку"
+		buyBtnsInit();
 
-				// change sort icon
-				if (bHasOrderIcon){
-					if (bDesc) {
-						$orderIcon.addClass("b-order__" + sName + "_revert");
-					} else {
-						$orderIcon.removeClass("b-order__" + sName + "_revert");
-					}
-				}
-			};
-			if (bSortInitialize){
-				$sortBtnByName.on("click", function(){
-					sortByField.call(this, "name", $proposList, $proposListItems, true);
-				});
-				$sortBtnByPrice.on("click", function(){
-					sortByField.call(this, "price", $proposList, $proposListItems, true);
-				});
-				$sortBtnByRating.on("click", function(){
-					sortByField.call(this, "rating", $proposList, $proposListItems, false);
-				});
-			};
-			// кінець ф-й сортування таблиці пропозицій
-		};
-		var reloadPropositionsTable = function(){
-			hideContainerAjax($proposListContainer);
-
-			$proposListContainer.queue("ajax", function(){
-
-				var  type = $vehicleParamSelects.filter(":not([disabled])").val()
-	            	,cityName = $cityName.val()
-	            	,city = $cityId.val()
-	            	,zone = $cityZone.val()
-	            	;
-
-	            // 
-
-				$.ajax({
-	            	type: "get",
-            		data: {type: type, city: city, cityName: cityName, zone: zone},
-	            	url : "./ajax/__propositionsList.html",
-	            	error : function(){
-	            	    alert('error');
-	            	},
-	            	success: function(response){
-	            	    $proposListContainer.html(response);
-	            	    $vehicleForm = $("#vehicleForm");
-						$cityId = $vehicleForm.find("#cityId");
-						$cityName = $vehicleForm.find("#regCity");
-						$proposListContainer = $("#propositionsList");
-						$propositionsBlock = $containerAjax.find("#propositions");
-						$proposList = $propositionsBlock.find(".js-list_propositions");
-						$proposListItems = $proposList.children(".js-proposition");
-						$moreProposBtn = $propositionsBlock.find("#morePropositions");
-						moreBtnHideCheck();
-						$moreProposBtn.find(".fa").addClass("fa-angle-down").removeClass("fa-angle-up");
-	            	    proposTableInit();	// ініціалізуємо функціонал завантаженої таблиці пропозицій
-	            	},
-	            	complete: function(){
-	            		showContainerAjax($containerAjax);
-	            		$proposListContainer.dequeue("ajax");
-	            	}
-	            });
-				
-			});
-			showContainerAjax($proposListContainer);
-			$proposListContainer.dequeue("ajax");
-		}
+		// валідація форми
 		$vehicleForm.submit(function(event){
 			event.preventDefault();
 			if (!$cityId.val()){	//якщо не вибране місто реєстрації (відповідне приховане поле без значення)
@@ -306,35 +366,6 @@ $(document).ready(function(){
 			} else {
 				reloadPropositionsTable();	// підвантажуємо нову таблицю пропозицій
 			}
-		});
-		
-		proposTableInit(true);	// ініціалізація функціоналу таблиці при початковому підвантаженні
-
-		// підванатажимо блок оформлення при кліку на "Оформить страховку"
-		var  $buyBtns = $("#propositions").find(".js-proposition__buy")
-			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")
-			;
-
-		$buyBtns.on("click", function(){
-			// GTM variables
-			var  nameOfCompany = $(this).siblings(".b-company__name").text()
-				,price = $(this).find(".b-text_btn").attr("data-fullprice")
-				;
-			dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
-
-			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
-			showOrderBlock(proposNum, $containerAjax);
-		});
-
-		$quickDelivBtns.on("click", function(){
-			// GTM variables
-			var  nameOfCompany = $(this).siblings(".b-company__name").text()
-				,price = $(this).find(".b-text_btn").attr("data-fullprice")
-				;
-			dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
-
-			var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
-			showQuickDeliveryBlock(proposNum, $containerAjax);
 		});
 
 		//	Повертаємось до вибора тз при кліку на лого Oh.ua
