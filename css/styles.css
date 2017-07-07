@@ -2479,7 +2479,7 @@ body{
     position: relative;
     margin-top: 0;
     margin-bottom: 11px;
-    height: 154px;
+    min-height: 154px;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;

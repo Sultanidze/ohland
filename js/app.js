@@ -847,15 +847,16 @@ $(document).ready(function(){
 				,$filesList = $button.next(".b-list_files")	// div з іменами файлів
 				,i
 				,tempField
-				//,filesExt = ["jpe", "jpg", "jpeg", "jpe", "jfif", "jfif-tbnl", "png", "tif", "tiff", "webp"]	// розширення файлів які можна
 				,bValidType
 				,t = this
 				;
 
 			var checkType = function(t){
-				var re = /image\/(jpeg|pjpeg|png|webp)/i;	// allowed MIME file types
-				// return t.files[0].type.match('image.*');
-				return t.files[0].type.match(re);
+				if (filesNum){	// перевіряємо чи не видалено файли
+					var re = /image\/(jpeg|pjpeg|png|webp)/i;	// allowed MIME file types
+					// return t.files[0].type.match('image.*');
+					return t.files[0].type.match(re);
+				}
 			}
 
 			bValidType = checkType(t);
@@ -883,9 +884,12 @@ $(document).ready(function(){
 				} else {
 					filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
 				}
-			} else {	// якщо видалили файли
+			} else {	// якщо видалили файли, чи додали файли невалідних типів
 				// перевіримо чи є іще заповнені файлові поля, якщо ні то покажемо помилку валідації
-				var filledNum = 0;
+				var 
+					filledNum = 0	// ініціалізуємо лічильник заповнених полів
+					,$fileInputsBlock = $(this).parents(".b-form__cell_file")
+					;
 				$filesInput.each(function(){
 					if (filledNum > 1){
 						return false	// якщо заповнених видимих полів більше ніж одне то виходимо з цикла
@@ -894,9 +898,9 @@ $(document).ready(function(){
 					}
 				});
 				if (filledNum >= 1){	// якщо є заповнені видимі поля то validation success 
-					$(this).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid")
+					$fileInputsBlock.removeClass("b-cell_error").addClass("b-cell_valid")
 				} else {
-					$(this).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error")
+					$fileInputsBlock.removeClass("b-cell_valid").addClass("b-cell_error")
 				}
 				
 				$fileProgress.css("width", "0px")	// якщо видалили файли, то сховаємо смужку прогреса
