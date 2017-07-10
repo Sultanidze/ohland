@@ -20,6 +20,9 @@ font-family: 'Playfair Display', serif;
 .g-pos_relative{
     position: relative;
 }
+.bg-light{
+    background-color: #fff;
+}
 .bg-corporate_light{
     background-color: #f2c90c;
     color: #231f20;
@@ -623,13 +626,13 @@ body{
 .b-calculator__heading_registration{
     margin-top: 33px;
 }
-.b-calculator__heading_registration .fa{
+.b-icon_tolltip{
     vertical-align: 5%;
     font-size: 17px;
     color: #bebebe;
     cursor: pointer;
 }
-.b-calculator__heading_registration .fa:hover{
+.b-icon_tolltip:hover{
     color: #7339a6;
 }
 .b-label_registration{
@@ -2125,11 +2128,6 @@ body{
     color: #231f20;
 }
 .b-calculator_propos{
-/*
-    float: right;
-    width: 920px;
-*/
-/*    overflow-x: hidden;*/
     padding-left: 51px;
     padding-right: 51px;
     padding-bottom: 20px;
@@ -2142,7 +2140,7 @@ body{
 }
 .b-calculator__heading_propos{
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 20px;
 }
 .b-precomplete_regCity{
@@ -2150,16 +2148,7 @@ body{
     left: 0;
     right: 0;
 }
-/*
-.b-precomplete_active{
-    display: block;
-}
-*/
-/*
-.b-propositions{
-    position: relative;
-}
-*/
+
 .b-propositions__string{
     margin-bottom: 60px;
 }
@@ -2182,16 +2171,9 @@ body{
     float: left;
     position: relative;
     width: 227px;
-/*    height: 320px;*/
     height: 334px;
-/*    width: 245px;*/
-/*    height: 293px;*/
 }
-/*
-.b-proposition__wrap:first-child{
-    width: 245px;
-}
-*/
+
 .b-proposition{
     position: absolute;
     top: 0;
@@ -2204,7 +2186,6 @@ body{
     padding: 23px 18px 12px;
     -webkit-box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
     box-shadow: 0 0 30px 9px rgba(0,0,0,0.2);
-/*    z-index: 5;*/
     z-index: 0;
 }
 .b-proposition__tab{
@@ -2233,7 +2214,6 @@ body{
     display: inline-block;
 }
 .b-company__name{
-/*    display: inline-block;*/
     display: block;
     margin-top: 10px;
     margin-right: 10px;
@@ -2242,8 +2222,6 @@ body{
 .b-propos__details{
     overflow: hidden;
     min-height: 83px;
-/*    max-height: 70px;*/
-/*    max-height: 83px;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -2261,14 +2239,8 @@ body{
     font-weight: 300;
     color: #fff;
 }
-/*
-.b-details__list>li:nth-child(3)~li{
-    display: none;
-}
-*/
+
 .b-details__btn_readmore{
-/*    margin-bottom: 20px;*/
-/*    display: none;*/
     visibility: hidden;
     border: none;
     padding: 0;
@@ -2280,7 +2252,6 @@ body{
 }
 .b-details_hidden{
     display: none;
-/*    min-height: 15px;*/
     margin-bottom: 20px;
     padding-top: 15px;
 }
@@ -2328,7 +2299,6 @@ body{
 }
 .b-proposition__gain{
     position: absolute;
-/*    top: 120%;*/
     right: 31px;
     bottom: 14px;
     font-size: 13px;
@@ -2337,12 +2307,7 @@ body{
     color: #f2c916;
     cursor: default;
 }
-.b-propos__guaranties{
-    float: right;
-    width: 154px;
-    margin-top: 30px;
-    margin-left: 5px;
-}
+
 .b-guaranties__heading{
     font-size: 18px;
     font-weight: 700;
@@ -2377,10 +2342,6 @@ body{
     content: "\f106";
 }
 .b-propos__recalc{
-/*
-    width: 768px;
-    margin: 0 auto;
-*/
     margin-bottom: 35px;
     display: -webkit-flex;
     display: -moz-flex;
@@ -2400,7 +2361,6 @@ body{
     margin-bottom: 3px;
 }
 .b-propos__recalc .selectric{
-/*    width: 220px;*/
     min-width: 150px;
 }
 .b-propos__recalc .selectric .label{
@@ -2490,13 +2450,6 @@ body{
     box-shadow: 0 0 30px 9px rgba(0,0,0,0.1);
     background-color: #fff;
 }
-/*
-.b-proposition_row:after{
-    content: '';
-    display: table;
-    clear: both;
-}
-*/
 .b-proposition_row .b-container__filter{
     padding: 5px 5px 5px 15px;
     display: -webkit-flex;
@@ -2691,9 +2644,20 @@ body{
     transform: rotate(90deg);
 }
 
+.b-propos__guaranties{
+    position: relative;
+    left: 25px;
+    float: right;
+    width: 190px;
+    margin-top: 60px;
+    margin-left: 5px;
+}
 .b-propos__guaranties .b-crumbs_aside{
     margin-bottom: 45px;
     float: none;
+}
+.b-wrap_guaranties{
+    padding: 15px;
 }
 .b-propos__btn_edge{
     border: 1px solid #efca14;
@@ -2822,6 +2786,10 @@ body{
     position: absolute;
     top: 0;
     right: 120px;
+}
+#formBySelf .b-crumbs_aside{
+    top: -70px;
+    right: 35px;
 }
 .b-heading_method{
 /*    margin-top: 40px;*/
