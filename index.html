@@ -119,9 +119,9 @@
                         <span class="b-calculator__heading b-calculator__heading_registration">Объем двигателя  <span class="b-icon_tolltip fa fa-question-circle" aria-hidden="true" title="Выберите обьем двигателя вашего ТС"></span></span>
                         <div class="b-vehicle__params">
                             <div class="b-params b-params_car js-params_active b-params_active">
-                                <input type="radio" class="radio sr-only" id="small" value="3" name="type">
+                                <input type="radio" class="radio sr-only" id="small" value="3" name="type" checked>
                                 <label for="small">до 1600 см<sup>3</sup></label>
-                                <input type="radio" class="radio sr-only" id="middle" value="4" name="type" checked>
+                                <input type="radio" class="radio sr-only" id="middle" value="4" name="type">
                                 <label for="middle">1601 - 2000 см<sup>3</sup></label>
                                 <input type="radio" class="radio sr-only" id="large" value="5" name="type">
                                 <label for="large">до 2001 - 3000 см<sup>3</sup></label>
@@ -149,9 +149,9 @@
                         </div>
                         <span class="b-calculator__heading b-calculator__heading_registration">Место регистрации авто <span class="b-icon_tolltip fa fa-question-circle" aria-hidden="true" title="Введите несколько букв названия населенного пункта, затем выберете населенный пункт из списка. Место регистрации вашего ТС необходимо указывать согласно технического паспорта. (Не путать с местом жительства или прописки)"></span></span>
                         <div class="b-block_select b-selectBlock_registration">
-                            <input type="text" class="b-autocomplete b-autocomplete_vehicle selectric" id="regCity" title="Введите и выберите город">
-                            <input type="hidden" class="hidden" name="regCityId" id="cityId">
-                            <input type="hidden" class="hidden" name="zoneId" id="zoneId">
+                            <input type="text" class="b-autocomplete b-autocomplete_vehicle selectric" id="regCity" title="Введите и выберите город" data-item="Киев (г.), Киевская обл." value="Киев (г.), Киевская обл." data-item="Киев (г.), Киевская обл.">
+                            <input type="hidden" class="hidden" name="regCityId" id="cityId" value="1">
+                            <input type="hidden" class="hidden" name="zoneId" id="zoneId" value="1">
                             <div class="autocomplete-suggestions b-precomplete_brand js-precomplete">
                                 <div class="autocomplete-suggestion" data-id="1" data-zone="1">Киев (г.), Киевская обл.</div>
                                 <div class="autocomplete-suggestion" data-id="9" data-zone="3">Харьков (г.), Харьковская обл.</div>

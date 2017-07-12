@@ -10,6 +10,9 @@ font-family: 'Playfair Display', serif;
 .g-highlited{
     color: #f2c90c;
 }
+.g-center{
+    text-align: center;
+}
 
 .g-color-corporate-dark{
     color: #5f308c;
@@ -2787,9 +2790,10 @@ body{
     top: 0;
     right: 120px;
 }
-#formBySelf .b-crumbs_aside{
-    top: -70px;
-    right: 35px;
+.b-section_crumbs .b-crumbs_aside{
+    position: absolute;
+    top: 140%;
+    right: 0;
 }
 .b-heading_method{
 /*    margin-top: 40px;*/
@@ -3101,6 +3105,9 @@ body{
     display: none;
     height: 294px;
 }
+.b-finalize__method__phone .b-form__heading_finalize{
+     padding-left: 295px;   
+}
 .b-finalize__method__phone .b-form__cell:first-child{
     margin-left: 130px;
 }
@@ -3235,13 +3242,9 @@ body{
     margin-bottom: 82px;
     color: #231f20;
 }
-.b-container_thanks{
-    max-width: 1110px;
-}
-.b-container_thanks:after{
-    content: '';
-    display: table;
-    clear: both;
+.b-thanks .b-crumbs_aside{
+    margin-top: 25px;
+    margin-left: 40px;
 }
 
 .b-thanks__col_left{
