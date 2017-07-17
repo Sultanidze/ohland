@@ -30,8 +30,8 @@
                         <div class="b-select__container_propos js-vehicle__block js-car">
                             <label for="engineCapacity" class="b-label_registration">Обьем двигателя</label>
                             <select name="engineCapacity" class="js-selectric js-selectric_car" id="engineCapacity">
-                                <option value="3">до 1600 см&sup3;</option>
-                                <option value="4" selected>1601 - 2000 см&sup3;</option>
+                                <option value="3" selected>до 1600 см&sup3;</option>
+                                <option value="4">1601 - 2000 см&sup3;</option>
                                 <option value="5">2001 - 3000 см&sup3;</option>
                                 <option value="6">от 3001 см&sup3;</option>
                             </select>
@@ -98,8 +98,10 @@
                                 </span>
                             </div>
                             <div class="b-container__filter b-container__filter_rating">
-                                <span class="b-filter b-filter_rating js-filter js-filter_rating">
-                                    <span class="b-order js-order">Рейтинг надежности</span>
+                                <span class="b-filter b-filter_rating js-filter js-filter_rating" data-order="asc">
+                                    <span class="b-order b-order__rating js-order">
+                                        Рейтинг надежности<span class="fa" aria-hidden="true"></span>
+                                    </span>
                                 </span>
                             </div>
                         </div>

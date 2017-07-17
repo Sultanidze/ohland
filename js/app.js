@@ -243,7 +243,7 @@ $(document).ready(function(){
 					}
 				});
 				$sortBtnByRating.on("click", function(){
-					sortByField.call(this, "rating", $proposList, $proposListItems, false);
+					sortByField.call(this, "rating", $proposList, $proposListItems, true);
 					$proposListItems = $proposList.children(".js-proposition");
 					if (!$moreProposBtn.hasClass("js-rolled")) {
 						$proposListItems.not(":gt(3)").slideDown(400);
