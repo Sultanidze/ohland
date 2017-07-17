@@ -650,6 +650,7 @@ $(document).ready(function(){
 					;
 				// console.log($fileFieldsVisible);	
 
+				// required autocomplete fields check
 				$autoCompleteFields.each(function(){
 					if(!$(this).prop("disabled")){
 						if ($(this).next().val()){
@@ -665,20 +666,22 @@ $(document).ready(function(){
 					}
 				});
 
-				if ($fileFieldsVisible.length){	// перевіряємо чи це форма з полями відвантаження
-					for (i = 0; i < $fileFieldsVisible.length; ++i){
-					 	if ($fileFieldsVisible.eq(i).val()){
-							$fileFieldsVisible.eq(i).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
-							break;
-						}
-					}
-						// console.log(i);
-					if (i == $fileFieldsVisible.length){
-						bValid = false;
-						$fileFieldsVisible.eq(0).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error");
-						$fileFieldsVisible.eq(0).focus();
-					}
-				}
+				// required file fields check
+				// if ($fileFieldsVisible.length){	// перевіряємо чи це форма з полями відвантаження ('є видимі поля файлів')
+				// 	for (i = 0; i < $fileFieldsVisible.length; ++i){
+				// 	 	if ($fileFieldsVisible.eq(i).val()){
+				// 			$fileFieldsVisible.eq(i).parents(".b-form__cell_file").removeClass("b-cell_error").addClass("b-cell_valid");
+				// 			break;
+				// 		}
+				// 	}
+				// 		// console.log(i);
+				// 	if (i == $fileFieldsVisible.length){
+				// 		bValid = false;
+				// 		$fileFieldsVisible.eq(0).parents(".b-form__cell_file").removeClass("b-cell_valid").addClass("b-cell_error");
+				// 		$fileFieldsVisible.eq(0).focus();
+				// 	}
+				// }
+				
 				// $fileFieldsVisible.each(function(){
 					// if ($(this).val()){
 						// $(this).parents(".b-form__cell").addClass("b-cell_valid")
