@@ -2585,7 +2585,7 @@ body{
 .b-text_detail{
     display: inline-block;
     font-size: 12px;
-    line-height: 18px;
+    line-height: 16px;
 }
 .b-detail__item_propos:last-child .b-item__block_img{
     top: 5px;
