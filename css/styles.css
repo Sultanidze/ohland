@@ -3527,9 +3527,437 @@ body{
     }
 }
 
+/*======= SEOMAP =======*/
+.b-container__seoMap{
+/*    margin: 0 auto 30px;*/
+    margin-top: 80px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    
+}
+.b-container__seoMap+.cities_links{
+    display: none;
+}
+.b-seoMap{
+    display: inline-block;
+    position: relative;
+    width: 846px;
+    height: 570px;
+    background: url("../img/seomap/ukraine.svg") 0 0 no-repeat;
+}
+.b-seomap__bgnd{
+    position: absolute;
+    top: 0;
+/*    right: 0;*/
+    left: 0;
+/*    margin: auto;*/
+    -webkit-filter: drop-shadow(0 0 20px #bbb);
+    -o-filter: drop-shadow(0 0 20px #bbb);
+    filter: drop-shadow(0 0 20px #bbb);
+}
+.b-map__region{
+    position: absolute;
+    cursor: default;
+}
+.b-region__title{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    z-index: 1;
+    cursor: pointer;
+    color: #5f308c;
+}
+.b-region__img{
+    -webkit-transition: opacity 25ms;
+    -ms-transition: opacity 25ms;
+    -o-transition: opacity 25ms;
+    transition: opacity 25ms;
+}
+.b-region__img_regular{
+    width: 100%;
+}
+.b-region__img_highlighted{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.b-region__title:hover{
+    color: #231f20;
+}
+.b-region__title:hover ~ .b-region__img_highlighted{
+    opacity: 1;
+}
+.b-region__title_active{
+    cursor: default;
+    color: #231f20;
+}
+.b-region__title_active ~ .b-region__img_highlighted{
+    opacity: 1;
+}
+
+.b-region_lutsk{
+    width: 107.64px;
+    top: 13.6px;
+    left: 93.799999px;
+}
+.b-region_lutsk .b-region__title{
+    top: 57px;
+    left: 39px;
+}
+.b-region_rovno{
+    width: 125px;
+    top: 17px;
+    left: 153px;
+}
+.b-region_rovno .b-region__title{
+    top: 75px;
+    left: 54px;
+}
+.b-region_zhitomyr{
+    width: 117px;
+    top: 45px;
+    left: 247px;
+}
+.b-region_zhitomyr .b-region__title{
+    top: 78px;
+    left: 33px;
+}
+.b-region_kyiv{
+    width: 128.5px;
+    top: 58px;
+    left: 343.7px;
+}
+.b-region_kyiv .b-region__title{
+    top: 86px;
+    left: 36px;
+}
+.b-region_chernigov{
+    width: 130.7px;
+    top: 0;
+    left: 401px;
+}
+.b-region_chernigov .b-region__title{
+    top: 86px;
+    left: 36px;
+}
+.b-region_sumy{
+    width: 124.6px;
+    top: 0.5px;
+    left: 508px;
+}
+.b-region_sumy .b-region__title{
+    top: 86px;
+    left: 36px;
+}
+
+.b-region_lviv{
+    width: 131.69px;
+    top: 95.19px;
+    left: 32.7px;
+}
+.b-region_lviv .b-region__title{
+    top: 65px;
+    left: 45px;
+}
+.b-region_ternopol{
+    width: 76px;
+    top: 137px;
+    left: 129px;
+}
+.b-region_ternopol .b-region__title{
+    top: 51px;
+    left: 6px;
+}
+.b-region_khmelnickyi{
+    width: 81.07px;
+    top: 118.7px;
+    left: 193.4px;
+}
+.b-region_khmelnickyi .b-region__title{
+    top: 51px;
+    left: 6px;
+}
+.b-region_vinnytsia{
+    width: 123.7px;
+    top: 172.25px;
+    left: 248.9px;
+}
+.b-region_vinnytsia .b-region__title{
+    top: 80px;
+    left: 39px;
+}
+.b-region_cherkassy{
+    width: 154px;
+    top: 152px;
+    left: 353px;
+}
+.b-region_cherkassy .b-region__title{
+    top: 74px;
+    left: 57px;
+}
+.b-region_poltava{
+    width: 157px;
+    top: 129px;
+    left: 470px;
+}
+.b-region_poltava .b-region__title{
+    top: 65px;
+    left: 54px;
+}
+.b-region_kharkiv{
+    width: 150.1px;
+    top: 129.9px;
+    left: 596.5px;
+}
+.b-region_kharkiv .b-region__title{
+    top: 63px;
+    left: 64px;
+}
+
+.b-region_uzhgorod{
+    width: 115.2px;
+    top: 203.75px;
+    left: 0px;
+}
+.b-region_uzhgorod .b-region__title{
+    top: 53px;
+    left: 26px;
+}
+.b-region_ivano-frankovsk{
+    width: 99px;
+    top: 183px;
+    left: 68px;
+}
+.b-region_ivano-frankovsk .b-region__title{
+    top: 38px;
+    left: 19px;
+}
+.b-region_chernovtsy{
+    width: 128.4px;
+    top: 249.35px;
+    left: 126.599999px;
+}
+.b-region_chernovtsy .b-region__title{
+    top: 22px;
+    left: 23px;
+}
+
+.b-region_kirovograd{
+    width: 198px;
+    top: 232px;
+    left: 357px;
+}
+.b-region_kirovograd .b-region__title{
+    top: 51px;
+    left: 88px;
+}
+.b-region_dnepropetrovsk{
+    width: 189px;
+    top: 225px;
+    left: 511px;
+}
+.b-region_dnepropetrovsk .b-region__title{
+    top: 54px;
+    left: 45px;
+}
+.b-region_donetsk{
+    width: 125px;
+    top: 213.3px;
+    left: 681px;
+}
+.b-region_donetsk .b-region__title{
+    top: 91px;
+    left: 34px;
+}
+.b-region_lugansk{
+    width: 110.3px;
+    top: 152.599999px;
+    left: 735.7px;
+}
+.b-region_lugansk .b-region__title{
+    top: 80px;
+    left: 37px;
+}
+
+.b-region_odessa{
+    width: 154.2px;
+    top: 291.5px;
+    left: 276.9px;
+}
+.b-region_odessa .b-region__title{
+    top: 70px;
+    left: 81px;
+}
+.b-region_nikolaev{
+    width: 141.4px;
+    top: 293px;
+    left: 379.2px
+}
+.b-region_nikolaev .b-region__title{
+    top: 69px;
+    left: 60px;
+}
+.b-region_kherson{
+    width: 163.399px;
+    top: 338.588px;
+    left: 453.7px;
+}
+.b-region_kherson .b-region__title{
+    top: 67px;
+    left: 60px;
+}
+.b-region_zaporozhye{
+    width: 144.8px;
+    top: 297.0px;
+    left: 572.3px;
+}
+.b-region_zaporozhye .b-region__title{
+    top: 63px;
+    left: 37px;
+}
+
+.b-region_simferopol{
+    width: 207.9px;
+    top: 434.1px;
+    left: 489px;
+}
+.b-region_simferopol .b-region__title{
+    top: 68px;
+    left: 60px;
+}
+
+/* firefox map hacks */
+@-moz-document url-prefix() {
+    .b-region_uzhgorod{
+        width: 116.5px;
+        top: 203.3px;
+    }
+    .b-region_khmelnickyi{
+        width: 82.07px;
+    }
+    .b-region_lviv{
+        width: 131.5px;
+        top: 94.9px;
+        left: 33.4px;
+    }
+    .b-region_lutsk{
+        width: 107.64px;
+        top: 12.7px;
+        left: 94.5px;
+    }
+    .b-region_rovno{
+        width: 124.76px;
+        top: 16.6px;
+        left: 153.5px;
+    }
+    .b-region_zhitomyr{
+        width: 116.5px;
+        top: 45.5px;
+        left: 247.5px;
+    }
+    .b-region_chernovtsy{
+        width: 128.4px;
+        top: 249.1px;
+        left: 126.9px;
+    }
+    .b-region_ivano-frankovsk{
+        width: 98.7px;
+        top: 182px;
+        left: 68.999px;
+    }
+    .b-region_ternopol{
+        width: 76.1px;
+        top: 137px;
+        left: 129.3px;
+    }
+    .b-region_khmelnickyi{
+        width: 81.5px;
+        top: 118.7px;
+        left: 193.54px;
+    }
+    .b-region_kyiv{
+        width: 128.9px;
+        top: 57.8px;
+        left: 343.54px;
+    }
+    .b-region_vinnytsia{
+        left: 249px;
+        top: 172.1px;
+    }
+    .b-region_odessa {
+        top: 290.2px;
+    }
+    .b-region_sumy {
+        width: 124.25px;
+        top: -0.2px;
+        left: 507.7px;
+    }
+    .b-region_lugansk {
+        top: 152.3px;
+        left: 735.1px;
+    }
+    .b-region_donetsk {
+        width: 124.8px;
+        top: 212.2px;
+        left: 680.45px;
+    }
+    .b-region_zaporozhye {
+        width: 146.4px;
+        top: 296.8px;
+        left: 571.1px;
+    }
+    .b-region_kherson {
+        width: 163.5px;
+        top: 338.1px;
+        left: 453.4px;
+    }
+    .b-region_simferopol {
+        left: 487.5px;
+        top: 433.6px;
+        width: 210px;
+    }
+    .b-region_kharkiv {
+        left: 595px;
+        top: 129.5px;
+        width: 151.45px;
+    }
+    .b-region_nikolaev {
+        left: 379.5px;
+        top: 292.5px;
+        width: 140.5px;
+    }
+}
+/* firefox map hacks end */
+
+/* IE map hack*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .b-seomap__bgnd{
+        top: -2px;
+    }
+}
+/* IE map hack end */
+
+.b-seoMap_descr{
+    width: 310px;
+    display: inline-block;
+    margin-left: 40px;
+    vertical-align: top;
+    padding-top: 50px;
+    
+}
+.b-reasons__text_seomap{
+    margin-top: 50px;
+    margin-bottom: 0;
+    width: 100%;
+}
+/*======= SEOMAP END =======*/
+
 /* IE10-11 styles*/
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-   /* стили только для IE10 IE11 */
     .svg-vehicle{
 /*        top: 0;*/
         height: 47px;
@@ -3563,5 +3991,4 @@ body{
         -ms-transform: rotateY(0deg);
         transform: rotateY(0deg);
     }
-    
 }
