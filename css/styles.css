@@ -4085,6 +4085,9 @@ body{
     text-indent: -5px;
 }
 
+.b-seo__article_additional{
+    padding-top: 0;
+}
 .b-seo__article_additional .title{
     margin-bottom: 15px;
     text-transform: uppercase;
