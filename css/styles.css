@@ -3989,6 +3989,9 @@ body{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+.b-seo__top .b-section__heading_seo{
+    padding-left: 80px;
+}
 .b-section__heading_seo{
     margin-bottom: 50px;
     width: auto;
@@ -4029,7 +4032,7 @@ body{
     text-align: left;
 }
 .b-seo__vehicle{
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     float: right;
     width: 140px;
 }
@@ -4089,6 +4092,7 @@ body{
 
 .list_seoDocks{
     margin-bottom: 40px;
+    padding-left: 20px;
     line-height: 28px;
     font-size: 18px;
     font-family: 'Roboto Condensed', sans-serif;
