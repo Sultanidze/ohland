@@ -227,6 +227,9 @@ body{
     color: #7239a6;
 }
 */
+.b-crumbs__item a{
+    color: #7239a6;
+}
 .b-crumbs__item_unactive{
     cursor: pointer;
 }
