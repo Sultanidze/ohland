@@ -13,6 +13,103 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 });
 
 $(document).ready(function(){
+	// header module
+	var headerModule = (function(){
+		var obj = {};	// module returned object
+
+		// menu hiding/appearance
+		obj.$header = $("#headerWrapper");	// header
+		obj.$mainMenu = $("#mainMenu");		// menu
+		obj.$menuBtn = $("#menuBtn");		
+		obj.$closeIcon = obj.$menuBtn.find(".b-icon_bars");
+		obj.$openIcon = obj.$menuBtn.find(".fa-times");
+
+		// menu btn icon toggle
+		obj.menuBtnToggle = function(){
+			if (obj.$mainMenu.hasClass("opened")){
+				obj.$closeIcon.fadeOut(200);
+				obj.$openIcon.fadeIn(200);
+			} else {
+				obj.$openIcon.fadeOut(200);
+				obj.$closeIcon.fadeIn(200);
+			}
+		};
+		// menu open
+		obj.openMenu = function(){
+			var  $menuList = obj.$mainMenu.children("ul")
+				,$menuCallback = obj.$mainMenu.children(".js-btn_callback")
+				,height = $menuList.outerHeight() + ($menuCallback.is(":visible")?$menuCallback.outerHeight():0)
+				;
+
+			obj.$mainMenu.css("top", "100%");
+			obj.$mainMenu.animate({
+				height: height
+			}, 200);
+			obj.$mainMenu.addClass("opened");
+			obj.menuBtnToggle();
+		};
+		// menu close
+		obj.closeMenu = function(){
+			obj.$mainMenu.animate({
+				height: "0"
+			}, 200, function(){
+				obj.$mainMenu.css("top", "-9999px");
+			});
+			obj.$mainMenu.removeClass("opened");
+			obj.menuBtnToggle();
+		};
+		// menu close after some scroll
+		obj.closeAfterScroll = new function(){
+			var  o = this
+				,startCoor
+				;
+
+			o.SCROLL_VAL_PX = 100;	// close after 100px scroll
+
+			o.menuScrollHandler = function (){
+				var currentCoor = obj.$mainMenu.offset().top;
+
+				if (Math.abs(currentCoor - startCoor) >= o.SCROLL_VAL_PX){
+					obj.closeMenu();
+					$(document).off("scroll", o.menuScrollHandler);
+				}
+			}
+			o.init = function(){
+				startCoor = obj.$mainMenu.offset().top;
+				$(document).on("scroll", o.menuScrollHandler);
+			};
+		};
+
+		obj.menuToggler = function(){
+			// open/close menu on mouseenter event
+			obj.$menuBtn.on("mouseenter click", function(){
+				if (obj.$mainMenu.hasClass("opened")){
+					obj.closeMenu();
+				} else {
+					obj.openMenu();
+				};
+				if (obj.$mainMenu.hasClass("opened")){
+					obj.closeAfterScroll.init();
+				}
+			});
+			// close menu after click on close btn
+			obj.$mainMenu.find(".js-menu__close").on("click", obj.closeMenu);
+
+			$(window).on("resize", function(){	// close menu - prevent visible menu height overflow
+				obj.closeMenu();
+			});
+		};
+
+		obj.init = function(){
+			// obj.headerStick();	// stick header
+			obj.menuToggler();	// menu open/close functionality 
+		}
+
+		return obj;	// return object with menu methods and buttons
+	})();
+	
+	headerModule.init();
+	
 // Global variables
 	var  $containerAjax = $(".js-ajax_calculator")
 		;
