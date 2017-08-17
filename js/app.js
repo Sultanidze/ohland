@@ -67,7 +67,7 @@ $(document).ready(function(){
 			o.SCROLL_VAL_PX = 100;	// close after 100px scroll
 
 			o.menuScrollHandler = function (){
-				var currentCoor = obj.$mainMenu.offset().top;
+				var currentCoor = $(document).scrollTop();
 
 				if (Math.abs(currentCoor - startCoor) >= o.SCROLL_VAL_PX){
 					obj.closeMenu();
@@ -75,7 +75,7 @@ $(document).ready(function(){
 				}
 			}
 			o.init = function(){
-				startCoor = obj.$mainMenu.offset().top;
+				startCoor = $(document).scrollTop();
 				$(document).on("scroll", o.menuScrollHandler);
 			};
 		};
