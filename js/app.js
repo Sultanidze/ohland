@@ -369,7 +369,7 @@ $(document).ready(function(){
 						}
 						,sVehicle = selectVal($vehicleSelect)
 						,sParams = selectVal($type)
-						,settlement = $cityName.attr("data-item").match(/^.+?(?=, )/i)
+						,settlement = $cityName.attr("data-item").match(/(^.+?(?=, ))|(^.+)/i)
 						,headerText = sVehicle + ' ' + sParams + ' ' + settlement[0]
 						;
 						
