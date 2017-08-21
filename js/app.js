@@ -213,31 +213,33 @@ $(document).ready(function(){
 
 			,$buyBtns = $("#propositions").find(".js-proposition__buy")						// кнопка оформлення покупки
 			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")	// кнопка оформлення швидкої доставки
+			,$makeBtns = $().add($buyBtns).add($quickDelivBtns)							// кнопки оформлення
 			;
 
 		// ф-я ініціалізації функціонала кнопок купівлі і доставки
 		var buyBtnsInit = function(){
-			$buyBtns.on("click", function(){
+			 var init = function(){
 				// GTM variables
-				var  nameOfCompany = $(this).siblings(".b-company__name").text()
+				var  nameOfCompany = $(this).parents(".js-proposition").attr("data-name")
 					,price = $(this).find(".b-text_btn").attr("data-fullprice")
 					;
 				dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
 
 				var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
 				showOrderBlock(proposNum, $containerAjax);	// показуємо блок оформлення
+			};
+			console.log($makeBtns);
+			$makeBtns.on("click", function(){
+				init.call(this);
 			});
 
-			$quickDelivBtns.on("click", function(){
-				// GTM variables
-				var  nameOfCompany = $(this).siblings(".b-company__name").text()
-					,price = $(this).find(".b-text_btn").attr("data-fullprice")
-					;
-				dataLayer.push({'event': 'buySC', 'eventCategory': 'buyOsagoLanding', 'eventAction': nameOfCompany, 'eventLabel': price});	// GTM
+			// $buyBtns.on("click", function(){
+			// 	init.call(this);
+			// });
 
-				var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
-				showQuickDeliveryBlock(proposNum, $containerAjax);	// показуємо блок швидкої доставки
-			});
+			// $quickDelivBtns.on("click", function(){
+			// 	init.call(this);
+			// });
 		};
 
 		// ф-я приховування параметрів необраних ТЗ
