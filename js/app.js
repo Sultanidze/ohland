@@ -228,18 +228,10 @@ $(document).ready(function(){
 				var proposNum = $(this).attr("data-proposition");	// номер пропозиції для підвантаження потрібної пропозиції
 				showOrderBlock(proposNum, $containerAjax);	// показуємо блок оформлення
 			};
-			console.log($makeBtns);
+
 			$makeBtns.on("click", function(){
 				init.call(this);
 			});
-
-			// $buyBtns.on("click", function(){
-			// 	init.call(this);
-			// });
-
-			// $quickDelivBtns.on("click", function(){
-			// 	init.call(this);
-			// });
 		};
 
 		// ф-я приховування параметрів необраних ТЗ
