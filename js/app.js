@@ -13,6 +13,16 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 });
 
 $(document).ready(function(){
+    // data-href replace module
+    var dataHref = function(){
+        $('a[data-href]').each(function(){
+            $(this).attr('href', $(this).attr('data-href'));
+            $(this).removeAttr('data-href');
+        });
+    };
+
+    dataHref(); // replacing data-href attributes with href
+    
 	// header module
 	var headerModule = (function(){
 		var obj = {};	// module returned object
