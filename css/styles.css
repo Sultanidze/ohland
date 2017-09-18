@@ -4489,6 +4489,11 @@ a.b-callback_footer:hover{
 .b-seo__article:last-child{
     padding-bottom: 20px;
 }
+
+.b-seotext_old{
+    max-width: 1090px;
+    margin: 0 auto;
+}
 /*======= SEOTEXT END =======*/
 
 /* IE10-11 styles*/

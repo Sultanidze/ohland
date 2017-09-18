@@ -490,10 +490,10 @@ $(document).ready(function(){
 		});
 
 		//	Повертаємось до вибора тз при кліку на лого Oh.ua
-		$(".b-logo__link").click(function(e){
-			e.preventDefault();	// не перевантажуємо сторінку
-			showVehicleCalc($containerAjax)
-		});
+		// $(".b-logo__link").click(function(e){
+		// 	e.preventDefault();	// не перевантажуємо сторінку
+		// 	showVehicleCalc($containerAjax)
+		// });
 	};
 	
 	// quick Delivery
