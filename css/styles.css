@@ -57,6 +57,9 @@ font-family: 'Playfair Display', serif;
 .g-visible-4_only>li:nth-child(4)~li{
     display: none;
 }
+.g-visible-5_only>li:nth-child(5)~li{
+    display: none;
+}
 
 .row{
     margin-left: -15px;
@@ -2598,16 +2601,19 @@ a.b-callback_footer:hover{
     z-index: 0;
 }
 .b-proposition__tab{
+/*
     position: absolute;
     top: -22px;
-    left: 20px;
+    bottom: 100%;
+    left: 21px;
     z-index: -1;
+*/
     width: 112px;
     height: 22px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    border-radius: 3px 3px 0 0;
+    border-radius: 5px 5px 0 0;
     padding: 6px 5px 0;
     background-color: #f2c916;
     text-align: center;
@@ -2684,6 +2690,11 @@ a.b-callback_footer:hover{
     background-color: #fbbb1d;
     font-weight: 700;
     color: #000;
+}
+.b-discont .fa{
+    display: inline-block;
+    padding-right: 2px;
+    color: #fbbb1d;
 }
 .b-proposition__buy{
     position: relative;
@@ -2788,12 +2799,11 @@ a.b-callback_footer:hover{
 
 .b-propositions{
     float: left;
-    width: 895px;
+    width: 896px;
 }
 .b-propositions__header{
-    margin-bottom: 13px;
+    margin-bottom: 30px;
     font-size: 14px;
-    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 700;
 }
 .b-propositions__header:after{
@@ -2805,13 +2815,14 @@ a.b-callback_footer:hover{
     flex-shrink: 0;
     float: left;
     text-align: center;
-    width: 215px;
+    font-family: 'Roboto Condensed', sans-serif;
+    width: 212px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 .b-container__filter_rating{
-    width: 225px;
+    width: 226px;
 }
 .b-propositions__header .b-filter{
     cursor: pointer;
@@ -2854,8 +2865,8 @@ a.b-callback_footer:hover{
 .b-proposition_row{
     position: relative;
     margin-top: 0;
-    margin-bottom: 11px;
-    min-height: 154px;
+    margin-bottom: 25px;
+    min-height: 104px;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -2883,16 +2894,23 @@ a.b-callback_footer:hover{
     align-items: center;
 }
 .b-proposition_row .b-proposition__company{
-    padding-right: 15px;
+/*    padding-right: 15px;*/
+    padding: 9px;
 }
 .b-img_company{
+    margin: auto;
     max-width: 100%;
     max-height: 65px;
 }
 .b-proposition__company .b-filter_rating{
     display: inline-block;
-    margin-top: 25px;
+/*    margin-top: 25px;*/
     font-family: 'Roboto Condensed', sans-serif;
+}
+.b-filter_rating .text{
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #cdcdcd;
 }
 .b-proposition__company .b-order{
     text-decoration: none;
@@ -2900,6 +2918,7 @@ a.b-callback_footer:hover{
 .b-proposition_row .b-proposition__price{
     -ms-align-items: flex-end;
     align-items: flex-end;
+    padding: 9px;
     color: #fff;
     font-family: 'Roboto Condensed', sans-serif;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7c3eb3+30,7c3eb3+30,582c82+77 */
@@ -2913,7 +2932,8 @@ a.b-callback_footer:hover{
     -ms-align-self: flex-start;
     align-self: flex-start;
     margin-bottom: auto;
-    font-size: 60px;
+    line-height: 1;
+    font-size: 48px;
     font-weight: 700;
 }
 .b-proposition__price .b-currency{
@@ -2928,18 +2948,21 @@ a.b-callback_footer:hover{
 }
 .b-proposition_row .b-proposition__about{
     padding-top: 8px;
+    padding-right: 10px;
     text-align: left;
     -ms-align-items: stretch;
     align-items: stretch;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
-    -ms-flex-direction: row;
-    -o-flex-direction: row;
-    flex-direction: row;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .b-details__list_propos{
     list-style: none;
     margin: 0;
+    height: 100%;
     padding: 0;
     display: -webkit-flex;
     display: -moz-flex;
@@ -2951,22 +2974,23 @@ a.b-callback_footer:hover{
     -ms-flex-direction: column;
     -o-flex-direction: column;
     flex-direction: column;
+    justify-content: space-around;
 }
 .b-detail__item_propos{
     position: relative;
-    margin: 4px 0;
+/*    margin: 4px 0;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 38px;
+    padding-left: 25px;
 }
 .b-detail__item_propos:first-child{
     margin-top: 0;
 }
 .b-detail__item_propos:last-child{
-    margin-top: auto;
+/*    margin-top: auto;*/
     margin-bottom: 0;
-    font-weight: 700;
+/*    font-weight: 700;*/
 }
 .b-item__block_img{
     position: absolute;
@@ -2978,11 +3002,15 @@ a.b-callback_footer:hover{
     text-align: center;
     line-height: 24px;
 }
+.b-propositions__list .b-item__block_img{
+    color: #007437;
+}
 .b-text_detail{
     display: inline-block;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 15px;
+    line-height: 1.3333333;
 }
+/*
 .b-detail__item_propos:last-child .b-item__block_img{
     top: 5px;
     border-radius: 0;
@@ -2992,9 +3020,10 @@ a.b-callback_footer:hover{
 .b-detail__item_propos:last-child .b-text_detail{
     font-family: 'Roboto Condensed', sans-serif;
 }
+*/
 
 .b-proposition__buy_row{
-    width: 245px;
+    width: 244px;
 /*    flex-grow: 1;*/
     border-left: 1px solid #bdbdbd;
     padding: 15px;
@@ -3041,14 +3070,19 @@ a.b-callback_footer:hover{
 }
 
 .b-proposition_row .b-proposition__tab{
-    top: -12px;
-    right: -90px;
-    left: auto;
+/*    top: -12px;*/
+/*    right: -90px;*/
+/*    left: auto;*/
+    position: absolute;
+/*    top: -22px;*/
+    bottom: 100%;
+    left: 21px;
     z-index: 0;
     width: 90px;
     font-size: 10px;
     background-color: #cc0000;
     color: #fff;
+/*
     -webkit-transform-origin: 0 100%;
     -moz-transform-origin: 0 100%;
     -ms-transform-origin: 0 100%;
@@ -3058,6 +3092,7 @@ a.b-callback_footer:hover{
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
+*/
 }
 
 .b-propos__guaranties{

@@ -202,6 +202,7 @@ $(document).ready(function(){
 			,$proposListContainer = $("#propositionsList")	// контейнер списку пропозицій
 			,$proposList = $propositionsBlock.find(".js-list_propositions")	// список пропозицій
 			,$proposListItems = $proposList.children(".js-proposition")	// елементи списку пропозицій
+			,iVisItemsNum = 5	// кількість елементів, що відображаються при згортанні (мінус 2)
 			
 			,$moreProposBtn = $propositionsBlock.find("#morePropositions")	// "Больше предложений" button
 			,$vehicleSelect = $("#vehicle")
@@ -281,7 +282,7 @@ $(document).ready(function(){
 
 		// hide "Больше предложений" button if less then 5 propositions
 		var moreBtnHideCheck = function(){
-			if ($proposListItems.length < 5){
+			if ($proposListItems.length <= iVisItemsNum){
 				$moreProposBtn.css("display", "none")
 			} else{
 				$moreProposBtn.css("display", "inline-block")
@@ -331,24 +332,24 @@ $(document).ready(function(){
 					sortByField.call(this, "name", $proposList, $proposListItems, true);
 					$proposListItems = $proposList.children(".js-proposition");
 					if (!$moreProposBtn.hasClass("js-rolled")) {
-						$proposListItems.not(":gt(3)").slideDown(400);
-						$proposListItems.filter(":gt(3)").slideUp(400);
+						$proposListItems.not(":gt("+(iVisItemsNum-1)+")").slideDown(400);
+						$proposListItems.filter(":gt("+(iVisItemsNum-1)+")").slideUp(400);
 					}
 				});
 				$sortBtnByPrice.on("click", function(){
 					sortByField.call(this, "price", $proposList, $proposListItems, true);
 					$proposListItems = $proposList.children(".js-proposition");
 					if (!$moreProposBtn.hasClass("js-rolled")) {
-						$proposListItems.not(":gt(3)").slideDown(400);
-						$proposListItems.filter(":gt(3)").slideUp(400);
+						$proposListItems.not(":gt("+(iVisItemsNum-1)+")").slideDown(400);
+						$proposListItems.filter(":gt("+(iVisItemsNum-1)+")").slideUp(400);
 					}
 				});
 				$sortBtnByRating.on("click", function(){
 					sortByField.call(this, "rating", $proposList, $proposListItems, true);
 					$proposListItems = $proposList.children(".js-proposition");
 					if (!$moreProposBtn.hasClass("js-rolled")) {
-						$proposListItems.not(":gt(3)").slideDown(400);
-						$proposListItems.filter(":gt(3)").slideUp(400);
+						$proposListItems.not(":gt("+(iVisItemsNum-1)+")").slideDown(400);
+						$proposListItems.filter(":gt("+(iVisItemsNum-1)+")").slideUp(400);
 					}
 				});
 			};
@@ -463,11 +464,14 @@ $(document).ready(function(){
 			if (!$proposListItems.is(":animated")){
 				$(this).toggleClass("js-rolled");
 				if ($(this).hasClass("js-rolled")){
-					$proposListItems.filter(":gt(3)").slideDown(400);
+					$proposListItems.filter(":gt("+(iVisItemsNum-1)+")").slideDown(400);
 				} else {
-					$proposListItems.filter(":gt(3)").slideUp(400);
+					$proposListItems.filter(":gt("+(iVisItemsNum-1)+")").slideUp(400);
+					console.log($proposListItems.filter(":gt("+(iVisItemsNum-1)+")"));
 				};
-				$proposList.removeClass("g-visible-4_only");	// далі приховуємо пропозиції без цсс, логікою js
+				$proposList.removeClass(function(index, className){
+					return (className.match (/(^|\s)g-visible-\d+_only/g) || []).join(' ');	// remove class "g-visible-X_only" (X: number)
+				});	// далі приховуємо пропозиції без цсс, логікою js
 				$moreProposBtn.find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
 			}
 		});
