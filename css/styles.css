@@ -3118,6 +3118,7 @@ a.b-callback_footer:hover{
     border-left: 1px solid #efca14;
 }
 .b-propos__btn_more{
+    clear: both;
     border: 1px solid #bebebe;
     background-color: transparent;
 }

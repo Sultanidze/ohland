@@ -285,7 +285,7 @@ $(document).ready(function(){
 			if ($proposListItems.length <= iVisItemsNum){
 				$moreProposBtn.css("display", "none")
 			} else{
-				$moreProposBtn.css("display", "inline-block")
+				$moreProposBtn.css("display", "block")
 			}
 		};
 
