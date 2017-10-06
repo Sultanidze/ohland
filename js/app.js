@@ -165,6 +165,7 @@ $(document).ready(function(){
             	    alert('error');
             	},
             	success: function(response){
+            		dataLayer.push({'event': 'GAevent', 'eventCategory': 'OsagoChoise', 'eventAction': 'buttonClick'});
             	    $containerAjax.html(response);
             	    propositionsInit($containerAjax);
             	},
@@ -543,6 +544,7 @@ $(document).ready(function(){
             	    alert('error');
             	},
             	success: function(response){
+					dataLayer.push({'event': 'GAevent', 'eventCategory': 'osagoAnketa', 'eventAction': 'buttonClick'});
             	    $containerAjax.html(response);
             	    orderBlockInit($containerAjax);
             	},
