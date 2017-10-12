@@ -914,7 +914,9 @@ $(document).ready(function(){
 			;
 		
 		// show only selected buy method
-		$methodBtns.click(function(){
+		$methodBtns.click(function(e){
+			e.preventDefault();
+
 			var $activeBtn = $methodBtns.filter(".b-finalize__btn_active")
 				,methodNum = $methodBtns.index($(this))
 				;

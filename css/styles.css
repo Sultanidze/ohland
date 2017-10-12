@@ -39,7 +39,7 @@ font-family: 'Playfair Display', serif;
     background-color: #fff;
 }
 .bg-mid{
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .bg-corporate_light{
     background-color: #f2c90c;
@@ -481,7 +481,7 @@ a.b-menu__heading:hover{
 
 .b-section_crumbs{
     min-height: 40px;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-crumbs{
 /*    display: none;*/
@@ -527,7 +527,7 @@ a.b-menu__heading:hover{
 
 .b-section_calculator{
     position: relative;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-container__calculator_vehicle:after{
     content: '';
@@ -1478,7 +1478,7 @@ a.b-menu__heading:hover{
     text-align: center;
     padding-top: 40px;
     padding-bottom: 60px;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-attention__factors{
     display: inline-block;
@@ -2695,6 +2695,7 @@ a.b-callback_footer:hover{
     display: inline-block;
     padding-right: 2px;
     color: #fbbb1d;
+    cursor: pointer;
 }
 .b-proposition__buy{
     position: relative;
@@ -3155,8 +3156,9 @@ a.b-callback_footer:hover{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 30px;
-    cursor: pointer;
+    text-decoration: none;
     color: #6c369d;
+    cursor: pointer;
 }
 .b-finalize__btn_method:last-child{
     margin-right: 0;
@@ -3457,7 +3459,7 @@ a.b-callback_footer:hover{
 
 .b-form__vehicle{
     height: 223px;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-bg_car{
     position: absolute;
@@ -3590,10 +3592,10 @@ a.b-callback_footer:hover{
 .b-form__delivery_byupload{
 /*    height: 410px;*/
     min-height: 195px;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-form__pay_byupload{
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 .b-wrap_files{
     position: relative;
@@ -3849,7 +3851,7 @@ a.b-callback_footer:hover{
     top: 0;right: 0;bottom: 0;left: 0;
     z-index: 100;
     text-align: center;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
 }
 /*
 .b-container_preloader:before{
