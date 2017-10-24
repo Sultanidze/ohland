@@ -6,6 +6,85 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>ОСАГО-Ленд</title>
+	
+    
+    <script type="application/ld+json">
+    {
+     "@context": "http://schema.org",
+     "@type": "InsuranceAgency",
+     "address": 
+     {
+        "@type": "PostalAddress",
+        "addressLocality": "Киев",
+        "addressCountry": "Украина",
+        "streetAddress": "ул. Пушкинская, 9"
+     },
+     "url": "https://oh.ua",
+     "brand": "OH", 
+     "name": "Страхование онлайн - OH.UA",
+     "image": "https://oh.ua/images/news/29.1.b.jpg",
+     "logo": "https://oh.ua/osago/app/web/img/logo.png",
+     "telephone": "+38 (098) 733 67 18", 
+     "email": "sales@oh.ua", 
+    "priceRange": "₴300-₴2000"
+      }
+    </script>
+
+	<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Product",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "bestRating": "5",
+        "ratingCount": "24",
+        "ratingValue": "4.9"
+      },
+      "image": "http://oh.ua/osago/app/web/img/seoCar.png",
+      "name": "ОСАГО - страхование онлайн",
+     "alternateName": "Автоцивилка онлайн",
+      "offers": {
+        "@type": "AggregateOffer",
+     "priceCurrency": "UAH",
+         "lowPrice": "699",
+
+        "offerCount": "6",
+         "offers": [
+          {
+            "@type": "Offer",
+             "name": "ОСАГО в Киеве",
+            "url": "kyiv/"
+          },
+        {
+            "@type": "Offer",
+            "name": "ОСАГО в Харькове",
+            "url": "kharkiv/"
+          },
+          {
+            "@type": "Offer",
+            "name": "ОСАГО в Днепропетровске",
+            "url": "dnepropetrovsk/"
+          },
+          {
+            "@type": "Offer",
+            "name": "ОСАГО в Запорожье",
+            "url": "zaporozhye/"
+          },
+          {
+            "@type": "Offer",
+            "name": "ОСАГО в Одессе",
+            "url": "odessa/"
+          },
+          {
+            "@type": "Offer",
+            "name": "ОСАГО во Львове",
+            "url": "lviv/"
+          }
+        ]
+      }
+    }
+    </script>
+	
 	<link href="./css/normalize.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="./css/selectric.css" rel="stylesheet">
@@ -143,13 +222,10 @@
                 <div class="b-container">
                     <ol class="b-crumbs">
                         <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <a href="http://test.oh.ua/">Главная</a>
+                            <a href="http://test.oh.ua/" itemprop="url"><span itemprop="title">Главная</span></a>
                         </li>
                         <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <a href="http://test.oh.ua/ohproject/">Осаго</a>
-                        </li>
-                        <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <span>Житомир</span>
+                            <span>Осаго</span>
                         </li>
                     </ol>
                 </div>
