@@ -109,6 +109,27 @@
 	<![endif]-->
 </head>
 <body>
+    <!--Site Preloader Start-->
+    <!--[if !IE 8]><!-->
+    <script src="https://oh.ua/project/templates/oh.ua/js/vendor/queryloader2.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            new QueryLoader2(document.querySelector("body"), {
+                barColor: "#efefef",
+                backgroundColor: "#111",
+                percentage: true,
+                barHeight: 1,
+                minimumTime: 200,
+                fadeOutTime: 1000
+            });
+        });
+    </script>
+    <!--<![endif]-->
+    <!--/Site Preloader End-->
+    <!--For Main Page only! (queryloader2.js helper)-->
+    <div id="qLoverlay"></div>
+    <!--/For Main Page only! (queryloader2.js helper)-->
+    
 	<div id="headerWrapper">
         <header class="b-header b-container b-container_mid" id="header">
             <a href="#" class="b-logo__link">
@@ -402,8 +423,11 @@
 	</section>
     <section class="b-section_video">
         <div class="b-container">
+            <div class="b-videohelp">
+                <div class="b-heading_videohelp">Видео Помощник<br>Oh.ua</div>
+            </div>
             <div class="b-card b-card_video">
-                <iframe width="625" height="440" src="https://www.youtube.com/embed/FpxfsSiqKuQ" frameborder="0" allowfullscreen></iframe>
+                <iframe width="625" height="440" src="https://www.youtube.com/embed/FpxfsSiqKuQ" class="js-preserveAspectRatio" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="b-videohelp">
                 <div class="b-heading_videohelp">Видео<br>Помощник<br>Oh.ua</div>
@@ -510,13 +534,13 @@
 	            <p class="b-map__address"><span>Или пишите:</span>sales@oh.ua</p>
 	        </div>
 	        <div class="b-card b-card_map">
-	            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.715301864317!2d30.51680831566454!3d50.446403395537665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cef476aeabf7%3A0x7a1e66ef15f87549!2z0KHRgtGA0LDRhdC-0LLQutCwINCe0KHQkNCT0J4g0LIg0JrQuNC10LLQtSwg0L7QvdC70LDQudC9INC60LDQu9GM0LrRg9C70Y_RgtC-0YAg0LDQstGC0L7RhtC40LLQuNC70LrQuCDigJQgT2guVUE!5e0!3m2!1suk!2sua!4v1497353903019" width="625" height="454" frameborder="0" style="border:0" allowfullscreen></iframe>
+	            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.715301864317!2d30.51680831566454!3d50.446403395537665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cef476aeabf7%3A0x7a1e66ef15f87549!2z0KHRgtGA0LDRhdC-0LLQutCwINCe0KHQkNCT0J4g0LIg0JrQuNC10LLQtSwg0L7QvdC70LDQudC9INC60LDQu9GM0LrRg9C70Y_RgtC-0YAg0LDQstGC0L7RhtC40LLQuNC70LrQuCDigJQgT2guVUE!5e0!3m2!1suk!2sua!4v1497353903019" width="625" height="454" frameborder="0" style="border:0" class="b-map_iframe" allowfullscreen></iframe>
 	        </div>
 	    </div>
 	</section>
 	<section class="b-section_howto">
         <div class="b-container">
-	        <span class="b-section__heading b-section__heading_howto">Как вы можете оформить полис ОСАГО на сайте Oh.ua?</span>
+	        <span class="b-section__heading b-section__heading_howto">Как <span>вы можете </span>оформить полис ОСАГО на сайте Oh.ua?</span>
 	        <div class="b-howto__stages">
 	            <span class="b-howto__stage">
 	                <img src="./img/loupe.svg" alt="лупа">
@@ -567,12 +591,13 @@
             </a>
         </div>
     </section>
+<!--
 	<section class="b-section_rating">
         <div class="b-container">
 	        <span class="b-section__heading b-section__heading_rating">Рейтинг страховщиков по ОСАГО</span>
             <div class="b-rating__block_btns">
                 <button class="b-rating__btn b-rating__btn_mtsbu">Светофор МТСБУ</button>
-                <button class="b-rating__btn b-rating__btn_clients b-rating__btn_active">Рейтинг клиентов Oh.ua</button>
+                <button class="b-rating__btn b-rating__btn_clients b-btn_active">Рейтинг клиентов Oh.ua</button>
             </div>
             <div class="b-rating__wrapper_clients">
                 <div class="b-rating__slider">
@@ -1026,7 +1051,7 @@
                             <td class="b-tlight_green"></td>
                         </tr>
                         <tr>
-                            <!-- needed for table border-bottom -->
+                             needed for table border-bottom 
                             <th></th>
                             <td></td>
                             <td></td>
@@ -1051,6 +1076,7 @@
             </div>
         </div>
     </section>
+-->
     <section class="b-section_seoMap">
         <div class="b-container b-container_seoMap">
             <div class="b-seoMap" id="seoMap">                
@@ -1275,12 +1301,12 @@
 	        </div>
         </div>
     </section>
-	<section class="b-section_responses">
+	<section class="b-section_responses" id="responses">
         <div class="b-container">
 	        <span class="b-section__heading b-section__heading_rating b-section__heading_faq">ОТЗЬІВЬІ КЛИЕНТОВ</span>
-            <div class="b-rating__block_btns b-responses__block_btns">
-                <button class="b-rating__btn b-rating__btn_active b-rating__btn_mtsbu b-rating__btn_responses js-btn_responses">Отзывы от клиентов Oh.ua</button>
-                <button class="b-rating__btn b-rating__btn_clients b-rating__btn_responses js-btn_feedback">Для тех, кто хочет оставить отзыв</button>
+            <div class="b-rating__block_btns b-responses__block_btns js-btns_category">
+                <button class="b-rating__btn b-btn_active b-rating__btn_mtsbu b-rating__btn_responses b-btn_active js-btn_responses">Отзывы от клиентов Oh.ua</button>
+                <button class="b-rating__btn b-rating__btn_clients b-rating__btn_responses js-btn_feedback">оставить отзыв</button>
             </div>
             <div class="b-responses__container_slider">
                 <div class="b-slider_responses">
@@ -1407,35 +1433,37 @@
                 <div class="b-heading_seo g-color-corporate-dark">НА КАКИЕ ТРАНСПОРТНЫЕ СРЕДСТВА РАСПРОСТРАНЯЕТСЯ АВТОЦИВИЛКА?</div>
                 <p class="b-seoText clearfix">
                     Обязательному автострахованию подлежат:
-                    <span class="b-seo__vehicle">
-                        <span class="block">
-                            <object data="./img/cargo.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_cargo"></object>
+                    <span class="b-seo__vehicles">
+                        <span class="b-seo__vehicle">
+                            <span class="block">
+                                <object data="./img/cargo.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_cargo"></object>
+                            </span>
+                            <span class="title bold">грузовые авто</span>
                         </span>
-                        <span class="title bold">грузовые авто</span>
-                    </span>
-                    <span class="b-seo__vehicle">
-                        <span class="block">
-                               <object data="./img/car.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_car"></object>
+                        <span class="b-seo__vehicle">
+                            <span class="block">
+                                   <object data="./img/car.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_car"></object>
+                            </span>
+                            <span class="title bold">легковые  авто</span>
                         </span>
-                        <span class="title bold">легковые  авто</span>
-                    </span>
-                    <span class="b-seo__vehicle" style="clear: right">
-                        <span class="block">
-                            <object data="./img/moto.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_moto"></object>
+                        <span class="b-seo__vehicle" style="clear: right">
+                            <span class="block">
+                                <object data="./img/moto.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_moto"></object>
+                            </span>
+                            <span class="title bold">мотоциклы, мотороллеры</span>
                         </span>
-                        <span class="title bold">мотоциклы, мотороллеры</span>
-                    </span>
-                    <span class="b-seo__vehicle">
-                        <span class="block">
-                            <object data="./img/trailer.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_trailer"></object>
+                        <span class="b-seo__vehicle">
+                            <span class="block">
+                                <object data="./img/trailer.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_trailer"></object>
+                            </span>
+                            <span class="title bold">прицепы</span>
                         </span>
-                        <span class="title bold">прицепы</span>
-                    </span>
-                    <span class="b-seo__vehicle">
-                        <span class="block">
-                            <object data="./img/bus.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_bus"></object>
+                        <span class="b-seo__vehicle">
+                            <span class="block">
+                                <object data="./img/bus.svg" type="image/svg+xml" class="obj-vehicle obj-vehicle_bus"></object>
+                            </span>
+                            <span class="title bold">автобусы</span>
                         </span>
-                        <span class="title bold">автобусы</span>
                     </span>
                 </p>
                 <p class="b-seoText">
@@ -1478,7 +1506,8 @@
                         <li>пострадавшим I и II категории от Чернобыльской катастрофы;</li>
                         <li>пенсионерам.</li>
                     </ul>
-                    Скидка для льготников  в 50% от страхового платежа распространяется только на автомобили с объемом двигателя не более 2500 см33. Авто должно быть собственностью лица, относящегося к одной из вышеуказанных категорий, и исключительно в его управлении.
+                    <br>
+                    Скидка для льготников  в 50% от страхового платежа распространяется только на автомобили с объемом двигателя не более 2500 см3. Авто должно быть собственностью лица, относящегося к одной из вышеуказанных категорий, и исключительно в его управлении.
                 </div>
             </div>
         </article>
@@ -1579,6 +1608,73 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="b-footer__up_mobile">
+            <ul class="b-footer__list_categories">
+                <li class="b-footer__category">
+                    <span class="b-category__heading js-accordion__trigger">О компании</span>
+                    <div class="b-accordion_content js-accordion__content">
+                        <ul class="b-category__list_links">
+                            <li class="b-category__item"><a href="#" class="b-category__link">Акции</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Новости</a></li>
+                            <li class="b-category__item"><a href="https://test.oh.ua/faq/kak-osuschestvlyaetsya-oplata/" class="b-category__link">Оплата и доставка</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Часто задаваемые вопросы (FAQ)</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Сотрудничество</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="b-footer__category">
+                    <span class="b-category__heading js-accordion__trigger">Услуги</span>
+                    <div class="b-accordion_content js-accordion__content">
+                        <ul class="b-category__list_links">
+                            <li class="b-category__item"><a href="#" class="b-category__link">ОСАГО</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Туристическое страхование</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Зеленая Карта</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">КАСКО</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Электронный полис ОСАГО</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="b-footer__category">
+                    <span class="b-category__heading js-accordion__trigger">Сервисы</span>
+                    <div class="b-accordion_content js-accordion__content">
+                        <ul class="b-category__list_links">
+                            <li class="b-category__item"><a href="#" class="b-category__link">Калькулятор ОСАГО</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Калькулятор Зеленая Карта</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Калькулятор ВЗР</a></li>
+                            <li class="b-category__item"><a href="#" class="b-category__link">Калькулятор КАСКО</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="b-footer__category">
+                    <span class="b-category__heading js-accordion__trigger">Контакты</span>
+                    <div class="b-accordion_content js-accordion__content">
+                        <ul class="b-linkslist_footer">
+                            <li class="b-linkitem_footer">
+                                <a href="#" class="b-link_footer b-header__link b-callback_footer js-btn_callback callback">
+                                    <span class="fa fa-phone" aria-hidden="true"></span>
+                                    <span class="b-link__text">Обратный звонок</span>
+                                </a>
+                            </li>
+                            <li class="b-linkitem_footer">
+                                <a href="tel:0442903669" class="b-link_footer b-header__link b-header__link_phone">
+                                    <span class="b-icon_phone"></span>
+                                    <span class="b-link__text">(098) 733 67 18</span>
+                                </a>
+                            </li>
+                            <li class="b-linkitem_footer">
+                                <a href="mailto:sales@oh.ua" class="b-link_footer b-header__link b-header__link_email">
+                                    <span class="fa fa-envelope-open-o" aria-hidden="true"></span>
+                                    <span class="b-link__text">sales@oh.ua</span>
+                                </a>
+                            </li>
+                            <li class="b-linkitem_footer">
+                                <a href="tel:0442903669" class="b-link_footer"><span class="b-link__text">Звонок оператору</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="b-footer__down">
             <p class="b-footer__pay">
