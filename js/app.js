@@ -12,6 +12,27 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 	formatSubmit: 'dd.mm.yyyy'
 });
 
+//SET CURSOR POSITION plugin
+$.fn.setCursorPosition = function(pos) {
+  this.each(function(index, elem) {
+    if (elem.setSelectionRange) {
+      elem.setSelectionRange(pos, pos);
+    } else if (elem.createTextRange) {
+      var range = elem.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  });
+  return this;
+};
+
+var 
+	 $window = $(window)
+	,BREAKPOINT_XS = 767	// mobile devices breakpoint
+	;
+
 $(document).ready(function(){
     // data-href replace module
     var dataHref = function(){
@@ -149,17 +170,20 @@ $(document).ready(function(){
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
 		hideContainerAjax($containerAjax);
 
-            var type = $("#vehicleForm input[name='type']:checked").val()
-            var notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0;
-            var city = $("#vehicleForm #cityId").val();
-            var cityName = $("#vehicleForm #regCity").val();
-            var zone = $("#vehicleForm #zoneId").val();
+            var 
+            	 type = $("#vehicleForm input[name='type']:checked").val()
+            	,franshiza = $("#vehicleForm").find("input[name='franshiza']").val()
+            	,notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0
+            	,city = $("#vehicleForm #cityId").val()
+            	,cityName = $("#vehicleForm #regCity").val()
+            	,zone = $("#vehicleForm #zoneId").val()
+            	;
 
 		$containerAjax.queue("ajax", function(){
 
 			$.ajax({
             	type: "get",
-            	data: {type: type, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
+            	data: {type: type, franshiza: franshiza, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
             	url : "./ajax/__propositions.html",
             	error : function(){
             	    alert('error');
@@ -226,7 +250,9 @@ $(document).ready(function(){
 			,$buyBtns = $("#propositions").find(".js-proposition__buy")						// кнопка оформлення покупки
 			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")	// кнопка оформлення швидкої доставки
 			,$makeBtns = $().add($buyBtns).add($quickDelivBtns)							// кнопки оформлення
+			,$franshiza = $(".js-range_franshiza").ionRangeSlider()			// слайдер Франшизи
 			;
+
 
 		// ф-я ініціалізації функціонала кнопок купівлі і доставки
 		var buyBtnsInit = function(){
@@ -354,6 +380,13 @@ $(document).ready(function(){
 					}
 				});
 			};
+
+			// розгортання і згортання деталей пропозиції
+			$(".js-propos__btn_about").on("click", function(){
+				$(this).find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+				// $(this).next(".b-details__list_propos").fadeToggle(200)
+				$(this).parents(".js-proposition").find(".b-details__list_propos").slideToggle(200)
+			})
 		};
 
 		// ф-я підвантаження нової таблиці пропозицій
@@ -362,7 +395,7 @@ $(document).ready(function(){
 
 			$proposListContainer.queue("ajax", function(){
 				var 
-					$type = $vehicleParamSelects.filter(":not([disabled])")
+					 $type = $vehicleParamSelects.filter(":not([disabled])")
 					,type = $vehicleParamSelects.filter(":not([disabled])").val()
 	            	,cityName = $cityName.val()
 	            	,city = $cityId.val()
@@ -391,7 +424,7 @@ $(document).ready(function(){
 	            	    alert('error');
 	            	},
 	            	success: function(response){
-						$vehicleForm.slideUp(200);
+						// $vehicleForm.slideUp(200);	// згортаємо форму фільтрів
 
 	            	    $proposListContainer.html(response);
 	            	    $vehicleForm = $("#vehicleForm");
@@ -439,6 +472,17 @@ $(document).ready(function(){
 				vehicleChange.call(this);
 				$(element).change();	// fired by default
 			}
+		});
+
+		// підвантажимо пропозиції при зміні значення фільтрів
+		$vehicleSelect.on("change", function(){
+			$vehicleForm.trigger("submit");
+		});
+		$franshiza.on("change", function(){
+			$vehicleForm.trigger("submit");
+		});
+		$cityName.on("change", function(){
+			$vehicleForm.trigger("submit");
 		});
 
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
@@ -551,6 +595,7 @@ $(document).ready(function(){
             	complete: function(){
             		showContainerAjax($containerAjax);
             		$containerAjax.dequeue("ajax");
+            		$window.triggerHandler("resize");	// if mobile device => show only byUpload method
             	}
             });
 		});
@@ -933,7 +978,30 @@ $(document).ready(function(){
 					validatorCurrent = orderFormsValidation($activeMethod);	// hidden method could not be initialized before
 				});
 			}
+
+			// scroll to block
+			var  
+				 $anchor = $methods.parent()
+				,offsetAnchor = $anchor.offset().top
+				;
+				
+				// offsetAnchor -= $("#header").outerHeight();	// fixed header offset
+
+			$('html, body').animate({ scrollTop: offsetAnchor}, 400);
 		});
+
+		// on mobiles show only byFileUpload method
+		$window.on("resize", function(){
+			if ($window.outerWidth() <= BREAKPOINT_XS && !$methodBtns.filter("[data-for='byUpload']").hasClass("b-finalize__btn_active")){
+				console.log("viewport <= 767px");
+				$methodBtns.filter("[data-for='byUpload']").trigger("click");
+			} else {
+				// console.log("viewport > 767px");
+				// $methodBtns.filter("[data-for='bySelf']").trigger("click");
+			}
+		});
+		// .triggerHandler("resize");
+
 		// перемикання блоку "парень-девушка"
 		$trashTabs.click(function(){
 			if (!$trashCard.is(":animated")){
@@ -1010,11 +1078,13 @@ $(document).ready(function(){
 				}
 				
 				// покажемо імена файлів
-				filesListStr += '<span class="b-filename">' + this.files[0].name;
+				filesListStr += '<span class="b-filename"><span class="b-filename__text">' + this.files[0].name + '</span><span class="fa fa-check" aria-hidden="true"></span>';
 				if ($(this).attr("id") != "copies_byupload"){
-					filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
+					// filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
+					filesListStr += '<button class="b-clear js-clearFiles"><span class="hidden-xs">удалить</span><span class="fa fa-times" aria-hidden="true"></span></button></span>';	// додамо опцію видалити файл
 				} else {
-					filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
+					// filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
+					filesListStr += '</span>';	// для файла в першому полі немає опції "видалити"
 				}
 			} else {	// якщо видалили файли, чи додали файли невалідних типів
 				// перевіримо чи є іще заповнені файлові поля, якщо ні то покажемо помилку валідації
@@ -1086,7 +1156,10 @@ $(document).ready(function(){
 	// delivery selects stylization
 		// delivery method select
 		$deliveryMode.selectric({	// стилізуємо селекти вибора доставки
+			disableOnMobile: false,
+			nativeOnMobile: false,
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+			console.log("delivery mode changed")
 				deliveryStr = $(element).val();	// current select value				
 				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $deliveryMode selects
 				
@@ -1346,7 +1419,13 @@ $(document).ready(function(){
 	};
 	var vehicleCalcInit = function($containerAjax){
 		// selects stylization
-		$(".js-selectric").selectric();
+		$(".js-selectric").selectric({
+		    onSelect: function(element) {
+		    	$(element).change();
+		    	var value = $(element).val();
+		    	$("#vehicleForm").find("input[name='type'][value=" + value + "]").prop("checked", true).trigger("change");
+		    }
+	    });
 		// vehicles labels select
 		var  $vehicles = $(".b-vehicle")	//	блоки тз з картинками
 			,$vehiclesBlock = $(".b-vehicles")	// $vehicles container
@@ -1376,6 +1455,9 @@ $(document).ready(function(){
 				$paramBlocks.eq(index).addClass("b-params_active");	// показуємо активний блок параметрів
 			}
 		});
+
+		// слайдер Франшизи
+		$(".js-range_franshiza").ionRangeSlider();
 
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
 		precomplete(2, $("#regCity"));
@@ -1487,11 +1569,14 @@ $(document).ready(function(){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
 				    		itemOtherIds = [];	// масив додаткових id елементів
-				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+				        	// oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+				        	oJS = JSON.parse(data);	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 				        	propertiesLength = 0;
 				        	var i;
-				        	for (i in oJS.items[0]) {
-				        		if (oJS.items[0].hasOwnProperty(i)) {
+				        	// for (i in oJS.items[0]) {
+				        	// 	if (oJS.items[0].hasOwnProperty(i)) {
+				        	for (i in oJS.items) {
+				        		if (oJS.items.hasOwnProperty(i)) {
 				        			++propertiesLength;
 				        		}
 				        	}
@@ -1583,7 +1668,21 @@ $(document).ready(function(){
 		slidesToShow: 3,
 		slidesToScroll: 1,
 		autoplay: true,
-		autoplaySpeed: 4400
+		autoplaySpeed: 4400,
+		responsive: [
+			{
+				breakpoint: 770,
+				settings: {
+					slidesToShow: 2
+			 	}
+			},
+			{
+				breakpoint: 600,
+				settings: {
+					slidesToShow: 1
+			 	}	
+			}
+		]
 	});
 	// add my buttons to ads slider
 	var  $sliderReasonsPrevBtn = $sliderReasons.parents(".b-reasons__slider").find(".b-slider__control_left")
@@ -1607,9 +1706,9 @@ $(document).ready(function(){
 		,$ratingMtsbu = $(".b-rating__wrapper_mtsbu")
 		;
 	$ratingBtns.click(function(){
-		if (!$(this).hasClass("b-rating__btn_active")){
-			$ratingBtns.removeClass("b-rating__btn_active");
-			$(this).addClass("b-rating__btn_active")
+		if (!$(this).hasClass("b-btn_active")){
+			$ratingBtns.removeClass("b-btn_active");
+			$(this).addClass("b-btn_active")
 			if($(this).hasClass("b-rating__btn_mtsbu")){
 				$ratingClients.fadeOut(600);
 				$ratingMtsbu.fadeIn(600);
@@ -1658,216 +1757,320 @@ $(document).ready(function(){
 		,$faqHeading = $(".b-questAnsw h5")
 		;
 
-		$(".b-questAnsw:nth-child(n+2)").find("p").hide();
-		$faqHeading.click(function(){
-			if ($(this).parent(".b-questAnsw").hasClass("b-questAnsw_unrolled")){
-				$(this).next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
-			} else {
-				$faq.find(".b-questAnsw_unrolled").next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
-				$(this).next("p").slideDown(400).parent(".b-questAnsw").addClass("b-questAnsw_unrolled");
-			}
-		})
+	$(".b-questAnsw:nth-child(n+2)").find("p").hide();
+	$faqHeading.click(function(){
+		if ($(this).parent(".b-questAnsw").hasClass("b-questAnsw_unrolled")){
+			$(this).next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
+		} else {
+			$faq.find(".b-questAnsw_unrolled").next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
+			$(this).next("p").slideDown(400).parent(".b-questAnsw").addClass("b-questAnsw_unrolled");
+		}
+	});
 
-// responses slider
-	var  $sliderResp = $(".b-slider_responses")
-		,$slideResp = $(".b-slide_responses")
-		,$respFedbBtn = $(".b-section_responses .b-responses__block_btns .b-rating__btn_responses")
-		,$responsesBtn = $respFedbBtn.filter(".js-btn_responses")
-		,$feedbackBtn = $respFedbBtn.filter(".js-btn_feedback")
-		,$sliderRespControlBtn = $sliderResp.find(".b-slider__control_responses")
-		,$sliderRespPrevBtn = $sliderResp.find(".b-slider__controls_responses .b-slider__control_left")
-		,$sliderRespNextBtn = $sliderResp.find(".b-slider__controls_responses .b-slider__control_right")
-		,$activeSlide = $slideResp.filter(".b-slide_active")
-		,$unactiveSlide = $slideResp.filter(":not(.b-slide_active)")
-		,$slidesContent = $("#slides").children()	// знаходимо відгуки в прихованому блоці
-		,slidesArray = []	// масив з html відгуків
-		,responseNum	// зберігає індекс останнього завантаженого відгуку
-		,bPrevNext		// чи попередній напрямок запитів "Наступний слайд"
+// faq show more btn
+	var 
+		 $faqBtnMore = $(".js-btn_faqs")
+		,$faqBtnMoreArrow = $faqBtnMore.children(".fa")
+		,$faqHidden = $faq.filter(":nth-child(n+5)")
 		;
 
-	var  sliderInit = function(){
+	$faqBtnMore.on("click", function(){
+		$faqHidden.slideToggle(400);
+		$faqBtnMoreArrow.toggleClass("fa-angle-up").toggleClass("fa-angle-down");
+	});
+
+// responces slider
+	var responces = (function(){
+		var obj = {};
+
+		obj.$section = $("#responses");
+
+		obj.$slider = obj.$section.find(".b-slider_responses");
+
+		var  $slideResp = obj.$slider.find(".b-slide_responses")
+			,$respFedbBtn = obj.$section.find(".js-btns_category")
+			,$responsesBtn = $respFedbBtn.children(".js-btn_responses")
+			,$feedbackBtn = $respFedbBtn.children(".js-btn_feedback")
+			,$sliderRespControlBtn = obj.$slider.find(".b-slider__control_responses")
+			,$sliderRespPrevBtn = obj.$slider.find(".b-slider__controls_responses .b-slider__control_left")
+			,$sliderRespNextBtn = obj.$slider.find(".b-slider__controls_responses .b-slider__control_right")
+			,$activeSlide = $slideResp.filter(".b-slide_active")
+			,$unactiveSlide = $slideResp.filter(":not(.b-slide_active)")
+			,$slidesContent = $("#slides").children()	// знаходимо відгуки в прихованому блоці
+			,slidesArray = []	// масив з html відгуків
+			,responseNum	// зберігає індекс останнього завантаженого відгуку
+			,bPrevNext		// чи попередній напрямок запитів "Наступний слайд"
+			,widthSlideCss = $activeSlide.outerWidth()	// initial width for desktop
+			,widthContainer
+			,widthSlide
+			,diff	// widthContainer - widthSlide
+			,bSmallScr // true on large screens
+			;
+
+		obj.slidesInit = function(){
 			// initial slides content
 			$slidesContent.each(function(index, element){	// заповнюємо масив html відгуків
 				slidesArray.push($(element).html())
 			});
+			
 			// наповнимо слайди початковим контенотом
 			$slideResp.eq(0).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[1]);			
 			$slideResp.eq(1).find(".b-slide__side_front .b-slide__wrap").html(slidesArray[0]);
+
 			responseNum = 1;	// 2й відгук завантажували останнім
 			bPrevNext =true;	// порядок завантаження слайдів був прямий
-			// initial positions
-			$unactiveSlide.css("top", "0px");
-			$unactiveSlide.css("left", "0px");
-			$activeSlide.css("top", "30px");
-			$activeSlide.css("left", "404px");	
-		}
-		,moveLeft = function($slide, bNext){
-			$slide.animate({
-					top: 20,
-					left: 444
-				},	{
-					duration: 200,
-					easing: "linear",
-					queue: "active",	// черга для анімації цього слайда
-					done: function(){
-						$(this).css("z-index", "-1")	// приберемо на задній фон
+
+			// active slide initial position
+			$window.on("resize", function(){
+				activeSlidePosition();
+			}).trigger("resize");
+		};
+
+		var  
+			activeSlidePosition = function(){
+				$activeSlide = $slideResp.filter(".b-slide_active");
+				$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
+				$unactiveSlide.css("top", "0px");
+				$unactiveSlide.css("left", "0px");
+				
+				widthContainer = obj.$slider.outerWidth();
+				widthSlide = $activeSlide.outerWidth();
+
+				if (widthContainer > widthSlideCss){
+					if (widthSlide < widthSlideCss){
+						$slideResp.css("width", widthSlideCss + "px")
 					}
+					bSmallScr = false;
+					$activeSlide.css("top", "30px");
+					diff = widthContainer - widthSlideCss;
+					$activeSlide.css("left", diff + "px");
+				} else {
+					widthSlide = widthContainer;
+					$slideResp.css("width", widthContainer + "px")
+					bSmallScr = true;
+					// diff = 0;
+					$activeSlide.css("top", "10px");
+					$activeSlide.css("left", "5px");
+					$unactiveSlide.css("left", "-5px");
 				}
-			);
-			$slide.animate({
-					top: 5,
-					left: 400
-				},	{
-					duration: 200,
-					easing: "linear",
-					queue: "active"	// черга для анімації цього слайда
-				}
-			);
-			$slide.animate({
-					top: 2,
-					left: 201
-				},	{
-					duration: 300,
-					easing: "linear",
-					queue: "active",	// черга для анімації цього слайда
-					done: function(){
-						// завантажимо новий контент слайда
-						var $slideContent = $(this).find(".b-slide__side_front .b-slide__wrap");
-						$slideContent.fadeOut(100);
-						if(bNext){
-							if(bPrevNext){
-								// перевірка індекса масива перед інкрементом на 1
-								if (responseNum == slidesArray.length-1){
-									responseNum = 0
-								} else {
-									++responseNum;
-								}
-								$slideContent.html(slidesArray[responseNum]);	// відмальовуєм відгук з індексом responseNum
-							} else {
-								// перевірка індекса масива перед інкрементом на 2
-								if (responseNum == slidesArray.length-1){
-									responseNum = 1
-								} else if (responseNum == slidesArray.length-2){
-									responseNum = 0;
-								} else {
-									responseNum+=2;
-								}
-								$slideContent.html(slidesArray[responseNum]);
-							}
-							bPrevNext = true;
-						} else {
-							if(!bPrevNext){
-								// перевірка індекса масива перед декрементом на 1
-								if (responseNum == 0){
-									responseNum = slidesArray.length - 1
-								} else {
-									--responseNum;
-								}
-								$slideContent.html(slidesArray[responseNum]);
-							} else {
-								// перевірка індекса масива перед декрементом на 2
-								if (responseNum == 1){
-									responseNum = slidesArray.length - 1
-								} else if (responseNum == 0){
-									responseNum = slidesArray.length - 2
-								} else {
-									responseNum-=2;
-								}
-								$slideContent.html(slidesArray[responseNum]);
-							}
-							bPrevNext = false;
+				
+			}
+			,moveLeft = function($slide, bNext, bSmallScr){	
+				$slide.animate({
+						top: bSmallScr?9:20,
+						left: bSmallScr?40:diff*1.1
+					},	{
+						duration: bSmallScr?100:200,
+						easing: "linear",
+						queue: "active",	// черга для анімації цього слайда
+						done: function(){
+							$(this).css("z-index", "-1")	// приберемо на задній фон
 						}
-						
-						$slideContent.fadeIn(100);
 					}
-				}
-			);
-			$slide.animate({
-					top: 0,
-					left: 0
-				},	{
-					duration: 300,
-					easing: "linear",
-					queue: "active",
-					done: function(){
-						$slideResp.toggleClass("b-slide_active");
+				);
+				$slide.animate({
+						top: bSmallScr?7:5,
+						left: bSmallScr?30:diff*0.99
+					},	{
+						duration: bSmallScr?100:200,
+						easing: "linear",
+						queue: "active"	// черга для анімації цього слайда
 					}
-				}
-			);
-			$slide.dequeue("active");	// запустимо чергу
-		}
-		,moveRight = function($slide){
-			$slide.animate({
-					top: 40,
-					left: -44
-				},	{
-					duration: 200,
-					easing: "linear",
-					queue: "unactive",	// черга для анімації цього слайда
-					done: function(){
-						$(this).css("z-index", "4")
+				);
+				$slide.animate({
+						top: bSmallScr?5:2,
+						left: bSmallScr?15:diff*0.5
+					},	{
+						duration: bSmallScr?150:300,
+						easing: "linear",
+						queue: "active",	// черга для анімації цього слайда
+						done: function(){
+							// завантажимо новий контент слайда
+							var $slideContent = $(this).find(".b-slide__side_front .b-slide__wrap");
+							$slideContent.fadeOut(100);
+							if(bNext){
+								if(bPrevNext){
+									// перевірка індекса масива перед інкрементом на 1
+									if (responseNum == slidesArray.length-1){
+										responseNum = 0
+									} else {
+										++responseNum;
+									}
+									$slideContent.html(slidesArray[responseNum]);	// відмальовуєм відгук з індексом responseNum
+								} else {
+									// перевірка індекса масива перед інкрементом на 2
+									if (responseNum == slidesArray.length-1){
+										responseNum = 1
+									} else if (responseNum == slidesArray.length-2){
+										responseNum = 0;
+									} else {
+										responseNum+=2;
+									}
+									$slideContent.html(slidesArray[responseNum]);
+								}
+								bPrevNext = true;
+							} else {
+								if(!bPrevNext){
+									// перевірка індекса масива перед декрементом на 1
+									if (responseNum == 0){
+										responseNum = slidesArray.length - 1
+									} else {
+										--responseNum;
+									}
+									$slideContent.html(slidesArray[responseNum]);
+								} else {
+									// перевірка індекса масива перед декрементом на 2
+									if (responseNum == 1){
+										responseNum = slidesArray.length - 1
+									} else if (responseNum == 0){
+										responseNum = slidesArray.length - 2
+									} else {
+										responseNum-=2;
+									}
+									$slideContent.html(slidesArray[responseNum]);
+								}
+								bPrevNext = false;
+							}
+							
+							$slideContent.fadeIn(100).promise().done(function(){
+								$(this).css('display', '');
+							});
+						}
 					}
+				);
+				$slide.animate({
+						top: bSmallScr?0:0,
+						left: -5
+					},	{
+						duration: bSmallScr?150:300,
+						easing: "linear",
+						queue: "active",
+						done: function(){
+							$slideResp.toggleClass("b-slide_active");
+						}
+					}
+				);
+				$slide.dequeue("active");	// запустимо чергу
+			}
+			,moveRight = function($slide, bSmallScr){
+				$slide.animate({
+						top: bSmallScr?7:40,
+						left: bSmallScr?-40:-diff*0.1
+					},	{
+						duration: bSmallScr?100:200,
+						easing: "linear",
+						queue: "unactive",	// черга для анімації цього слайда
+						done: function(){
+							$(this).css("z-index", "4")
+						}
+					}
+				);
+				$slide.animate({
+						top: bSmallScr?9:60,
+						left: bSmallScr?-30:diff*0.01
+					},	{
+						duration: bSmallScr?100:200,
+						easing: "linear",
+						queue: "unactive"	// черга для анімації цього слайда
+					}
+				);
+				$slide.animate({
+						top: bSmallScr?10:30,
+						left: bSmallScr?5:diff
+					},	{
+						duration: bSmallScr?300:600,
+						easing: "linear",
+						queue: "unactive"
+					}
+				);
+				$slide.dequeue("unactive");	// запустимо чергу
+			}
+			,reshuffle = function($active, $unActive, bNext){
+				moveLeft($active, bNext, bSmallScr);
+				moveRight($unActive, bSmallScr);
+			};
+
+		obj.sliderInit = function(){
+			$responsesBtn.click(function(){
+				if (!$activeSlide.is(":animated")) {
+
+					if ($activeSlide.hasClass("b-slide_rotated")){
+						$feedbackBtn.toggleClass("b-btn_active");
+						$responsesBtn.toggleClass("b-btn_active");
+					}
+
+					$activeSlide = $slideResp.filter(".b-slide_active");
+					$activeSlide.removeClass("b-slide_rotated");	// rotate back if rotated
 				}
-			);
-			$slide.animate({
-					top: 60,
-					left: 4
-				},	{
-					duration: 200,
-					easing: "linear",
-					queue: "unactive"	// черга для анімації цього слайда
+			});
+			$feedbackBtn.click(function(){
+				if (!$activeSlide.is(":animated")) {
+					$feedbackBtn.toggleClass("b-btn_active");
+					$responsesBtn.toggleClass("b-btn_active");
+					
+					$activeSlide = $slideResp.filter(".b-slide_active");
+					$activeSlide.toggleClass("b-slide_rotated");		// rotate back if rotated
 				}
-			);
-			$slide.animate({
-					top: 30,
-					left: 404
-				},	{
-					duration: 600,
-					easing: "linear",
-					queue: "unactive"
+			});
+
+			$sliderRespControlBtn.click(function(){
+				$activeSlide = $slideResp.filter(".b-slide_active");
+				if ($activeSlide.hasClass("b-slide_rotated")){
+					$feedbackBtn.trigger("click");
 				}
-			);
-			$slide.dequeue("unactive");	// запустимо чергу
-		}
-		,reshuffle = function($active, $unActive, bNext){
-			moveLeft($active, bNext);
-			moveRight($unActive);
+			});
+			$sliderRespPrevBtn.click(function(){
+				$activeSlide = $slideResp.filter(".b-slide_active");
+				$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
+				if(!$activeSlide.is(":animated")){
+					reshuffle($activeSlide, $unactiveSlide, false);
+				}
+			});
+			$sliderRespNextBtn.click(function(){
+				$activeSlide = $slideResp.filter(".b-slide_active");
+				$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
+				if(!$activeSlide.is(":animated")){
+					reshuffle($activeSlide, $unactiveSlide, true);
+				}
+			});
+		};
+
+		obj.init = function(){
+			obj.slidesInit();	// підвантаження слайдів з прихованого блока
+			obj.sliderInit();	// підвантаження слайдів з прихованого блока
 		}
 
-	sliderInit();
-	$responsesBtn.click(function(){
-		$respFedbBtn.removeClass("b-rating__btn_active");
-		$responsesBtn.addClass("b-rating__btn_active");
-		$activeSlide.removeClass("b-slide_rotated")
-	});
-	$feedbackBtn.click(function(){
-		$respFedbBtn.toggleClass("b-rating__btn_active");
-		$activeSlide = $slideResp.filter(".b-slide_active");
-		if (!$activeSlide.is(":animated")) {
-			$activeSlide.toggleClass("b-slide_rotated");
-		}
-	});
+		return obj;
+	})();
 
-	$sliderRespControlBtn.click(function(){
-		$activeSlide = $slideResp.filter(".b-slide_active");
-		if ($activeSlide.hasClass("b-slide_rotated")){
-			$feedbackBtn.trigger("click");
+	// rating stars module
+	var stars = (function(){
+		var obj = {};
+
+		obj.fillStar = function(){	// ф-я для зафарбовування зірочок для кожного контейнера $("РейтингКонтейнер").each(fillStar)
+			var  starsNum = $(this).attr("data-rating")	// к-ть зірочок для зафарбування в атрибуті "data-rating" контейнера
+				,$stars = $(this).children("span.fa")
+				,i
+				;
+			// 	fa-star-o контур зірочки
+			// 	fa-star зафарбований контур зірочки
+			for (i=0; i<starsNum; ++i){
+				$stars.eq(i).removeClass("fa-star-o").addClass("fa-star");
+			}
+		};
+
+		obj.fillAllStars = function(sSelector){	// sSelector - селектор контейнера із зрочками
+			var $ratings = $(sSelector);	// контейнер із зірочками
+				$ratings.each(function(){obj.fillStar.call(this)});	// add context from each f-n
 		}
-	});
-	$sliderRespPrevBtn.click(function(){
-		$activeSlide = $slideResp.filter(".b-slide_active");
-		$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
-		if(!$activeSlide.is(":animated")){
-			reshuffle($activeSlide, $unactiveSlide, false);
+
+		obj.init = function(){
+			obj.fillAllStars(".js-company__rating");
 		}
-	});
-	$sliderRespNextBtn.click(function(){
-		$activeSlide = $slideResp.filter(".b-slide_active");
-		$unactiveSlide = $slideResp.filter(":not(.b-slide_active)");
-		if(!$activeSlide.is(":animated")){
-			reshuffle($activeSlide, $unactiveSlide, true);
-		}
-	});
+
+		return obj;
+	})();
+
 	//	Додаємо маску на номер телефона в формах
 	$("input[type='tel']").mask("+38 (099) 999-99-99");
 
@@ -1921,7 +2124,7 @@ $(document).ready(function(){
 		$modals.fadeOut();
 	}
 
-	$("#callbackBtn, #callbackBtn_footer").click(function(){
+	$("#callbackBtn, #callbackBtn_footer, .js-btn_callback").click(function(){
 		$modalOvl.fadeIn();
 		$modalCallback.fadeIn();
 	});
@@ -1982,7 +2185,77 @@ $(document).ready(function(){
 			;
 		$('html, body').animate({ scrollTop: offsetAnchor}, 400);
 		return false;
-	})
+	});
+
+
+	// adaptive iframe video
+	var iframeAspectRatio = (function(){
+		var obj = {};
+		
+		obj.iframesAll = $("iframe");
+		
+		obj.calcHeight = function($el){
+			$(window).on("resize", function(){
+				$el.height($el.width() * $el.attr("data-ratio"))
+			}).resize();
+		};
+		
+		obj.aspectRatio = function($el, FcallBack){
+			// save aspect ratio
+			$el.attr("data-ratio", $el.attr('height') / $el.attr('width'))
+			// and remove the hard coded width/height
+			.removeAttr('height')
+			.removeAttr('width');
+			if (typeof(FcallBack) == "function"){
+				FcallBack(arguments[0]);
+			}
+		};
+
+		obj.init = function(sSelector){
+			obj.iframesAll.filter(sSelector).each(function(){
+				var $this = $(this);
+				obj.aspectRatio($this, obj.calcHeight);
+			});
+		}
+		
+		return obj;
+	})();
+
+	// footer module
+	var footer = (function(){
+		var obj = {};	// module returned object
+
+		// mobile Footer accordion
+		obj.$accordionTriggers = $("footer").find(".js-accordion__trigger");
+		obj.$accordionContents = $("footer").find(".js-accordion__content");
+
+		obj.mobileAccordion = function() {
+			obj.$accordionTriggers.on("click", function(){
+				var  $trigger = $(this)
+					,$content = $trigger.siblings(".js-accordion__content")
+					;
+				// close all opened accordion items except of clicked
+				obj.$accordionContents.each(function(){
+					if (($(this)[0] !== $content[0])&&($(this).parent().hasClass("opened"))){
+						$(this).slideUp(200);
+						$(this).parent().removeClass("opened");
+					}
+				});
+				$content.slideToggle(200);
+				$trigger.parent().toggleClass("opened");
+			});
+		}
+
+		obj.init = function(){
+			obj.mobileAccordion();	// mobile footer accordion functionality
+		}
+
+		return obj;	// return object with menu methods and buttons
+	})();
+
+	iframeAspectRatio.init(".js-preserveAspectRatio");	// make iframe with desired selector height depending on the aspect ratio (width from css)
+	responces.init();	// responses slider init
+	footer.init();	// footer module init
 
 	$("#toTop").trigger("click");	// scroll to top after page is loaded
 });

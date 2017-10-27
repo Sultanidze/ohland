@@ -1,7 +1,8 @@
 <div class="b-container b-container__calculator_propositions" id="propositions">
                 <div class="b-section_crumbs">
-                    <div class="b-container">
-                    <ol class="b-crumbs">
+                    <div class="b-container_crumbs_propos">
+                    <button class="b-btn__home b-propos__btn_edge js-crumbs__link" data-step="1"><i class="fa fa-angle-left" aria-hidden="true"></i>Назад</button>
+                    <ol class="b-crumbs b-crumbs_propos">
                         <li class="b-crumbs__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                             <a href="http://test.oh.ua/" itemprop="url"><span itemprop="title">Главная</span></a>
                         </li>
@@ -77,8 +78,12 @@
                                 <div class="autocomplete-suggestion" data-id="44" data-zone="3">Николаев (г.), Николаевская обл.</div>
                             </div>
                         </div>
+                        <div class="b-select__container_propos b-block_franshiza">
+                            <label for="franshiza" class="b-label_registration">Франшиза</label>
+                            <input type="text" name="franshiza" class="js-range_franshiza" data-min="0" data-from="1000" data-max="2000" data-step="1000">
+                        </div>
                         <button type="submit" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge">
-                            <span class="b-text_btn">Изменить данные</span>
+<!--                            <span class="b-text_btn">Изменить данные</span>-->
                         </button>
                     </form>
                     <div class="b-propositions">
@@ -113,6 +118,11 @@
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">9 из 10</span>
                                             </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
+                                            </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
                                             <span class="b-price">816<span class="b-currency"> грн</span></span>
@@ -128,6 +138,7 @@
                                                 <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -195,11 +206,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -216,6 +227,11 @@
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">9 из 10</span>
                                             </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
+                                            </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
                                             <span class="b-price">1023<span class="b-currency"> грн</span></span>
@@ -230,6 +246,7 @@
                                                 <span class="fa fa-question-circle"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -264,11 +281,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -281,6 +298,11 @@
                                             <div class="b-filter b-filter_rating">
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">9 из 10</span>
+                                            </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
                                             </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
@@ -296,6 +318,7 @@
                                                 <span class="fa fa-question-circle"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -335,11 +358,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -352,6 +375,11 @@
                                             <div class="b-filter b-filter_rating">
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">9 из 10</span>
+                                            </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
                                             </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
@@ -367,6 +395,7 @@
                                                 <span class="fa fa-question-circle"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -412,11 +441,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -429,6 +458,11 @@
                                             <div class="b-filter b-filter_rating">
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">9 из 10</span>
+                                            </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
                                             </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
@@ -444,6 +478,7 @@
                                                 <span class="fa fa-question-circle"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -477,11 +512,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -494,6 +529,11 @@
                                             <div class="b-filter b-filter_rating">
                                                 <span class="text">Рейтинг надежности</span>
                                                 <span class="b-order">0 из 10</span>
+                                            </div>
+                                            
+                                            <div class="b-discont">
+                                                <span class="fa fa-question-circle" title="Часть ущерба, которая не покрывается за счет страховой компании и возмещается страхователем из собственных средств"></span>
+                                                 Франшиза 0 грн
                                             </div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_price b-proposition__price">
@@ -509,6 +549,7 @@
                                                 <span class="fa fa-question-circle"></span>
                                                  Франшиза 0 грн
                                             </div>
+                                            <div class="b-details__heading_about js-propos__btn_about"><span class="g-underlined">Подробнее</span> <span class="fa fa-angle-down"></span></div>
                                         </div>
                                         <div class="b-container__filter b-container__filter_rating b-proposition__about">
                                             <ul class="b-details__list_propos">
@@ -542,11 +583,11 @@
                                         </div>
                                         <div class="b-proposition__buy_row">
                                             <button type="button" class="b-form__submit_vehicle b-btn_buy js-proposition__buy" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Оформить страховку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Оформить <span class="to-trim">страховку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 <!--
                                             <button type="button" class="b-propos__btn_change b-form__submit_vehicle b-propos__btn_edge js-proposition__delivery_quick" data-proposition="1">
-                                                <span class="b-text_btn" data-fullprice="1478">Заказать доставку</span><span class="fa fa-angle-right" aria-hidden="true"></span>
+                                                <span class="b-text_btn" data-fullprice="1478">Заказать <span class="to-trim">доставку</span></span><span class="fa fa-angle-right" aria-hidden="true"></span>
                                             </button>
 -->
                                         </div>
@@ -556,6 +597,7 @@
                         </div>
                     </div>
                     <div class="b-propos__guaranties">
+<!--
                         <ul class="b-crumbs_aside">
                             <li class="b-crumbs__item_aside b-item_done js-crumbs__link" data-step="1">
                                 <div class="b-item__link">
@@ -582,6 +624,7 @@
                                 </div>
                             </li>
                         </ul>
+-->
                         <div class="b-wrap_guaranties bg-light">
                             <div class="b-guaranties__heading">Гарантия лучшей цены</div>
                             <p>Мы гарантируем самые низкие цены. Не дороже, чем напрямую в страховой компании. Если вы нашли цену ниже, мы компенсируем вам эту разницу.</p>
