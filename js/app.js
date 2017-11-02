@@ -360,7 +360,8 @@ $(document).ready(function(){
 			// розгортання і згортання деталей пропозиції
 			$(".js-propos__btn_about").on("click", function(){
 				$(this).find(".fa").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
-				$(this).next(".b-details__list_propos").fadeToggle(200)
+				// $(this).next(".b-details__list_propos").fadeToggle(200)
+				$(this).parents(".js-proposition").find(".b-details__list_propos").slideToggle(200)
 			})
 		};
 
@@ -941,6 +942,9 @@ $(document).ready(function(){
 					validatorCurrent = orderFormsValidation($activeMethod);	// hidden method could not be initialized before
 				});
 			}
+
+			// scroll to block
+			
 		});
 		// перемикання блоку "парень-девушка"
 		$trashTabs.click(function(){

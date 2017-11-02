@@ -27,6 +27,9 @@ font-family: 'Playfair Display', serif;
 .g-bold{
     font-weight: 700;
 }
+.g-underlined{
+    text-decoration: underline;
+}
 
 .g-text_unstyled{
     text-transform: none;
@@ -3056,12 +3059,20 @@ a.b-callback_footer:hover{
 .b-proposition__price .b-currency{
     font-size: 16px;
 }
+.b-container__filter .b-discont{
+    height: auto;
+    font-size: 13px;
+}
 .b-proposition__price .b-discont{
     margin-top: 0;
-    height: auto;
     text-align: right;
-    font-size: 13px;
     color: #fff;
+}
+.b-proposition__company .b-discont{
+    display: none;
+/*    margin-top: 15px;*/
+    margin-top: auto;
+    color: #000;
 }
 .b-proposition_row .b-proposition__about{
     padding-top: 8px;
@@ -5087,8 +5098,8 @@ a.b-callback_footer:hover{
         line-height: 1.5;
     }
     .b-propos__btn_more{
-        -ms-align-items: flex-start;
-        align-items: flex-start;
+       -ms-align-self: flex-start;
+       align-self: flex-start;
     }
 }
 @media (max-width: 1010px){
@@ -5543,6 +5554,7 @@ a.b-callback_footer:hover{
     
 /*    stage 2 styles*/
     .b-propos__recalc{
+        margin-bottom: 55px;
         display: block;
     }
     .b-propos__recalc .b-select__container_propos:nth-child(n){
@@ -5555,17 +5567,27 @@ a.b-callback_footer:hover{
         margin: 0 0 15px;
     }
     .b-propos__recalc .b-propos__btn_change{
-        margin: 0;
+        margin: 0 auto;
+        display: block;
     }
     .b-propos__guaranties,.b-calculator__heading_propos{
+        margin-bottom: 30px;
         width: 100%;
         max-width: 470px;
     }
+    .b-propos__guaranties{
+        margin-bottom: 60px;
+    }
+    .b-propositions__header{
+        display: none;
+    }
+    
     .b-propos__recalc, .b-propositions{
         width: 100%;
         max-width: 470px;
     }
     .b-proposition_row{
+        margin-bottom: 15px;
         -webkit-flex-wrap: wrap;
         -moz-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
@@ -5584,33 +5606,58 @@ a.b-callback_footer:hover{
         width: 50%;
     }
     .b-proposition__buy_row{
-        border: none;
         flex-grow: 1;
+        border: none;
+        padding: 20px;
+    }
+    .b-proposition__price .b-price{
+        -ms-align-self: center;
+        align-self: center;
     }
     .b-proposition_row .b-container__filter{
+        flex-basis: 50%;
         flex-grow: 1;
         border-top-right-radius: 4px;
+        padding: 9px;
+    }
+    .b-proposition_row .b-proposition__price{
+        flex-basis: 48.4%;
+        flex-grow: 0;
+        -ms-align-items: center;
+        align-items: center;
+    }
+    .b-proposition_row .b-proposition__about{
+        padding: 0;
+    }
+    .b-details__heading_about{
+        margin-top: 10px;
+        display: block;
+        font-weight: 600;
+    }
+    .b-proposition__company .b-filter_rating,
+    .b-proposition__price .b-discont{
+        display: none;
+    }
+    .b-proposition__company .b-discont {
+        display: block;
+        line-height: normal;
     }
 /*
     .b-proposition_row .b-proposition__about{
         flex-grow: 0;
     }
 */
+    .b-details__list_propos{
+        display: none;
+        margin: 10px auto;
+        width: 320px;
+        padding: 10px 20px 0;
+    }
     .b-proposition__buy_row span.b-text_btn{
         width: 160px;
     }
     .b-proposition__buy_row .to-trim{
         display: inline;
-    }
-    
-    .b-details__heading_about{
-        margin-top: 10px;
-        display: block;
-        font-weight: 600;
-    }
-    .b-details__list_propos{
-        margin-top: 10px;
-        display: none;
     }
     
 /*    stage 3 styles*/
@@ -5857,6 +5904,9 @@ a.b-callback_footer:hover{
         display: block;
         width: 100%;
     }
+    
+/*    stage 2 styles*/
+    
     
 /*    stage 3 styles*/
     .b-finalize__method__phone{
@@ -6164,7 +6214,7 @@ a.b-callback_footer:hover{
     }
 }
 @media (max-width: 480px){
-    .b-section_crumbs, .b-crumbs_aside, .b-videohelp:last-child .b-stages_videohelp, .b-section_seoText{
+    .b-section_crumbs, .b-crumbs_aside, .b-propos__guaranties, .b-videohelp:last-child .b-stages_videohelp, .b-section_seoText{
         display: none;
     }
     
@@ -6366,8 +6416,8 @@ a.b-callback_footer:hover{
     
 /*    stage 2 styles*/
     .b-container__calculator_propositions{
-        padding-right: 5px;
-        padding-left: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
     }
     .b-propositions{
         -webkit-order: initial;
@@ -6378,6 +6428,20 @@ a.b-callback_footer:hover{
     }
     .b-propos__guaranties .b-wrap_guaranties{
         flex-grow: 1;
+    }
+    
+    .b-proposition_row .b-proposition__price{
+        flex-basis: 150px;
+    }
+    
+    .b-proposition__price .b-price{
+        font-size: 40px;
+    }
+    .b-details__heading_about{
+        margin-top: 5px;
+    }
+    .b-details__list_propos{
+        width: 210px;
     }
     
 /*    stage 3 styles */
