@@ -12,7 +12,10 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 	formatSubmit: 'dd.mm.yyyy'
 });
 
-var $window = $(window);
+var 
+	 $window = $(window)
+	,BREAKPOINT_XS = 767	// mobile devices breakpoint
+	;
 
 $(document).ready(function(){
     // data-href replace module
@@ -560,6 +563,7 @@ $(document).ready(function(){
             	complete: function(){
             		showContainerAjax($containerAjax);
             		$containerAjax.dequeue("ajax");
+            		$window.triggerHandler("resize");	// if mobile device => show only byUpload method
             	}
             });
 		});
@@ -944,8 +948,26 @@ $(document).ready(function(){
 			}
 
 			// scroll to block
-			
+			var  
+				 $anchor = $methods.parent()
+				,offsetAnchor = $anchor.offset().top
+				;
+				
+				// offsetAnchor -= $("#header").outerHeight();	// fixed header offset
+
+			$('html, body').animate({ scrollTop: offsetAnchor}, 400);
 		});
+
+		// on mobiles show only byFileUpload method
+		$window.on("resize", function(){
+			if ($window.outerWidth() <= BREAKPOINT_XS){
+				$methodBtns.filter("[data-for='byUpload']").trigger("click");
+			} else {
+				$methodBtns.filter("[data-for='bySelf']").trigger("click");
+			}
+		});
+		// .triggerHandler("resize");
+
 		// перемикання блоку "парень-девушка"
 		$trashTabs.click(function(){
 			if (!$trashCard.is(":animated")){
@@ -1022,11 +1044,13 @@ $(document).ready(function(){
 				}
 				
 				// покажемо імена файлів
-				filesListStr += '<span class="b-filename">' + this.files[0].name;
+				filesListStr += '<span class="b-filename"><span class="b-filename__text">' + this.files[0].name + '</span><span class="fa fa-check" aria-hidden="true"></span>';
 				if ($(this).attr("id") != "copies_byupload"){
-					filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
+					// filesListStr += '<span class="fa fa-times-circle-o js-clearFiles" aria-hidden="true"></span></span>';	// додамо хрестик видалити файл
+					filesListStr += '<button class="b-clear js-clearFiles"><span class="hidden-xs">удалить</span><span class="fa fa-times" aria-hidden="true"></span></button></span>';	// додамо опцію видалити файл
 				} else {
-					filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
+					// filesListStr += '<span class="fa fa-check" aria-hidden="true"></span></span>';	// для файла в першому полі приберемо хрестик
+					filesListStr += '</span>';	// для файла в першому полі немає опції "видалити"
 				}
 			} else {	// якщо видалили файли, чи додали файли невалідних типів
 				// перевіримо чи є іще заповнені файлові поля, якщо ні то покажемо помилку валідації
