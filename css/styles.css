@@ -5,6 +5,10 @@ font-family: 'Roboto Condensed', sans-serif;
 font-family: 'Playfair Display', serif;
 */
 
+input{
+    border-radius: 0;    /* input ios fix*/
+}
+
 /* - PRELOADER - */
 #qLoverlay {
     position: fixed;
@@ -131,6 +135,7 @@ font-family: 'Playfair Display', serif;
 
 html{
 /*    min-width: 1320px;*/
+    min-width: 320px;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -1975,6 +1980,11 @@ a.b-menu__heading:hover{
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
 }
+.b-btn_faqs{
+    display: none;
+    margin-top: 15px;
+}
+
 .b-section_responses{
     margin: 0 auto;
     max-width: 910px;
@@ -3411,6 +3421,7 @@ a.b-callback_footer:hover{
 }
 .b-row__detail{
     font-size: 12px;
+    line-height: 1.4;
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
 }
@@ -4942,7 +4953,7 @@ a.b-callback_footer:hover{
     .b-form__insured{
         height: auto;
     }
-    .b-form__cell input, .b-form__cell #address_insured{
+    #finalize .selectric-wrapper, .b-form__cell input, .b-form__cell #address_insured{
         width: 236px;
     }
     .b-comment_finalize,.b-map_finalize{
@@ -4957,8 +4968,11 @@ a.b-callback_footer:hover{
     .b-form__cell_comment, .b-form__cell{
         margin-right: 45px;
     }
-    .b-form__delivery .row_form:nth-last-child(3) .b-label_finalize{
-        display: none;
+    .b-form__delivery .b-form__heading_finalize{
+        margin-bottom: 5px;
+    }
+    .b-form__delivery .row_form .b-form__cell:nth-last-child(3) .b-label_finalize{
+/*        display: none;*/
     }
     .b-finalize__method__phone .b-form__heading_finalize{
         padding-left: 0;
@@ -5414,6 +5428,10 @@ a.b-callback_footer:hover{
         -webkit-box-shadow: none;
         box-shadow: none;
     }
+    .b-factor__heading{
+        font-size: 20px;
+        text-transform: uppercase;
+    }
     
     .b-section_seoMap{
         display: none;
@@ -5458,7 +5476,7 @@ a.b-callback_footer:hover{
     .b-form__cell_comment, .b-form__cell {
         margin-right: 30px;
     }
-    .b-form__cell input, .b-form__cell #address_insured {
+    #finalize .selectric-wrapper, .b-form__cell input, .b-form__cell #address_insured {
         width: 222px;
     }
     .b-comment_finalize, .b-map_finalize {
@@ -5584,6 +5602,12 @@ a.b-callback_footer:hover{
         padding-right: 40px;
         line-height: 1.4;
         font-size: 16px;
+    }
+    .b-questAnsw:nth-child(n+5){
+        display: none;
+    }
+    .b-btn_faqs{
+        display: inline-block;
     }
     
     .b-responses__container_slider{
@@ -5787,6 +5811,10 @@ a.b-callback_footer:hover{
         padding: 0;
 */
     }
+    #finalize .selectric-wrapper{
+/*        width: 265px;*/
+        width: 100%;
+    }
     .b-form__cell_comment, .b-form__cell {
         margin-right: 0;
         width: 100%;
@@ -5986,7 +6014,9 @@ a.b-callback_footer:hover{
     .b-btn__cover_method span.fa{
         left: 53px;
     }
-    
+    .b-form__cell{
+        margin-bottom: 15px;
+    }
     .b-form__submit_pay {
         margin-left: 302px;
     }
@@ -6356,7 +6386,7 @@ a.b-callback_footer:hover{
     }
 }
 @media (max-width: 480px){
-    .b-section_crumbs, .b-propos__guaranties, .b-videohelp:last-child .b-stages_videohelp, .b-section_seoText{
+    .b-section_crumbs, .b-propos__guaranties, .b-videohelp:last-child .b-stages_videohelp, .b-section_responses, .b-section_seoText{
         display: none;
     }
     
@@ -6396,6 +6426,11 @@ a.b-callback_footer:hover{
         margin: 24px auto;
         min-width: 250px;
     }
+    
+    .b-calculator_vehicle .b-crumbs_aside{
+        display: none;
+    }
+    
     .b-advantages__list{
         margin: 25px auto;
         max-width: 290px;
@@ -6637,14 +6672,24 @@ a.b-callback_footer:hover{
         left: 0;
         right: 0;
         margin: auto;
+        width: 280px;
+    }
+    .b-progress_files{
+        max-width: 280px;
     }
     .b-list_files{
-            padding-top: 50px;
-        padding-left: 0;
         margin: 0 auto;
-        width: 265px;
+        width: 280px;
+        padding: 50px 0 0;
     }
     .b-filename__text{}
+    
+    #finalize .selectric-wrapper{
+/*
+        margin: auto;
+        width: 280px;
+*/
+    }
     
 /*    stage thanks styles*/
     #thanks{

@@ -960,10 +960,12 @@ $(document).ready(function(){
 
 		// on mobiles show only byFileUpload method
 		$window.on("resize", function(){
-			if ($window.outerWidth() <= BREAKPOINT_XS){
+			if ($window.outerWidth() <= BREAKPOINT_XS && !$methodBtns.filter("[data-for='byUpload']").hasClass("b-finalize__btn_active")){
+				console.log("viewport <= 767px");
 				$methodBtns.filter("[data-for='byUpload']").trigger("click");
 			} else {
-				$methodBtns.filter("[data-for='bySelf']").trigger("click");
+				// console.log("viewport > 767px");
+				// $methodBtns.filter("[data-for='bySelf']").trigger("click");
 			}
 		});
 		// .triggerHandler("resize");
@@ -1122,7 +1124,10 @@ $(document).ready(function(){
 	// delivery selects stylization
 		// delivery method select
 		$deliveryMode.selectric({	// стилізуємо селекти вибора доставки
+			disableOnMobile: false,
+			nativeOnMobile: false,
 			onChange: function(element) {	// element==this - це наш select, він лишається тим самим об'єктом і після ініціалізації selectric
+			console.log("delivery mode changed")
 				deliveryStr = $(element).val();	// current select value				
 				var indexOfThis = $deliveryMode.index($(element));	// index of current $(element) between $deliveryMode selects
 				
@@ -1708,15 +1713,27 @@ $(document).ready(function(){
 		,$faqHeading = $(".b-questAnsw h5")
 		;
 
-		$(".b-questAnsw:nth-child(n+2)").find("p").hide();
-		$faqHeading.click(function(){
-			if ($(this).parent(".b-questAnsw").hasClass("b-questAnsw_unrolled")){
-				$(this).next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
-			} else {
-				$faq.find(".b-questAnsw_unrolled").next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
-				$(this).next("p").slideDown(400).parent(".b-questAnsw").addClass("b-questAnsw_unrolled");
-			}
-		})
+	$(".b-questAnsw:nth-child(n+2)").find("p").hide();
+	$faqHeading.click(function(){
+		if ($(this).parent(".b-questAnsw").hasClass("b-questAnsw_unrolled")){
+			$(this).next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
+		} else {
+			$faq.find(".b-questAnsw_unrolled").next("p").slideUp(400).parent(".b-questAnsw").removeClass("b-questAnsw_unrolled");
+			$(this).next("p").slideDown(400).parent(".b-questAnsw").addClass("b-questAnsw_unrolled");
+		}
+	});
+
+// faq show more btn
+	var 
+		 $faqBtnMore = $(".js-btn_faqs")
+		,$faqBtnMoreArrow = $faqBtnMore.children(".fa")
+		,$faqHidden = $faq.filter(":nth-child(n+5)")
+		;
+
+	$faqBtnMore.on("click", function(){
+		$faqHidden.slideToggle(400);
+		$faqBtnMoreArrow.toggleClass("fa-angle-up").toggleClass("fa-angle-down");
+	});
 
 // responces slider
 	var responces = (function(){
