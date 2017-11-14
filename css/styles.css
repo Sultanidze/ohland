@@ -967,6 +967,9 @@ a.b-menu__heading:hover{
     display: block;
 }
 */
+.b-vehicle__params_mobile{
+    display: none;
+}
 .b-block_select{
     display: inline-block;
     margin-right: 105px;
@@ -6386,7 +6389,7 @@ a.b-callback_footer:hover{
     }
 }
 @media (max-width: 480px){
-    .b-section_crumbs, .b-propos__guaranties, .b-videohelp:last-child .b-stages_videohelp, .b-section_responses, .b-section_seoText{
+    .b-section_crumbs, .b-propos__guaranties, .b-videohelp:last-child .b-stages_videohelp, .b-section_responses, .b-section_seoText, .b-vehicles, .b-vehicle__params{
         display: none;
     }
     
@@ -6408,6 +6411,9 @@ a.b-callback_footer:hover{
         width: 140px;
         height: 140px;
     }
+    .b-vehicle__params_mobile{
+        display: block;
+    }
     .b-vehicle .svg-vehicle, .obj-vehicle{
         width: 50px;
     }
@@ -6415,7 +6421,8 @@ a.b-callback_footer:hover{
         font-size: 18px;
     }
     .b-calculator__heading_registration{
-        margin-top: 25px;
+/*        margin-top: 25px;*/
+        margin-top: 30px;
     }
     .b-selectBlock_registration{
         min-width: 0;

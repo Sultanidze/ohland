@@ -1387,7 +1387,13 @@ $(document).ready(function(){
 	};
 	var vehicleCalcInit = function($containerAjax){
 		// selects stylization
-		$(".js-selectric").selectric();
+		$(".js-selectric").selectric({
+		    onSelect: function(element) {
+		    	$(element).change();
+		    	var value = $(element).val();
+		    	$("#vehicleForm").find("input[name='type'][value=" + value + "]").prop("checked", true).trigger("change");
+		    }
+	    });
 		// vehicles labels select
 		var  $vehicles = $(".b-vehicle")	//	блоки тз з картинками
 			,$vehiclesBlock = $(".b-vehicles")	// $vehicles container
