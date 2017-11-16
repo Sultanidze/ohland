@@ -12,6 +12,22 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
 	formatSubmit: 'dd.mm.yyyy'
 });
 
+//SET CURSOR POSITION plugin
+$.fn.setCursorPosition = function(pos) {
+  this.each(function(index, elem) {
+    if (elem.setSelectionRange) {
+      elem.setSelectionRange(pos, pos);
+    } else if (elem.createTextRange) {
+      var range = elem.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  });
+  return this;
+};
+
 var 
 	 $window = $(window)
 	,BREAKPOINT_XS = 767	// mobile devices breakpoint
@@ -154,17 +170,20 @@ $(document).ready(function(){
 	var showPropositions = function($containerAjax){	// ф-я для підвантаження пропозицій
 		hideContainerAjax($containerAjax);
 
-            var type = $("#vehicleForm input[name='type']:checked").val()
-            var notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0;
-            var city = $("#vehicleForm #cityId").val();
-            var cityName = $("#vehicleForm #regCity").val();
-            var zone = $("#vehicleForm #zoneId").val();
+            var 
+            	 type = $("#vehicleForm input[name='type']:checked").val()
+            	,franshiza = $("#vehicleForm").find("input[name='franshiza']").val()
+            	,notTaxi = $("#vehicleForm [name='notTaxi']").is(':checked') ? 1 : 0
+            	,city = $("#vehicleForm #cityId").val()
+            	,cityName = $("#vehicleForm #regCity").val()
+            	,zone = $("#vehicleForm #zoneId").val()
+            	;
 
 		$containerAjax.queue("ajax", function(){
 
 			$.ajax({
             	type: "get",
-            	data: {type: type, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
+            	data: {type: type, franshiza: franshiza, notTaxi: notTaxi, city: city, cityName: cityName, zone: zone},
             	url : "./ajax/__propositions.html",
             	error : function(){
             	    alert('error');
@@ -231,7 +250,9 @@ $(document).ready(function(){
 			,$buyBtns = $("#propositions").find(".js-proposition__buy")						// кнопка оформлення покупки
 			,$quickDelivBtns = $("#propositions").find(".js-proposition__delivery_quick")	// кнопка оформлення швидкої доставки
 			,$makeBtns = $().add($buyBtns).add($quickDelivBtns)							// кнопки оформлення
+			,$franshiza = $(".js-range_franshiza").ionRangeSlider()			// слайдер Франшизи
 			;
+
 
 		// ф-я ініціалізації функціонала кнопок купівлі і доставки
 		var buyBtnsInit = function(){
@@ -374,7 +395,7 @@ $(document).ready(function(){
 
 			$proposListContainer.queue("ajax", function(){
 				var 
-					$type = $vehicleParamSelects.filter(":not([disabled])")
+					 $type = $vehicleParamSelects.filter(":not([disabled])")
 					,type = $vehicleParamSelects.filter(":not([disabled])").val()
 	            	,cityName = $cityName.val()
 	            	,city = $cityId.val()
@@ -403,7 +424,7 @@ $(document).ready(function(){
 	            	    alert('error');
 	            	},
 	            	success: function(response){
-						$vehicleForm.slideUp(200);
+						// $vehicleForm.slideUp(200);	// згортаємо форму фільтрів
 
 	            	    $proposListContainer.html(response);
 	            	    $vehicleForm = $("#vehicleForm");
@@ -451,6 +472,17 @@ $(document).ready(function(){
 				vehicleChange.call(this);
 				$(element).change();	// fired by default
 			}
+		});
+
+		// підвантажимо пропозиції при зміні значення фільтрів
+		$vehicleSelect.on("change", function(){
+			$vehicleForm.trigger("submit");
+		});
+		$franshiza.on("change", function(){
+			$vehicleForm.trigger("submit");
+		});
+		$cityName.on("change", function(){
+			$vehicleForm.trigger("submit");
 		});
 
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
@@ -1424,6 +1456,9 @@ $(document).ready(function(){
 			}
 		});
 
+		// слайдер Франшизи
+		$(".js-range_franshiza").ionRangeSlider();
+
 		// додамо до поля міста реєстрації статичну випадашку при введенні від 0 до 1 символа (до відпрацювання автокомпліта)
 		precomplete(2, $("#regCity"));
 
@@ -1534,11 +1569,14 @@ $(document).ready(function(){
 				        	items = []; // масив елементів
 				    		itemIds = [];	// масив id елементів
 				    		itemOtherIds = [];	// масив додаткових id елементів
-				        	oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+				        	// oJS = data;	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
+				        	oJS = JSON.parse(data);	//відповідний JSоб'єкт до JSON об'єкту AJAX відповіді
 				        	propertiesLength = 0;
 				        	var i;
-				        	for (i in oJS.items[0]) {
-				        		if (oJS.items[0].hasOwnProperty(i)) {
+				        	// for (i in oJS.items[0]) {
+				        	// 	if (oJS.items[0].hasOwnProperty(i)) {
+				        	for (i in oJS.items) {
+				        		if (oJS.items.hasOwnProperty(i)) {
 				        			++propertiesLength;
 				        		}
 				        	}

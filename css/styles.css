@@ -518,10 +518,12 @@ a.b-menu__heading:hover{
     cursor: default;
 }
 .b-crumbs__item+.b-crumbs__item:before{
-    content: "\f061";
+    content: "/";
+/*    content: "\f061";*/
     display: inline-block;
-    margin-right: 3px;
-    font-family: FontAwesome;
+/*    margin-right: 3px;*/
+/*    font-family: FontAwesome;*/
+    font-weight: 700;
 }
 .b-crumbs__link{
     text-decoration: none;
@@ -587,6 +589,7 @@ a.b-menu__heading:hover{
 }
 
 .b-crumbs_aside{
+    display: none;    /*edits 15.11.17*/
     float: right;
     margin: 0;
     padding: 0;
@@ -978,6 +981,9 @@ a.b-menu__heading:hover{
 .b-block_select:last-of-type{
     margin-right: 0;
 }
+.b-block_registration{
+    float: left;
+}
 .b-selectBlock_registration{
     min-width: 315px;
     position: relative;
@@ -1024,19 +1030,34 @@ a.b-menu__heading:hover{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.b-block_franshiza{
+    float: right;
+    width: 140px;
+}
+.b-calculator_vehicle .b-block_franshiza{
+    margin-right: 55px;
+}
+
+
 .b-block_checkbox{
-    margin-left: 50px;
-    display: inline-block;
+/*    margin-left: 50px;*/
+    float: right;
+/*    display: inline-block;*/
     vertical-align: top;
     width: 200px;
-    margin-top: 10px;
+    margin-top: 35px;
+    margin-right: 95px;
     position: relative;
-    padding-left: 17px;
+    padding-left: 24px;
+    font-size: 16px;
+    font-weight: 300;
     cursor: pointer;
 }
 .b-block_checkbox span.fa{
     position: absolute;
     left: 0;
+    font-size: 18px;
 /*    color: #f2c916;*/
     color: #743aa7;
 }
@@ -1070,7 +1091,8 @@ a.b-menu__heading:hover{
     box-shadow: 0 0 35px 7px rgba(0,0,0,0.15);
 }
 .b-form_vehicle .b-form__submit_vehicle{
-    margin-left: 190px;
+/*    margin-left: 190px;*/
+    float: left;
 }
 .b-form__submit_vehicle span.b-text_btn{
     display: inline-block;
@@ -2618,6 +2640,22 @@ a.b-callback_footer:hover{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+.b-container_crumbs_propos{
+    margin: 0 -16px;
+}
+.b-crumbs_propos{
+    display: inline-block;
+    padding-left: 10px;
+}
+.b-btn__home{
+    padding: 7px 14px 7px 12px;
+    cursor: pointer;
+    font: 700 14px 'Roboto Condensed', sans-serif;
+    
+}
+.b-btn__home i{
+    margin-right: 10px;
+}
 .b-propositions__block_aside {
     float: left;
     margin-top: 5px;
@@ -2926,6 +2964,7 @@ a.b-callback_footer:hover{
     font-size: 14px;
 }
 .b-propos__btn_change{
+    display: none;
     margin: 8px 0 0;
 }
 
